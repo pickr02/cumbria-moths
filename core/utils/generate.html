@@ -15,7 +15,8 @@
       <header class="d-flex align-items-center pb-3 mb-5 border-bottom fs-2">Generate atlas data from biological records CSV</header>
 
       <main>
-        <input type="file" accept=".csv" onChange="">
+        <input type="file" accept=".csv" onChange="biologicalRecordsCsvOpened(event)">
+        <div id="biologicalRecordsCsvLoad" class="spinner-border invisible"></div>
       </main>
       <footer class="pt-5 my-5 text-body-secondary border-top">
         Atlas website generated using BRC configurable atlas probject
@@ -23,7 +24,9 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="./core/js/test.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://unpkg.com/brc-atlas-bigr/dist/bigr.min.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="../js/utils.js"></script>
   </body>
 </html>

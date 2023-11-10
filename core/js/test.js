@@ -2,7 +2,7 @@ $(document).ready(function() {
 
   // Open test config file if it exists
   $.ajax({
-    url: "user/config/test.json",
+    url: "user/config/site.json",
     cache: false
   })
   .done(function( json ) {
