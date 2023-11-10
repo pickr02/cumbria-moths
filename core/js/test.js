@@ -12,11 +12,6 @@ $(document).ready(function() {
     $("#atlas-site-name").text(`${json.name}` )
  
     // Populate taxon drop-down
-    let repo = ''
-    if (location.hostname !== "localhost" && location.hostname !== "127.0.0.1") {
-      repo = `/${json.repo}`
-    }
-    //d3.csv(`${repo}/user/data/taxa.csv`).then(data => {
     d3.csv(`user/data/taxa.csv`).then(data => {
       data.forEach(d => {
         const $opt = $('<option>').appendTo($('#atlas-taxa-select'))
@@ -50,7 +45,7 @@ function atlasTaxonSelected() {
   const taxonId = $('#atlas-taxa-select').find(":selected").val()
   console.log('selected', taxonId)
 
-  mapStatic.setIdentfier(`../../user/data/hectad/${taxonId}.csv`)
+  mapStatic.setIdentfier(`user/data/hectad/${taxonId}.csv`)
   mapStatic.redrawMap()
 }
 
