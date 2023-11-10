@@ -16,7 +16,7 @@ $(document).ready(function() {
   })
 
   // Populate taxon drop-down
-  d3.csv("/user/data/taxa.csv").then(data => {
+  d3.csv("../../user/data/taxa.csv").then(data => {
     data.forEach(d => {
       const $opt = $('<option>').appendTo($('#atlas-taxa-select'))
       $opt.text(d.taxon)
