@@ -73,9 +73,11 @@ function generateHeader(configSite) {
 
 function siteRoot() {
   const pathElements = window.location.pathname.split('/')
-  if (pathElements[0] = 'core') {
+
+  console.log(pathElements)
+  if (pathElements[1] === 'core') {
     return ''
   } else {
-    return `/${pathElements[0]}`
+    return `/${pathElements[1]}`
   }
 }
