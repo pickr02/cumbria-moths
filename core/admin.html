@@ -1,40 +1,34 @@
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
-
+  
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <title>BRC GitHub atlas</title>
+    <title>Atlas admin utilties</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/biologicalrecordscentre/brc-atlas@latest/dist/brcatlas.umd.css">
   </head>
 
   <body>
     
     <div class="col-lg-8 mx-auto p-4 py-md-5">
       <header id="brc-atlas-header"></header>
+      
       <main>
-        <div class="row flex-column-reverse flex-sm-row">
-          <div class="col-sm-4">
-            <div class="dropdown">
-              <select id="atlas-taxa-select" class="form-select" onchange="atlasTaxonSelected()">
-                <option value="" disabled selected>Select taxon</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-sm-8">
-            <div id="atlas-static-map">
-          </div>
-        </div>
+        <h4>Atlas admin utilties</h4>
+        <ul class="list-group" style="display: inline-block">
+          <a class="list-group-item list-group-item-action" href="generate.html">Generate site atlas data from CSV biological records</a>
+        </ul>
+        <h4 class="mt-4">Navigation links</h4>
+        <ul class="list-group" style="display: inline-block">
+          <a class="list-group-item list-group-item-action" href="main.html">Back to main atlas page</a>
+        </ul>
       </main>
       <footer id="brc-atlas-footer"></footer>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="https://cdn.jsdelivr.net/gh/biologicalrecordscentre/brc-atlas@latest/dist/brcatlas.umd.js"></script>
     <script src="js/components.js"></script>
-    <script src="js/map.js"></script>
   </body>
 </html>

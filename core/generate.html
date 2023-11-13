@@ -12,11 +12,28 @@
   <body>
     
     <div class="col-lg-8 mx-auto p-4 py-md-5">
-      <header class="d-flex align-items-center pb-3 mb-5 border-bottom fs-2">Generate atlas data from biological records CSV</header>
-
+      
+      <header id="brc-atlas-header"></header>
+      <h4>Generate data from biological records CSV</h4>
+      <p>
+        Use this utility to select a CSV file of biological records from your computer
+        from which to generate all the data files that will drive your atlas site.
+        The file you select is not uploaded - it is only used to generate the atlas
+        data files which are zipped and saved to a folder on your computer. To drive
+        your atlas site, you will unzip this file and upload the atlas data 
+        to your forked GitHub repo.
+        Your original biological records CSV is not uploaded to the atlas site.
+      </p>
       <main>
-        <input type="file" accept=".csv" onChange="biologicalRecordsCsvOpened(event)">
-        <div id="biologicalRecordsCsvLoad" class="spinner-border invisible"></div>
+        <div class="mb-5">
+          <input type="file" accept=".csv" onChange="biologicalRecordsCsvOpened(event)">
+          <div id="biologicalRecordsCsvLoad" class="spinner-border invisible"></div>
+        </div>
+        <h4 class="mt-4">Navigation links</h4>
+        <ul class="list-group" style="display: inline-block">
+          <a class="list-group-item list-group-item-action" href="admin.html">Back to admin utils page</a>
+          <a class="list-group-item list-group-item-action"href="main.html">Back to main atlas page</a>
+        </ul>
       </main>
       <footer id="brc-atlas-footer"></footer>
     </div>
