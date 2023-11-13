@@ -4,7 +4,7 @@ $(document).ready(function() {
 
   // Open test config file if it exists
   $.ajax({
-    url: "user/config/site.json",
+    url: "../user/config/site.json",
     cache: false
   })
   .done(function( json ) {
@@ -12,7 +12,7 @@ $(document).ready(function() {
     $("#atlas-site-name").text(`${json.name}` )
  
     // Populate taxon drop-down
-    d3.csv(`user/data/taxa.csv`).then(data => {
+    d3.csv(`../user/data/taxa.csv`).then(data => {
       data.forEach(d => {
         const $opt = $('<option>').appendTo($('#atlas-taxa-select'))
         $opt.text(d.taxon)
@@ -45,7 +45,7 @@ function atlasTaxonSelected() {
   const taxonId = $('#atlas-taxa-select').find(":selected").val()
   console.log('selected', taxonId)
 
-  mapStatic.setIdentfier(`user/data/hectad/${taxonId}.csv`)
+  mapStatic.setIdentfier(`../user/data/hectad/${taxonId}.csv`)
   mapStatic.redrawMap()
 }
 

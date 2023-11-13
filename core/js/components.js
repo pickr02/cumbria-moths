@@ -6,12 +6,12 @@ $(document).ready(function() {
   $footer.html(`
     Created using <a href="https://github.com/BiologicalRecordsCentre/brevi-atlas-test">
     BRC configurable atlas project</a> (version <b><span id="brc-atlas-footer-version"></span></b>.)
-    <img class="pt-2" src="core/images/BRC_UKCEH_logo_small.png"></img>
+    <img class="pt-2" src="images/BRC_UKCEH_logo_small.png"></img>
   `)
 
   // Set version in footer
   $.ajax({
-    url: "core/config/config.json",
+    url: "config/config.json",
     cache: false
   })
   .done(function( json ) {
