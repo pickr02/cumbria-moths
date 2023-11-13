@@ -56,9 +56,6 @@ function generateHeader(configSite) {
   $header.attr("class", "d-flex align-items-center pb-3 mb-5 border-bottom fs-2")
 
   // Site logo
-  console.log(headerLogo)
-  console.log('window.location', window.location)
-  console.log('site root', siteRoot())
   if (headerLogo) {
     const $img = $(`<img src="../user/config/${headerLogo}">`).appendTo($header)
     if (logoHeight) {
