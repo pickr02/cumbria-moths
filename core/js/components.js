@@ -59,7 +59,7 @@ function generateHeader(configSite) {
   console.log(headerLogo)
   console.log('window.location', window.location)
   if (headerLogo) {
-    const $img = $(`<img src="/user/config/${headerLogo}">`).appendTo($header)
+    const $img = $(`<img src="${siteRoot()}/user/config/${headerLogo}">`).appendTo($header)
     if (logoHeight) {
       $img.css("height", `${logoHeight}px`)
       $img.css("margin-right", "10px")
@@ -68,4 +68,13 @@ function generateHeader(configSite) {
 
   // Site name
   $('<span>').text(name).appendTo($header)
+}
+
+function siteRoot() {
+  const pathElements = window.location.pathname.split('/')
+  if (pathElements[0] = 'core') {
+    return ''
+  } else {
+    return `/${pathElements[0]}`
+  }
 }
