@@ -58,7 +58,7 @@ function generateHeader(configSite) {
   // Site logo
   console.log(headerLogo)
   if (headerLogo) {
-    const $img = $(`<img src="../user/config/${headerLogo}">`).appendTo($header)
+    const $img = $(`<img src="/user/config/${headerLogo}">`).appendTo($header)
     if (logoHeight) {
       $img.css("height", `${logoHeight}px`)
       $img.css("margin-right", "10px")
