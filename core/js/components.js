@@ -1,8 +1,8 @@
 $(document).ready(function() {
 
  (async function() {
-    const configSite = await getConfig("../user/config/site.json") 
-    const configCore = await getConfig("config/config.json") 
+    const configSite = await getConfig("../user/config/site.txt") 
+    const configCore = await getConfig("config/config.txt") 
     
     //console.log('configSite', configSite)
     //console.log('configCore', configCore)
@@ -11,22 +11,6 @@ $(document).ready(function() {
     generateFooter(configCore)
   })()
 })
-
-function getConfig(file) {
-  return new Promise((resolve, reject) => {
-    $.ajax({
-      url: file,
-      cache: false,
-      // async:  false,
-      success: function (data) {
-        resolve(data)
-      },
-      error: function (error) {
-        resolve({})
-      }
-    })
-  })
-}
 
 function generateFooter(configCore) {
   // Footer
@@ -48,27 +32,128 @@ function generateFooter(configCore) {
 
 function generateHeader(configSite) {
 
-  const name = configSite.name ? configSite.name : "Site name configuration not specied"
+  // Header tag
+  const $header = $("#brc-atlas-header")
+  $header.attr("class", "xd-flex mb-5 border-bottom fs-1")
+
+  // Logo and name
+  const $divLogoNameNav = $("<div>")
+  $divLogoNameNav.attr("class", "d-flex flex-row p-2 align-items-center").appendTo($header)
+
+  // Header background colour
+  const headerColour = configSite['header-background-colour']
+  if (headerColour) {
+    $divLogoNameNav.css("background-color", headerColour)
+  }
+
+  // Header text colour
+  const headerTextColour = configSite['header-text-colour']
+  if (headerTextColour) {
+    $divLogoNameNav.css("color", headerTextColour)
+  }
+
+  // Logo
   const headerLogo = configSite['header-logo']
   const logoHeight = configSite['header-logo-height']
-  // Header
-  const $header = $("#brc-atlas-header")
-  $header.attr("class", "d-flex align-items-center pb-3 mb-5 border-bottom fs-2")
-
-  // Site logo
   if (headerLogo) {
-    const $img = $(`<img src="../user/config/${headerLogo}">`).appendTo($header)
+    const $img = $(`<img src="../user/config/${headerLogo}">`).appendTo($divLogoNameNav)
     if (logoHeight) {
       $img.css("height", `${logoHeight}px`)
       $img.css("margin-right", "10px")
     }
   }
+  // Header text
+  const headerName = configSite.name ? configSite.name : "Site name configuration not specied"
+  $('<div>').text(headerName).appendTo($divLogoNameNav)
 
-  // Site name
-  $('<span>').text(name).appendTo($header)
+  // Navigation
+  console.log('nav', configSite)
+
+  if (configSite.nav) {
+    
+    // $navbar.html(`
+    //   <nav class="ml-auto fs-6 navbar navbar-expand-lg navbar-light bg-light">
+    //     <div class="container-fluid">
+
+    //       <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    //         <span class="navbar-toggler-icon"></span>
+    //       </button>
+        
+    //       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    //         <ul class="navbar-nav ms-auto mb-1 mb-lg-0 ">
+    //           <li class="nav-item">
+    //             <a class="nav-link active" aria-current="page" href="#">Home</a>
+    //           </li>
+    //           <li class="nav-item">
+    //             <a class="nav-link" href="#">Link</a>
+    //           </li>
+    //         </ul>
+    //       </div>
+    //     </div>
+    //   </nav>
+    // `)
+
+    const $navbar = $('<nav class="fs-6 navbar navbar-expand-lg navbar-light bg-light">').appendTo($header)
+    const $navbarContainer = $('<div class="container-fluid">').appendTo($navbar)
+
+    const $navbarToggler = $('<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">').appendTo($navbarContainer)
+    $('<span class="navbar-toggler-icon">').appendTo($navbarToggler)
+
+    const $navbarCollapse = $('<div class="collapse navbar-collapse" id="navbarSupportedContent">').appendTo($navbarContainer)
+
+    const $navbarNav = $('<ul class="navbar-nav mb-2 mb-lg-0">').appendTo($navbarCollapse)
+
+    const $navItem = $('<li class="nav-item">').appendTo($navbarNav)
+    const $navLink = $(`<a class="nav-link active" aria-current="page" href="main.html">Home</a>`).appendTo($navItem)
+
+    configSite.nav.forEach(n => {
+      const $navItem = $('<li class="nav-item">').appendTo($navbarNav)
+      const $navLink = $(`<a class="nav-link" href="../user/config/${n.page}">${n.caption}</a>`).appendTo($navItem)
+      // if (i === 0) {
+      //   $navLink.addClass("active")
+      //   $navLink.attr("aria-current", "page")
+      // }
+    })
+  }
+
+  // Carousel
+  if (location.pathname.substring(location.pathname.length - 9) === "main.html" && configSite['header-carousel']) {
+    //console.log('carousel', configSite['header-carousel'])
+
+    const $carousel = $(`<div id="brc-atlas-header-carousel-div" class="carousel slide" data-bs-ride="carousel">`).appendTo($($header))
+    
+    // Indicators
+    const indicators = configSite['header-carousel-indicators']
+    if (indicators && indicators === "yes") {
+      const $carouselIndicators = $(`<div class="carousel-indicators">`).appendTo($carousel)
+      configSite['header-carousel'].forEach((img,i) => {
+        const $button = $(`<button type="button" data-bs-target="#brc-atlas-header-carousel-div" data-bs-slide-to="${i}">`).appendTo($carouselIndicators)
+        if (i === 0) {
+          $button.addClass("active")
+          $button.attr("aria-current", "true")
+        }
+      })
+    }
+
+    // Images
+    const $carouselInner = $(`<div class="carousel-inner">`).appendTo($carousel)
+    configSite['header-carousel'].forEach((img,i) => {
+      const $divImg = $(`<div class="align-items-center carousel-item">`).appendTo($carouselInner)
+      const height = configSite['header-carousel-height']
+      $divImg.css("height", height ? `${height}px` : "150px")
+      if (i === 0) {
+        $divImg.addClass("active")
+      }
+      const $img = $(`<img src="../user/config/${img}" class="position-absolute top-50 start-50 translate-middle d-block w-100" alt="...">`).appendTo($divImg)
+    })
+
+    const carousel = new bootstrap.Carousel(document.getElementById("brc-atlas-header-carousel-div"))
+    //carousel.cycle
+  }
 }
 
 function siteRoot() {
+  // Not used
   const pathElements = window.location.pathname.split('/')
 
   console.log(pathElements)

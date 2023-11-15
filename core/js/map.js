@@ -3,14 +3,14 @@ let mapStatic
 $(document).ready(function() {
 
   // Open test config file if it exists
-  $.ajax({
-    url: "../user/config/site.json",
-    cache: false
-  })
-  .done(function( json ) {
-    console.log(json)
-    $("#atlas-site-name").text(`${json.name}` )
- 
+  getConfig("../user/config/site.txt") 
+  .then(function( data ) {
+   
+    if (data.name) {
+      $("#atlas-site-name").text(`${data.name}` )
+    } else {
+      $("#atlas-site-name").text(`No site name specified` )
+    }
     // Populate taxon drop-down
     d3.csv(`../user/data/taxa.csv`).then(data => {
       data.forEach(d => {
@@ -19,13 +19,7 @@ $(document).ready(function() {
         $opt.attr('value', d.taxonId)
       })
     })
-
   })
-  .fail(function () {
-    $("#atlas-site-name").text(`No site name specified` )
-  })
-
-  
 
   // Initialise map
   mapStatic = brcatlas.svgMap({
