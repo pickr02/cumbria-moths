@@ -1,11 +1,22 @@
 let mapStatic
+let d3 // Must be made a global variable for brcatlas to work
 
-$(document).ready(function() {
+//js/jquery.min.js
+
+requirejs(["atlas-general", "atlas-components", "jquery.min", "d3", "brcatlas.umd.min"], function(general, components, jq, d3_7, brcatlas) {
+  
+  components.create()
+  general.loadCss('css/brcatlas.umd.css')
+  d3=d3_7 // Make global
+  loadContent(general, brcatlas)
+})
+
+function loadContent(general, brcatlas) {
 
   // Open test config file if it exists
-  getConfig("../user/config/site.txt") 
+  general.getConfig("../user/config/site.txt") 
   .then(function( data ) {
-   
+  
     if (data.name) {
       $("#atlas-site-name").text(`${data.name}` )
     } else {
@@ -33,7 +44,7 @@ $(document).ready(function() {
     mapTypesSel: {hectad: genHecatdMap},
     mapTypesKey: 'hectad'
   })
-})
+}
 
 function atlasTaxonSelected() {
   const taxonId = $('#atlas-taxa-select').find(":selected").val()
