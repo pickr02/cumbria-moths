@@ -66,7 +66,7 @@ define(
         populateTabs(config.tabs, brcatlas)
       } else { 
         // Default is to just show overview map
-        createOverviewMap(brcatlas, "#brc-local-atlas-tabs")
+        createOverviewMap(brcatlas, "#brc-local-atlas-tabs", "#brc-local-atlas-controls")
       }
     }
     
@@ -112,9 +112,9 @@ define(
     function populateTabs(tabs, brcatlas) {
       tabs.forEach((t,i) => {
         if (t.tab === "overview") {
-          createOverviewMap(brcatlas, "#brc-local-atlas-tab-overview")
+          createOverviewMap(brcatlas, "#brc-local-atlas-tab-overview", "#brc-local-atlas-control-overview")
         } else if (t.tab === "zoom") {
-          createSlippyMap(brcatlas, "#brc-local-atlas-tab-zoom")
+          createSlippyMap(brcatlas, "#brc-local-atlas-tab-zoom", "#brc-local-atlas-control-zoom")
         } else {
           $(`#${t.tab}.tab-pane`).text(t.caption ? t.caption : t.tab)
         }
@@ -122,33 +122,48 @@ define(
       })
     }
     
-    function createOverviewMap(brcatlas, selector) {
+    function createOverviewMap(brcatlas, selectorTab, selectorControl) {
       // Initialise map
+      const mapHeight = 800
       mapStatic = brcatlas.svgMap({
-        selector: selector,
+        selector: selectorTab,
         mapTypesKey: 'Standard hectad',
         seaFill: 'white',
         expand: true,
+        height: mapHeight,
         transOptsKey: 'BI4',
         mapTypesControl: false,
         transOptsControl: false,
         mapTypesSel: {hectad: genHecatdMap},
         mapTypesKey: 'hectad'
       })
-      // Set max width if config set
-      if (config.overview && config.overview['max-width']) {
-        $(selector).css('max-width', `${config.overview['max-width']}px`)
-      }
+      const width = mapStatic.getMapWidth()
+
+
+      $(selectorControl).text('') // Clear
+      createSlider (selectorControl, "Map size:", "80px", function(v) {
+        //$(selectorTab).css('max-height', `${v*5}px`)
+        // mapStatic.setHeight(v*5)
+        // mapStatic.redrawMap()
+        $(selectorTab).css('max-width', `${width*v/100}px`)
+      })
     }
 
-    function createSlippyMap(brcatlas, selector) {
+    function createSlippyMap(brcatlas, selectorTab, selectorControl) {
 
       // Initialise map
       mapSlippy = brcatlas.leafletMap({
-        selector: selector,
+        selector: selectorTab,
+        height: 500,
         mapTypesKey: 'Standard hectad',
         mapTypesSel: {hectad: genHecatdMap},
         mapTypesKey: 'hectad'
+      })
+
+      $(selectorControl).text('') // Clear
+      createSlider (selectorControl, "Map size:", "80px", function(v) {
+        mapSlippy.setSize($("#brc-local-atlas-tab-zoom").width(), v*5)
+        mapSlippy.invalidateSize()
       })
     }
 
@@ -157,6 +172,15 @@ define(
         mapSlippy.setSize($("#brc-local-atlas-tab-zoom").width(), $("#brc-local-atlas-tab-zoom").height())
         mapSlippy.invalidateSize()
       }
+    }
+
+    function createSlider (selector, label, labelWidth, callback ) {
+      const $divOuter = $(`<div style="display: grid; grid-template-columns: ${labelWidth} auto; grid-gap: 0px">`).appendTo($(selector))
+      $divLabel = $('<div class="grid-child green">').appendTo($divOuter)
+      $divLabel.text(label)
+      const $divSlider = $('<div class="grid-child glue">').appendTo($divOuter)
+      const $slider = $('<input type="range" class="form-range" min="40" value="100">').appendTo($divSlider)
+      $slider.on("change", () => callback($slider.val()))
     }
     
     async function genHecatdMap(file) {
