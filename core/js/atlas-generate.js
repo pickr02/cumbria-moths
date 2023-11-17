@@ -3,7 +3,7 @@ let d3 // Must be made a global variable for brcatlas to work
 requirejs(["atlas-components", "d3", "jszip.min", "bigr.min.umd"], function(components, d3_7, jszip, bigr) {
   d3 = d3_7
   components.create()
-  $('#brc-atlas-csv-load').on('change', function() {biologicalRecordsCsvOpened(event, jszip, bigr)})
+  $('#brc-local-atlas-csv-load').on('change', function() {biologicalRecordsCsvOpened(event, jszip, bigr)})
 })
 
 function biologicalRecordsCsvOpened(event, JSZip, bigr) {

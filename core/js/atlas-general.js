@@ -18,7 +18,9 @@ define(
             cache: false,
             // async:  false,
             success: function (data) {
-              resolve(jsyaml.load(data))
+              const json = jsyaml.load(data)
+              console.log(json)
+              resolve(json)
             },
             error: function (error) {
               resolve({})

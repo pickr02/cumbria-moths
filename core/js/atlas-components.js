@@ -21,7 +21,7 @@ define(
  
         function generateFooter(configCore) {
           // Footer
-          const $footer = $("#brc-atlas-footer")
+          const $footer = $("#brc-local-atlas-footer")
           $footer.attr("class", "pt-5 my-5 text-body-secondary border-top")
           $footer.html(`
             <span class="me-2">
@@ -40,7 +40,7 @@ define(
         function generateHeader(configSite) {
 
           // Header tag
-          const $header = $("#brc-atlas-header")
+          const $header = $("#brc-local-atlas-header")
           $header.attr("class", "xd-flex mb-5 border-bottom fs-1")
 
           // Logo and name
@@ -74,32 +74,8 @@ define(
           $('<div>').text(headerName).appendTo($divLogoNameNav)
 
           // Navigation
-          console.log('nav', configSite)
-
           if (configSite.nav) {
             
-            // $navbar.html(`
-            //   <nav class="ml-auto fs-6 navbar navbar-expand-lg navbar-light bg-light">
-            //     <div class="container-fluid">
-
-            //       <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            //         <span class="navbar-toggler-icon"></span>
-            //       </button>
-                
-            //       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            //         <ul class="navbar-nav ms-auto mb-1 mb-lg-0 ">
-            //           <li class="nav-item">
-            //             <a class="nav-link active" aria-current="page" href="#">Home</a>
-            //           </li>
-            //           <li class="nav-item">
-            //             <a class="nav-link" href="#">Link</a>
-            //           </li>
-            //         </ul>
-            //       </div>
-            //     </div>
-            //   </nav>
-            // `)
-
             const $navbar = $('<nav class="fs-6 navbar navbar-expand-lg navbar-light bg-light">').appendTo($header)
             const $navbarContainer = $('<div class="container-fluid">').appendTo($navbar)
 
@@ -113,7 +89,6 @@ define(
             // Current page
             const urlParams = new URLSearchParams(window.location.search)
             const userContent = urlParams.get('page')
-            console.log('Current page', userContent)
 
             const $navItem = $('<li class="nav-item">').appendTo($navbarNav)
             const $navLink = $(`<a class="nav-link" href="main.html">Home</a>`).appendTo($navItem)
@@ -136,14 +111,14 @@ define(
           if (location.pathname.substring(location.pathname.length - 9) === "main.html" && configSite['header-carousel']) {
             //console.log('carousel', configSite['header-carousel'])
 
-            const $carousel = $(`<div id="brc-atlas-header-carousel-div" class="carousel slide" data-bs-ride="carousel">`).appendTo($($header))
+            const $carousel = $(`<div id="brc-local-atlas-header-carousel-div" class="carousel slide" data-bs-ride="carousel">`).appendTo($($header))
             
             // Indicators
             const indicators = configSite['header-carousel-indicators']
             if (indicators && indicators === "yes") {
               const $carouselIndicators = $(`<div class="carousel-indicators">`).appendTo($carousel)
               configSite['header-carousel'].forEach((img,i) => {
-                const $button = $(`<button type="button" data-bs-target="#brc-atlas-header-carousel-div" data-bs-slide-to="${i}">`).appendTo($carouselIndicators)
+                const $button = $(`<button type="button" data-bs-target="#brc-local-atlas-header-carousel-div" data-bs-slide-to="${i}">`).appendTo($carouselIndicators)
                 if (i === 0) {
                   $button.addClass("active")
                   $button.attr("aria-current", "true")
@@ -163,7 +138,7 @@ define(
               const $img = $(`<img src="../user/config/${img}" class="position-absolute top-50 start-50 translate-middle d-block w-100" alt="...">`).appendTo($divImg)
             })
 
-            const carousel = new bootstrap.Carousel(document.getElementById("brc-atlas-header-carousel-div"))
+            const carousel = new bootstrap.Carousel(document.getElementById("brc-local-atlas-header-carousel-div"))
             //carousel.cycle
           }
         }
