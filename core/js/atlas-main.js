@@ -124,29 +124,42 @@ define(
     
     function createOverviewMap(brcatlas, selectorTab, selectorControl) {
       // Initialise map
-      const mapHeight = 800
+      const height = config.overview && config.overview.height ? config.overview.height : 500
+      // Get value for map width given original height set in config
+      // Need to do this with an instance of static map with expand set to false
+      // Later used to set the max width of actual map.
+      const $divTemp = $('<div id="brc-atlas-local-temp">').appendTo($('body'))
+      const mapTemp = brcatlas.svgMap({
+        selector: '#brc-atlas-local-temp',
+        height: height,
+        expand: false,
+        transOptsKey: 'BI4',
+        mapTypesControl: false,
+        transOptsControl: false,
+      })
+      const maxWidth = mapTemp.getMapWidth()
+      $divTemp.remove()
+      // Now the real map
       mapStatic = brcatlas.svgMap({
         selector: selectorTab,
         mapTypesKey: 'Standard hectad',
         seaFill: 'white',
         expand: true,
-        height: mapHeight,
+        height: height,
         transOptsKey: 'BI4',
         mapTypesControl: false,
         transOptsControl: false,
         mapTypesSel: {hectad: genHecatdMap},
         mapTypesKey: 'hectad'
       })
-      const width = mapStatic.getMapWidth()
 
+      $(selectorTab).css('max-width', `${maxWidth}px`)
 
-      $(selectorControl).text('') // Clear
-      createSlider (selectorControl, "Map size:", "80px", function(v) {
-        //$(selectorTab).css('max-height', `${v*5}px`)
-        // mapStatic.setHeight(v*5)
-        // mapStatic.redrawMap()
-        $(selectorTab).css('max-width', `${width*v/100}px`)
-      })
+      //const width = mapStatic.getMapWidth()
+      // $(selectorControl).text('') // Clear
+      // createSlider (selectorControl, "Map size:", "80px", function(v) {
+      //   $(selectorTab).css('max-width', `${width*v/100}px`)
+      // })
     }
 
     function createSlippyMap(brcatlas, selectorTab, selectorControl) {
@@ -160,16 +173,17 @@ define(
         mapTypesKey: 'hectad'
       })
 
-      $(selectorControl).text('') // Clear
-      createSlider (selectorControl, "Map size:", "80px", function(v) {
-        mapSlippy.setSize($("#brc-local-atlas-tab-zoom").width(), v*5)
-        mapSlippy.invalidateSize()
-      })
+      // $(selectorControl).text('') // Clear
+      // createSlider (selectorControl, "Map size:", "80px", function(v) {
+      //   mapSlippy.setSize($("#brc-local-atlas-tab-zoom").width(), v*5)
+      //   mapSlippy.invalidateSize()
+      // })
     }
 
     function resizeSlippyMap() {
       if (mapSlippy) {
-        mapSlippy.setSize($("#brc-local-atlas-tab-zoom").width(), $("#brc-local-atlas-tab-zoom").height())
+        const height = config.zoom && config.zoom.height ? config.zoom.height : 500
+        mapSlippy.setSize($("#brc-local-atlas-tab-zoom").width(), height)
         mapSlippy.invalidateSize()
       }
     }
