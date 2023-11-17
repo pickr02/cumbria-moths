@@ -13,13 +13,18 @@ define(
     // Create module
 
     let d3 // Must be made a global variable for brcatlas to work
-    let config, mapStatic
+    let config, mapStatic, mapSlippy
 
     components.create()
     general.loadCss('css/brcatlas.umd.css')
+    general.loadCss('css/leaflet.css')
     d3=d3_7 // Make module level variable to work
 
     loadContent(general, brcatlas)
+
+    $(window).resize(function() {
+      resizeSlippyMap()
+    })
 
     brcLocalAtlas.atlasTaxonSelected = function () {
       const taxonId = $('#atlas-taxa-select').find(":selected").val()
@@ -27,6 +32,11 @@ define(
     
       mapStatic.setIdentfier(`../user/data/hectad/${taxonId}.csv`)
       mapStatic.redrawMap()
+
+      if (mapSlippy) {
+        mapSlippy.setIdentfier(`../user/data/hectad/${taxonId}.csv`)
+        mapSlippy.redrawMap()
+      }
     }
 
     async function loadContent(general, brcatlas) {
@@ -74,13 +84,15 @@ define(
           const tabPrev = $(event.relatedTarget).attr('data-tab') // previous active tab
           $(`#brc-local-atlas-control-${tabPrev}`).hide()
           $(`#brc-local-atlas-control-${tabNew}`).show()
+
+          resizeSlippyMap()
         })
         $a.text(t.caption ? t.caption : t.tab)
 
         // Tab pane
         $divt = $(`<div class="tab-pane container fade" id="brc-local-atlas-tab-${t.tab}">`).appendTo($div)
-        $divt.css("padding", "1em")
-    
+        $divt.css("padding", "0.5em")
+
         // Control pane
         $divc = $(`<div id="brc-local-atlas-control-${t.tab}">`).appendTo("#brc-local-atlas-controls")
         $divc.css('margin-top', '1em')
@@ -100,10 +112,13 @@ define(
     function populateTabs(tabs, brcatlas) {
       tabs.forEach((t,i) => {
         if (t.tab === "overview") {
-          createOverviewMap(brcatlas, "#brc-local-atlas-tab-overview.tab-pane")
+          createOverviewMap(brcatlas, "#brc-local-atlas-tab-overview")
+        } else if (t.tab === "zoom") {
+          createSlippyMap(brcatlas, "#brc-local-atlas-tab-zoom")
         } else {
           $(`#${t.tab}.tab-pane`).text(t.caption ? t.caption : t.tab)
         }
+
       })
     }
     
@@ -123,6 +138,24 @@ define(
       // Set max width if config set
       if (config.overview && config.overview['max-width']) {
         $(selector).css('max-width', `${config.overview['max-width']}px`)
+      }
+    }
+
+    function createSlippyMap(brcatlas, selector) {
+
+      // Initialise map
+      mapSlippy = brcatlas.leafletMap({
+        selector: selector,
+        mapTypesKey: 'Standard hectad',
+        mapTypesSel: {hectad: genHecatdMap},
+        mapTypesKey: 'hectad'
+      })
+    }
+
+    function resizeSlippyMap() {
+      if (mapSlippy) {
+        mapSlippy.setSize($("#brc-local-atlas-tab-zoom").width(), $("#brc-local-atlas-tab-zoom").height())
+        mapSlippy.invalidateSize()
       }
     }
     
