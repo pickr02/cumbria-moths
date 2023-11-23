@@ -1,26 +1,14 @@
-requirejs(["jquery.min", "marked.min", "atlas-components"], function(jq, md, components) {
+requirejs(["jquery.min", "marked.min", "atlas-components", "atlas-general"], function(jq, md, components, general) {
   components.create()
-  loadContent(md)
+  loadContent(md, general)
 })
 
-function loadContent(md) {
+'atlas-general'
+
+function loadContent(md, general) {
 
   const urlParams = new URLSearchParams(window.location.search)
   const userContent = urlParams.get('page')
-  const tokens = userContent.split('.')
-  const ext = tokens[tokens.length-1]
-
-  if (ext === 'md' || ext === 'html') {
-
-    $.ajax({
-      url: `../user/config/${userContent}`,
-      cache: false,
-      success: function (data) {
-        $('main').html(ext === 'md' ? md.marked.parse(data) : data)
-      },
-      error: function (error) {
-        $('main').html(`File /user/config/${userContent} was not found.`)
-      }
-    })
-  }
+  const url = `../user/config/${userContent}`
+  general.file2Html(url).then(res => $('main').html(res) )
 }

@@ -26,22 +26,32 @@ define(
       resizeSlippyMap()
     })
 
-    brcLocalAtlas.atlasTaxonSelected = function () {
+    brcLocalAtlas.atlasTaxonSelected = async function () {
       const taxonId = $('#atlas-taxa-select').find(":selected").val()
       console.log('selected', taxonId)
-    
+
+      // Get config
+      config = await general.getConfig("../user/config/site.txt")
+
+      // There's always a static map
       mapStatic.setIdentfier(`../user/data/hectad/${taxonId}.csv`)
       mapStatic.redrawMap()
-
-      if (mapSlippy) {
-        mapSlippy.setIdentfier(`../user/data/hectad/${taxonId}.csv`)
-        mapSlippy.redrawMap()
+    
+      if (config.tabs) {
+        if (config.tabs.find(t => t.tab === 'zoom')) {
+          mapSlippy.setIdentfier(`../user/data/hectad/${taxonId}.csv`)
+          mapSlippy.redrawMap()
+        }
+        if (config.tabs.find(t => t.tab === 'details')) {
+          const url = `../user/data/captions/${taxonId}.md`
+          general.file2Html(url).then(res => $(`#brc-local-atlas-tab-details.tab-pane`).html(res) )
+        }
       }
     }
 
     async function loadContent(general, brcatlas) {
 
-      // Open test config file if it exists
+      // Open site config file if it exists
       config = await general.getConfig("../user/config/site.txt") 
    
       // Set site name
@@ -110,15 +120,18 @@ define(
     }
     
     function populateTabs(tabs, brcatlas) {
+
       tabs.forEach((t,i) => {
         if (t.tab === "overview") {
           createOverviewMap(brcatlas, "#brc-local-atlas-tab-overview", "#brc-local-atlas-control-overview")
         } else if (t.tab === "zoom") {
           createSlippyMap(brcatlas, "#brc-local-atlas-tab-zoom", "#brc-local-atlas-control-zoom")
+        } else if (t.tab === "details") {
+          //brc-local-atlas-control-details
+          // Do nothing here
         } else {
-          $(`#${t.tab}.tab-pane`).text(t.caption ? t.caption : t.tab)
+          $(`#brc-local-atlas-tab-${t.tab}.tab-pane`).text(`${t.caption ? t.caption : t.tab} content`)
         }
-
       })
     }
     
