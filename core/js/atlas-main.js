@@ -2,25 +2,26 @@
 brcLocalAtlas = {}
 
 define(
-  ["atlas-general", "atlas-components", "jquery.min", "d3", "brcatlas.umd.min"],
+  ["atlas-general", "atlas-components", "jquery.min", "d3", "brcatlas.umd.min", "brccharts.umd.min"],
   // [foo bar] /*optional dependencies*/, 
   // module definition function
   // dependencies (foo and bar) are mapped to function parameters
   //function ( foo, bar ) {
-  function (general, components, jq, d3_7, brcatlas) {
+  function (general, components, jq, d3_7, brcatlas, brccharts) {
     // return a value that defines the module export
     // (i.e the functionality we want to expose for consumption)
     // Create module
 
     let d3 // Must be made a global variable for brcatlas to work
-    let config, mapStatic, mapSlippy
+    let config, mapStatic, mapSlippy, chartByYear, chartByDay
 
     components.create()
     general.loadCss('css/brcatlas.umd.css')
+    general.loadCss('css/brccharts.umd.css')
     general.loadCss('css/leaflet.css')
     d3=d3_7 // Make module level variable to work
 
-    loadContent(general, brcatlas)
+    loadContent(general, brcatlas, brccharts)
 
     $(window).resize(function() {
       resizeSlippyMap()
@@ -46,10 +47,13 @@ define(
           const url = `../user/data/captions/${taxonId}.md`
           general.file2Html(url).then(res => $(`#brc-local-atlas-tab-details.tab-pane`).html(res) )
         }
+        if (config.tabs.find(t => t.tab === 'charts')) {
+          console.log('Call update chart')
+        }
       }
     }
 
-    async function loadContent(general, brcatlas) {
+    async function loadContent(general, brcatlas, brccharts) {
 
       // Open site config file if it exists
       config = await general.getConfig("../user/config/site.txt") 
@@ -73,7 +77,7 @@ define(
       // Create tabs
       if (config.tabs && config.tabs.length) {
         createTabs(config.tabs)
-        populateTabs(config.tabs, brcatlas)
+        populateTabs(config.tabs, brcatlas, brccharts)
       } else { 
         // Default is to just show overview map
         createOverviewMap(brcatlas, "#brc-local-atlas-tabs", "#brc-local-atlas-controls")
@@ -119,7 +123,7 @@ define(
       })
     }
     
-    function populateTabs(tabs, brcatlas) {
+    function populateTabs(tabs, brcatlas, brccharts) {
 
       tabs.forEach((t,i) => {
         if (t.tab === "overview") {
@@ -127,14 +131,77 @@ define(
         } else if (t.tab === "zoom") {
           createSlippyMap(brcatlas, "#brc-local-atlas-tab-zoom", "#brc-local-atlas-control-zoom")
         } else if (t.tab === "details") {
-          //brc-local-atlas-control-details
-          // Do nothing here
+          // No action needed here
+        } else if (t.tab === "charts") {
+          // No action needed here
+          createCharts(brccharts, "#brc-local-atlas-tab-charts", "#brc-local-atlas-control-charts")
         } else {
           $(`#brc-local-atlas-tab-${t.tab}.tab-pane`).text(`${t.caption ? t.caption : t.tab} content`)
         }
       })
     }
     
+    function createCharts(brccharts, selectorTab, selectorControl) {
+      //$(selectorTab).text('Create the temporal charts')
+
+      const width =  450
+      const height = 150
+
+      const optsByDay = {
+        selector: selectorTab,
+        data: [],
+        taxa: ['dummy'],
+        metrics: [
+          // { prop: '50', label: '50', colour: 'rgb(0,128,0)', fill: 'rgb(221,255,221)'},
+        ],
+        showLegend: false,
+        showTaxonLabel: false,
+        interactivity: 'mousemove',
+        width: width,
+        height: height,
+        perRow: 1,
+        expand: true,
+        //missingValues: 'break', 
+        metricExpression: '',
+        minMaxY: null,
+        minY: 0,
+        lineInterpolator: 'curveMonotoneX',
+        chartStyle: 'area',
+        // composition: 'spread',
+        periodType: 'week',
+        // axisLeftLabel: 'Latitude band',
+        margin: {left: 40, right: 0, top: 0, bottom: 15},
+      }
+      chartByDay = brccharts.temporal(optsByDay)
+
+      const optsByYear = {
+        selector: selectorTab,
+        data: [],
+        taxa: ['dummy'],
+        metrics: [
+          // { prop: 'dr736', label: 'iRecord ', colour: 'red'},
+        ],
+        minPeriod: 1980,
+        maxPeriod: 2020,
+        showLegend: false,
+        showTaxonLabel: false,
+        interactivity: 'mousemove',
+        width: width,
+        height: height,
+        perRow: 1,
+        expand: true,
+        missingValues: 'bridge', 
+        metricExpression: '',
+        minMaxY: null,
+        minY: 0,
+        periodType: 'year',
+        lineInterpolator: 'curveMonotoneX',
+        chartStyle: 'bar',
+        margin: {left: 40, right: 0, top: 0, bottom: 15},
+      }
+      chartByYear = brccharts.temporal(optsByYear)
+    }
+
     function createOverviewMap(brcatlas, selectorTab, selectorControl) {
       // Initialise map
       const height = config.overview && config.overview.height ? config.overview.height : 500

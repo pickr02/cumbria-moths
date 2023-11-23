@@ -10,6 +10,10 @@ A test repo for developing/testing ideas around customisable atlas (Rich Burkmar
   - Records CSV record check and report, e.g. for highlighting invalid GRs or unrecognised date formats
   - Generate record summary data files for use with explore map
 - Temporal charts
+  - Generate the data and change on species selection
+  - Config to say which of the two, or both, charts to include
+  - Config the height of the charts
+  - Config the year range (or none to extract from the data)
 - Gallery
 - Combined map controls
   - Map res selector (Hectad, quadrant, tetrad, monad - config)
