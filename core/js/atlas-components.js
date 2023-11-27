@@ -21,7 +21,7 @@ define(
  
         function generateFooter(configCore) {
           // Footer
-          const $footer = $("#brc-local-atlas-footer")
+          const $footer = $("#brc-footer")
           $footer.attr("class", "pt-5 my-5 text-body-secondary border-top")
           $footer.html(`
             <span class="me-2">
@@ -40,7 +40,7 @@ define(
         function generateHeader(configSite) {
 
           // Header tag
-          const $header = $("#brc-local-atlas-header")
+          const $header = $("#brc-header")
           $header.attr("class", "xd-flex mb-5 border-bottom fs-1")
 
           // Logo and name
@@ -111,14 +111,14 @@ define(
           if (location.pathname.substring(location.pathname.length - 9) === "main.html" && configSite['header-carousel']) {
             //console.log('carousel', configSite['header-carousel'])
 
-            const $carousel = $(`<div id="brc-local-atlas-header-carousel-div" class="carousel slide" data-bs-ride="carousel">`).appendTo($($header))
+            const $carousel = $(`<div id="brc-header-carousel-div" class="carousel slide" data-bs-ride="carousel">`).appendTo($($header))
             
             // Indicators
             const indicators = configSite['header-carousel-indicators']
             if (indicators && indicators === "yes") {
               const $carouselIndicators = $(`<div class="carousel-indicators">`).appendTo($carousel)
               configSite['header-carousel'].forEach((img,i) => {
-                const $button = $(`<button type="button" data-bs-target="#brc-local-atlas-header-carousel-div" data-bs-slide-to="${i}">`).appendTo($carouselIndicators)
+                const $button = $(`<button type="button" data-bs-target="#brc-header-carousel-div" data-bs-slide-to="${i}">`).appendTo($carouselIndicators)
                 if (i === 0) {
                   $button.addClass("active")
                   $button.attr("aria-current", "true")
@@ -138,7 +138,7 @@ define(
               const $img = $(`<img src="../user/config/${img}" class="position-absolute top-50 start-50 translate-middle d-block w-100" alt="...">`).appendTo($divImg)
             })
 
-            const carousel = new bootstrap.Carousel(document.getElementById("brc-local-atlas-header-carousel-div"))
+            const carousel = new bootstrap.Carousel(document.getElementById("brc-header-carousel-div"))
             //carousel.cycle
           }
         }

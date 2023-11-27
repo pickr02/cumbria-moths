@@ -4,28 +4,99 @@ requirejs(["atlas-general", "atlas-components", "d3", "jszip.min", "bigr.min.umd
   d3 = d3_7
   general.loadCss('css/atlas-css.css')
   components.create()
-  $('#brc-local-atlas-csv-load').on('change', function() {biologicalRecordsCsvOpened(event, jszip, bigr)})
-})
 
-function biologicalRecordsCsvOpened(event, JSZip, bigr) {
+  console.log('jzip', jszip)
 
-  $("#biologicalRecordsCsvLoad").removeClass("invisible")
+  const rtmp = new jszip()
+  console.log('rtmp', rtmp)
 
-  if (event.target.files[0] !== undefined) {
+  let jsonCsv
 
-    const reader = new FileReader()
-    reader.addEventListener('load', (event) => {
+  // Add file load handler
+  $('#brc-csv-load').on('change', function() {biologicalRecordsCsvOpened(event)})
 
-      d3.csv(event.target.result)
-        .then(function(json) {
-          $("#biologicalRecordsCsvLoad").addClass("invisible")
-          //generateData(json, JSZip, bigr)
-          // Enable buttons which require the data
-        })
-    })
-    reader.readAsDataURL(event.target.files[0])
+  // Disable controls initially
+  $('.brc-file-enable button').addClass('disabled')
+  $('.brc-file-enable .form-check-input').attr('disabled', '')
+  // Add enableDisable event handler to controls
+  $('.brc-file-enable .form-check-input').change(enableDisable)
+
+  // Add event handlers to buttons
+  $('#brc-gen-map').on('click', function() {generateData(jsonCsv, jszip, bigr)})
+
+  function biologicalRecordsCsvOpened(event) {
+
+    $("#biologicalRecordsCsvLoad").removeClass("invisible")
+
+    if (event.target.files[0] !== undefined) {
+
+      const reader = new FileReader()
+      reader.addEventListener('load', (event) => {
+
+        d3.csv(event.target.result)
+          .then(function(json) {
+            $("#biologicalRecordsCsvLoad").addClass("invisible")
+            jsonCsv = json
+            // Enable buttons which require the data
+            enableDisable()
+          })
+      })
+      reader.readAsDataURL(event.target.files[0])
+    }
   }
-}
+
+  function enableDisable() {
+
+    // Map and chart checkboxes
+    if (jsonCsv) {
+      $('.brc-file-enable .form-check-input').removeAttr('disabled')
+    } else {
+      $('.brc-file-enable .form-check-input').attr('disabled', '')
+    }
+
+    // Map altas checkboxes
+    if (isChecked('brc-gen-hectads') || isChecked('brc-gen-quadrants') || isChecked('brc-gen-tetrads') || isChecked('brc-gen-monads')) {
+      $('#brc-gen-map').removeClass('disabled')
+    } else {
+      $('#brc-gen-map').addClass('disabled')
+    }
+
+    // Charts checkboxes
+    if (isChecked('brc-gen-byweek') || isChecked('brc-gen-byyear')) {
+      $('#brc-gen-chart').removeClass('disabled')
+    } else {
+      $('#brc-gen-chart').addClass('disabled')
+    }
+  }
+
+  function isChecked (id) {
+    return $(`#${id}`).is(':checked')
+  }
+
+
+
+  function getYear(date, bStart) {
+    // For testing, assume all dates of form yyyy-mm-dd
+    // Ignore bStart argument - that will be to deal with formats such as nnnn-mm-dd - nnnn-mm-dd
+    if (date.match(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)) {
+      return Number(date.substr(0,4))
+    } else {
+      return null
+    }
+  }
+
+  function createMapCsvDataStr(data) {
+    const recs = data.map(d => {
+      return `${d.gr},${d.recn},${d.yearStart},${d.yearStart}` 
+    })
+    let dataString = `gr,recn,yearStart,yearEnd\r\n${recs.join("\r\n")}`
+    return dataString
+  }
+
+  function taxonToSafeName(taxon) { 
+    return `${taxon.replace(/[^a-z0-9]/gi, '_').toLowerCase()}` 
+  }
+
 
 function generateData(json, JSZip, bigr) {
   // For test evaluation, working with NBN download of national
@@ -125,24 +196,4 @@ function generateData(json, JSZip, bigr) {
   })
 }
 
-function getYear(date, bStart) {
-  // For testing, assume all dates of form yyyy-mm-dd
-  // Ignore bStart argument - that will be to deal with formats such as nnnn-mm-dd - nnnn-mm-dd
-  if (date.match(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)) {
-    return Number(date.substr(0,4))
-  } else {
-    return null
-  }
-}
-
-function createMapCsvDataStr(data) {
-  const recs = data.map(d => {
-    return `${d.gr},${d.recn},${d.yearStart},${d.yearStart}` 
-  })
-  let dataString = `gr,recn,yearStart,yearEnd\r\n${recs.join("\r\n")}`
-  return dataString
-}
-
-function taxonToSafeName(taxon) { 
-  return `${taxon.replace(/[^a-z0-9]/gi, '_').toLowerCase()}` 
-} 
+})

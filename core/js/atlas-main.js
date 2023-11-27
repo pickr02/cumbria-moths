@@ -45,7 +45,7 @@ define(
         }
         if (config.tabs.find(t => t.tab === 'details')) {
           const url = `../user/data/captions/${taxonId}.md`
-          general.file2Html(url).then(res => $(`#brc-local-atlas-tab-details.tab-pane`).html(res) )
+          general.file2Html(url).then(res => $(`#brc-tab-details.tab-pane`).html(res) )
         }
         if (config.tabs.find(t => t.tab === 'charts')) {
           console.log('Call update chart')
@@ -80,35 +80,35 @@ define(
         populateTabs(config.tabs, brcatlas, brccharts)
       } else { 
         // Default is to just show overview map
-        createOverviewMap(brcatlas, "#brc-local-atlas-tabs", "#brc-local-atlas-controls")
+        createOverviewMap(brcatlas, "#brc-tabs", "#brc-controls")
       }
     }
     
     function createTabs(tabs) {
-      $ul = $('<ul class="nav nav-tabs">').appendTo($('#brc-local-atlas-tabs'))
-      $div = $('<div class="tab-content">').appendTo($('#brc-local-atlas-tabs'))
+      $ul = $('<ul class="nav nav-tabs">').appendTo($('#brc-tabs'))
+      $div = $('<div class="tab-content">').appendTo($('#brc-tabs'))
     
       tabs.forEach((t,i) => {
         // Tab
         $li = $('<li class="nav-item">').appendTo($ul)
-        $a = $(`<a class="nav-link" data-bs-toggle="tab" href="#brc-local-atlas-tab-${t.tab}" data-tab="${t.tab}">`).appendTo($li)
+        $a = $(`<a class="nav-link" data-bs-toggle="tab" href="#brc-tab-${t.tab}" data-tab="${t.tab}">`).appendTo($li)
         $a.on('shown.bs.tab', function (event) {
           // Show/hide associated control panel
           const tabNew = $(event.target).attr('data-tab') // newly activated tab
           const tabPrev = $(event.relatedTarget).attr('data-tab') // previous active tab
-          $(`#brc-local-atlas-control-${tabPrev}`).hide()
-          $(`#brc-local-atlas-control-${tabNew}`).show()
+          $(`#brc-control-${tabPrev}`).hide()
+          $(`#brc-control-${tabNew}`).show()
 
           resizeSlippyMap()
         })
         $a.text(t.caption ? t.caption : t.tab)
 
         // Tab pane
-        $divt = $(`<div class="tab-pane container fade" id="brc-local-atlas-tab-${t.tab}">`).appendTo($div)
+        $divt = $(`<div class="tab-pane container fade" id="brc-tab-${t.tab}">`).appendTo($div)
         $divt.css("padding", "0.5em")
 
         // Control pane
-        $divc = $(`<div id="brc-local-atlas-control-${t.tab}">`).appendTo("#brc-local-atlas-controls")
+        $divc = $(`<div id="brc-control-${t.tab}">`).appendTo("#brc-controls")
         $divc.css('margin-top', '1em')
         $divc.text(`${t.caption ? t.caption : t.tab} controls`)
         $divc.css('display', 'none')
@@ -127,16 +127,16 @@ define(
 
       tabs.forEach((t,i) => {
         if (t.tab === "overview") {
-          createOverviewMap(brcatlas, "#brc-local-atlas-tab-overview", "#brc-local-atlas-control-overview")
+          createOverviewMap(brcatlas, "#brc-tab-overview", "#brc-control-overview")
         } else if (t.tab === "zoom") {
-          createSlippyMap(brcatlas, "#brc-local-atlas-tab-zoom", "#brc-local-atlas-control-zoom")
+          createSlippyMap(brcatlas, "#brc-tab-zoom", "#brc-control-zoom")
         } else if (t.tab === "details") {
           // No action needed here
         } else if (t.tab === "charts") {
           // No action needed here
-          createCharts(brccharts, "#brc-local-atlas-tab-charts", "#brc-local-atlas-control-charts")
+          createCharts(brccharts, "#brc-tab-charts", "#brc-control-charts")
         } else {
-          $(`#brc-local-atlas-tab-${t.tab}.tab-pane`).text(`${t.caption ? t.caption : t.tab} content`)
+          $(`#brc-tab-${t.tab}.tab-pane`).text(`${t.caption ? t.caption : t.tab} content`)
         }
       })
     }
@@ -255,7 +255,7 @@ define(
 
       // $(selectorControl).text('') // Clear
       // createSlider (selectorControl, "Map size:", "80px", function(v) {
-      //   mapSlippy.setSize($("#brc-local-atlas-tab-zoom").width(), v*5)
+      //   mapSlippy.setSize($("#brc-tab-zoom").width(), v*5)
       //   mapSlippy.invalidateSize()
       // })
     }
@@ -263,7 +263,7 @@ define(
     function resizeSlippyMap() {
       if (mapSlippy) {
         const height = config.zoom && config.zoom.height ? config.zoom.height : 500
-        mapSlippy.setSize($("#brc-local-atlas-tab-zoom").width(), height)
+        mapSlippy.setSize($("#brc-tab-zoom").width(), height)
         mapSlippy.invalidateSize()
       }
     }

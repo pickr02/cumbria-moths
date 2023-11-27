@@ -5,3 +5,18 @@
 .admin-link a {
   margin-bottom: 0.5em;
 }
+
+.brc-util.btn  {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+#brc-file-btn-parent {
+  display: inline-block;
+  position: relative;
+  top: 10px;
+}
+
+.brc-ctrl-grp {
+  padding: 0.5em;
+}
