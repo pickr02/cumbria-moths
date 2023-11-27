@@ -1,14 +1,11 @@
 let d3 // Must be made a global variable for brcatlas to work
 
-requirejs(["atlas-general", "atlas-components", "d3", "jszip.min", "bigr.min.umd"], function(general, components, d3_7, jszip, bigr) {
+requirejs(["atlas-general", "atlas-components", "atlas-dates", "d3", "jszip.min", "bigr.min.umd"], function(general, components, dateFns, d3_7, jszip, bigr) {
   d3 = d3_7
   general.loadCss('css/atlas-css.css')
   components.create()
 
-  console.log('jzip', jszip)
-
-  const rtmp = new jszip()
-  console.log('rtmp', rtmp)
+  console.log('data module', dateFns)
 
   let jsonCsv
 
@@ -22,7 +19,9 @@ requirejs(["atlas-general", "atlas-components", "d3", "jszip.min", "bigr.min.umd
   $('.brc-file-enable .form-check-input').change(enableDisable)
 
   // Add event handlers to buttons
-  $('#brc-gen-map').on('click', function() {generateData(jsonCsv, jszip, bigr)})
+  $('#brc-gen-sp').on('click', function() {generateSpData(jszip)})
+  $('#brc-gen-map').on('click', function() {generateMapData(jszip, bigr)})
+  $('#brc-gen-chart').on('click', function() {generateChartData(jszip, bigr)})
 
   function biologicalRecordsCsvOpened(event) {
 
@@ -49,8 +48,10 @@ requirejs(["atlas-general", "atlas-components", "d3", "jszip.min", "bigr.min.umd
 
     // Map and chart checkboxes
     if (jsonCsv) {
+      $('#brc-gen-sp').removeClass('disabled')
       $('.brc-file-enable .form-check-input').removeAttr('disabled')
     } else {
+      $('#brc-gen-sp').addClass('disabled')
       $('.brc-file-enable .form-check-input').attr('disabled', '')
     }
 
@@ -72,8 +73,6 @@ requirejs(["atlas-general", "atlas-components", "d3", "jszip.min", "bigr.min.umd
   function isChecked (id) {
     return $(`#${id}`).is(':checked')
   }
-
-
 
   function getYear(date, bStart) {
     // For testing, assume all dates of form yyyy-mm-dd
@@ -97,103 +96,253 @@ requirejs(["atlas-general", "atlas-components", "d3", "jszip.min", "bigr.min.umd
     return `${taxon.replace(/[^a-z0-9]/gi, '_').toLowerCase()}` 
   }
 
-
-function generateData(json, JSZip, bigr) {
-  // For test evaluation, working with NBN download of national
-  // earthworm data
-  // Cols for eval: 'Scientific name', 'OSGR' and 'Start date'
-  // For eval, produce hectad, quandrant, tetrad and monad altas files for each taxon
-  // Each CSV to have: gr, yearStart, yearEnd, recn
-  
-  const allData = []
-
-  json.forEach(d => {
+  function generateSpData(JSZip) {
+    // For test evaluation, working with NBN download of national
+    // earthworm data
+    // Cols for eval: 'Scientific name', 'OSGR' and 'Start date'
+    // For eval, produce hectad, quandrant, tetrad and monad altas files for each taxon
+    // Each CSV to have: gr, yearStart, yearEnd, recn
     
-    let bValidGr = true
-    try {
-      bigr.checkGr(d['OSGR'])
-    } catch (e) {
-      bValidGr = false
-    }
+    console.log('Generate species list')
 
-    if (bValidGr) {
+    const allData = []
 
+    jsonCsv.forEach(d => {
+      
       const taxonId = taxonToSafeName(d['Scientific name'])
-      const grs = bigr.getLowerResGrs(d['OSGR'])
-
       let taxonData = allData.find(d => d.taxonId === taxonId)
       if (!taxonData) {
         taxonData = {
           taxonId: taxonId,
           taxon: d['Scientific name'],
-          hectadData: [],
-          quandrantData: [],
-          tetradData: [],
-          monadData: [],
         }
         allData.push(taxonData)
       } 
+    })
 
-      updateDataArray(taxonData.hectadData, grs.p10000)
-      updateDataArray(taxonData.tetradData, grs.p2000)
-      updateDataArray(taxonData.monadData, grs.p1000)
-      if (grs.p5000 && grs.p5000.length === 1) {
-        updateDataArray(taxonData.quandrantData, grs.p5000[0])
+    console.log('sp data', allData)
+
+    // Create the map data and add to zip file
+    const zip = new JSZip()
+
+    // Create the species list CSV and add to zip file
+    const taxaListData = allData.map(d => {
+      return `${d.taxonId},${d.taxon}` 
+    }).sort()
+    zip.file("taxa.csv", `taxonId,taxon\r\n${taxaListData.join("\r\n")}`)
+
+    // Download the zip file
+    zip.generateAsync({type:"base64"}).then(function (base64) {
+      window.location = "data:application/zip;base64," + base64
+    }, function (err) {
+        console.log('error', err)
+    })
+  }
+
+  function generateMapData(JSZip, bigr) {
+    // For test evaluation, working with NBN download of national
+    // earthworm data
+    // Cols for eval: 'Scientific name', 'OSGR' and 'Start date'
+    // For eval, produce hectad, quandrant, tetrad and monad altas files for each taxon
+    // Each CSV to have: gr, yearStart, yearEnd, recn
+    
+    const bHec = isChecked('brc-gen-hectads')
+    const bQua = isChecked('brc-gen-quadrants')
+    const bTet = isChecked('brc-gen-tetrads')
+    const bMon = isChecked('brc-gen-monads')
+
+    const allData = []
+
+    jsonCsv.forEach(d => {
+      
+      let bValidGr = true
+      try {
+        bigr.checkGr(d['OSGR'])
+      } catch (e) {
+        bValidGr = false
       }
-    }
 
-    function updateDataArray(dataArray, gr) {
-      if (gr) {
-        foundGr = dataArray.find(h => gr === h.gr)
+      if (bValidGr) {
 
-        if (foundGr) {
-          const startYear = getYear(d['Start date'], true)
-          // if (!startYear) {
-          //   console.log('invalid start date', d)
-          // }
-          let endYear = getYear(d['End date'], false)
-          endYear = endYear ? endYear : startYear
+        const taxonId = taxonToSafeName(d['Scientific name'])
+        const grs = bigr.getLowerResGrs(d['OSGR'])
 
-          foundGr.recn += 1
-          foundGr.yearStart = foundGr.yearStart > startYear ? startYear : foundGr.yearStart
-          foundGr.yearEnd = foundGr.yearEnd < endYear ? endYear : foundGr.yearEnd
-        } else {
-          dataArray.push({
-            gr: gr,
-            recn: 1,
-            yearStart: getYear(d['Start date'], true),
-            yearEnd: getYear(d['End date'], false)
-          })
+        let taxonData = allData.find(d => d.taxonId === taxonId)
+        if (!taxonData) {
+          taxonData = {
+            taxonId: taxonId,
+            taxon: d['Scientific name'],
+          }
+          if (bHec) taxonData.hectadData = []
+          if (bQua) taxonData.quandrantData = []
+          if (bTet) taxonData.tetradData = []
+          if (bMon) taxonData.monadData = []
+
+          allData.push(taxonData)
+        } 
+
+        if (bHec) updateDataArray(taxonData.hectadData, grs.p10000)
+        if (bTet) updateDataArray(taxonData.tetradData, grs.p2000)
+        if (bMon) updateDataArray(taxonData.monadData, grs.p1000)
+        if (grs.p5000 && grs.p5000.length === 1) {
+          if (bQua) updateDataArray(taxonData.quandrantData, grs.p5000[0])
         }
       }
-    }
-  })
 
-  console.log(json.columns)
-  console.log(json)
-  console.log(allData)
+      function updateDataArray(dataArray, gr) {
+        if (gr) {
+          foundGr = dataArray.find(h => gr === h.gr)
 
-  // Create the map data and add to zip file
-  const zip = new JSZip()
-  allData.forEach(d => {
-    zip.folder("hectad").file(`${d.taxonId}.csv`, createMapCsvDataStr(d.hectadData))
-    zip.folder("quadrant").file(`${d.taxonId}.csv`, createMapCsvDataStr(d.quandrantData))
-    zip.folder("tetrad").file(`${d.taxonId}.csv`, createMapCsvDataStr(d.tetradData))
-    zip.folder("monad").file(`${d.taxonId}.csv`, createMapCsvDataStr(d.monadData))
-  })
+          if (foundGr) {
+            const startYear = getYear(d['Start date'], true)
+            // if (!startYear) {
+            //   console.log('invalid start date', d)
+            // }
+            let endYear = getYear(d['End date'], false)
+            endYear = endYear ? endYear : startYear
 
-  // Create the species list CSV and add to zip file
-  const taxaListData = allData.map(d => {
-    return `${d.taxonId},${d.taxon}` 
-  }).sort()
-  zip.file("taxa.csv", `taxonId,taxon\r\n${taxaListData.join("\r\n")}`)
+            foundGr.recn += 1
+            foundGr.yearStart = foundGr.yearStart > startYear ? startYear : foundGr.yearStart
+            foundGr.yearEnd = foundGr.yearEnd < endYear ? endYear : foundGr.yearEnd
+          } else {
+            dataArray.push({
+              gr: gr,
+              recn: 1,
+              yearStart: getYear(d['Start date'], true),
+              yearEnd: getYear(d['End date'], false)
+            })
+          }
+        }
+      }
+    })
 
-  // Download the zip file
-  zip.generateAsync({type:"base64"}).then(function (base64) {
-    window.location = "data:application/zip;base64," + base64
-  }, function (err) {
-      console.log('error', err)
-  })
-}
+    console.log(jsonCsv.columns)
+    console.log(jsonCsv)
+    console.log(allData)
 
+    // Create the map data and add to zip file
+    const zip = new JSZip()
+
+    allData.forEach(d => {
+      if (bHec) zip.folder("hectad").file(`${d.taxonId}.csv`, createMapCsvDataStr(d.hectadData))
+      if (bQua) zip.folder("quadrant").file(`${d.taxonId}.csv`, createMapCsvDataStr(d.quandrantData))
+      if (bTet) zip.folder("tetrad").file(`${d.taxonId}.csv`, createMapCsvDataStr(d.tetradData))
+      if (bMon) zip.folder("monad").file(`${d.taxonId}.csv`, createMapCsvDataStr(d.monadData))
+    })
+
+    // Create the species list CSV and add to zip file
+    const taxaListData = allData.map(d => {
+      return `${d.taxonId},${d.taxon}` 
+    }).sort()
+    zip.file("taxa.csv", `taxonId,taxon\r\n${taxaListData.join("\r\n")}`)
+
+    // Download the zip file
+    zip.generateAsync({type:"base64"}).then(function (base64) {
+      window.location = "data:application/zip;base64," + base64
+    }, function (err) {
+        console.log('error', err)
+    })
+  }
+
+  function generateChartData(JSZip, bigr) {
+    // For test evaluation, working with NBN download of national
+    // earthworm data
+    // Cols for eval: 'Scientific name', 'OSGR' and 'Start date'
+    // For eval, produce hectad, quandrant, tetrad and monad altas files for each taxon
+    // Each CSV to have: gr, yearStart, yearEnd, recn
+    
+    console.log('Generate chart data')
+
+    const bWk = isChecked('brc-gen-weekly')
+    const bYr = isChecked('brc-gen-yearly')
+
+    const allData = []
+
+    jsonCsv.forEach(d => {
+
+      const taxonId = taxonToSafeName(d['Scientific name'])
+      const dateStart = d['Start date']
+      const dateEnd = d['End date']
+
+      console.log(dateStart, dateEnd, dateFns.parseDate(dateStart), dateFns.parseDate(dateEnd))
+
+      //console.log('Start date', dateFns.parseDate(dateStart))
+      //console.log('End date', dateFns.parseDate(dateEnd))
+
+      // let taxonData = allData.find(d => d.taxonId === taxonId)
+      // if (!taxonData) {
+      //   taxonData = {
+      //     taxonId: taxonId,
+      //     taxon: d['Scientific name'],
+      //   }
+      //   if (bHec) taxonData.hectadData = []
+      //   if (bQua) taxonData.quandrantData = []
+      //   if (bTet) taxonData.tetradData = []
+      //   if (bMon) taxonData.monadData = []
+
+      //   allData.push(taxonData)
+      // } 
+
+      // if (bHec) updateDataArray(taxonData.hectadData, grs.p10000)
+      // if (bTet) updateDataArray(taxonData.tetradData, grs.p2000)
+      // if (bMon) updateDataArray(taxonData.monadData, grs.p1000)
+      // if (grs.p5000 && grs.p5000.length === 1) {
+      //   if (bQua) updateDataArray(taxonData.quandrantData, grs.p5000[0])
+      // }
+
+
+      // function updateDataArray(dataArray, gr) {
+      //   if (gr) {
+      //     foundGr = dataArray.find(h => gr === h.gr)
+
+      //     if (foundGr) {
+      //       const startYear = getYear(d['Start date'], true)
+      //       // if (!startYear) {
+      //       //   console.log('invalid start date', d)
+      //       // }
+      //       let endYear = getYear(d['End date'], false)
+      //       endYear = endYear ? endYear : startYear
+
+      //       foundGr.recn += 1
+      //       foundGr.yearStart = foundGr.yearStart > startYear ? startYear : foundGr.yearStart
+      //       foundGr.yearEnd = foundGr.yearEnd < endYear ? endYear : foundGr.yearEnd
+      //     } else {
+      //       dataArray.push({
+      //         gr: gr,
+      //         recn: 1,
+      //         yearStart: getYear(d['Start date'], true),
+      //         yearEnd: getYear(d['End date'], false)
+      //       })
+      //     }
+      //   }
+      // }
+    })
+
+    return
+
+    console.log(allData)
+
+    // Create the map data and add to zip file
+    const zip = new JSZip()
+
+    allData.forEach(d => {
+      if (bHec) zip.folder("hectad").file(`${d.taxonId}.csv`, createMapCsvDataStr(d.hectadData))
+      if (bQua) zip.folder("quadrant").file(`${d.taxonId}.csv`, createMapCsvDataStr(d.quandrantData))
+      if (bTet) zip.folder("tetrad").file(`${d.taxonId}.csv`, createMapCsvDataStr(d.tetradData))
+      if (bMon) zip.folder("monad").file(`${d.taxonId}.csv`, createMapCsvDataStr(d.monadData))
+    })
+
+    // Create the species list CSV and add to zip file
+    const taxaListData = allData.map(d => {
+      return `${d.taxonId},${d.taxon}` 
+    }).sort()
+    zip.file("taxa.csv", `taxonId,taxon\r\n${taxaListData.join("\r\n")}`)
+
+    // Download the zip file
+    zip.generateAsync({type:"base64"}).then(function (base64) {
+      window.location = "data:application/zip;base64," + base64
+    }, function (err) {
+        console.log('error', err)
+    })
+  }
 })
