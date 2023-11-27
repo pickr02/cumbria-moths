@@ -3,8 +3,6 @@ requirejs(["jquery.min", "marked.min", "atlas-components", "atlas-general"], fun
   loadContent(md, general)
 })
 
-'atlas-general'
-
 function loadContent(md, general) {
 
   const urlParams = new URLSearchParams(window.location.search)

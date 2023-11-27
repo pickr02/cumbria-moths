@@ -3,7 +3,7 @@ A test repo for developing/testing ideas around customisable atlas (Rich Burkmar
 
 ## TODO
 - Utilities
-  - Create blank information pages (md or html) for all taxa
+  - Create blank information pages (md or html) for all taxa (sample headers and text)
   - Generate temporal chart data files
   - Generate grid files from imported geojson boundary
   - Generate generalised boundary files from imported geojson - for potential use with leaflet

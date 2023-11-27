@@ -1,7 +1,8 @@
 let d3 // Must be made a global variable for brcatlas to work
 
-requirejs(["atlas-components", "d3", "jszip.min", "bigr.min.umd"], function(components, d3_7, jszip, bigr) {
+requirejs(["atlas-general", "atlas-components", "d3", "jszip.min", "bigr.min.umd"], function(general, components, d3_7, jszip, bigr) {
   d3 = d3_7
+  general.loadCss('css/atlas-css.css')
   components.create()
   $('#brc-local-atlas-csv-load').on('change', function() {biologicalRecordsCsvOpened(event, jszip, bigr)})
 })
@@ -18,7 +19,8 @@ function biologicalRecordsCsvOpened(event, JSZip, bigr) {
       d3.csv(event.target.result)
         .then(function(json) {
           $("#biologicalRecordsCsvLoad").addClass("invisible")
-          generateData(json, JSZip, bigr)
+          //generateData(json, JSZip, bigr)
+          // Enable buttons which require the data
         })
     })
     reader.readAsDataURL(event.target.files[0])

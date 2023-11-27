@@ -1,0 +1,7 @@
+.admin-link{
+  display: inline-block; 
+}
+
+.admin-link a {
+  margin-bottom: 0.5em;
+}
