@@ -33,7 +33,7 @@
             </div>
           </div>
 
-          <div id="brc-map-gen-grp" class="border">
+          <div id="brc-map-gen-grp" class="border p-2 mb-2">
             <select id="brc-data-taxon-select" disabled class="brc-data-select form-select mb-2">
               <option value="" selected>Select taxon field</option>
             </select>
@@ -48,12 +48,16 @@
             </select>
           </div>
           
-          <div class="mt-2">
-            <button id="brc-gen-sp" type="button" class="disabled btn btn-primary brc-util">Generate species list</button>
+          <div class="border p-2 mb-2">
+            <button id="brc-gen-sp" type="button" class="disabled btn btn-primary">Generate species list</button>
+          </div>
+
+          <div class="border p-2 mb-2">
+            <button id="brc-gen-info" type="button" class="disabled btn btn-primary mb-2">Generate species info page stubs</button>
           </div>
     
           <div id="brc-map-gen-grp" class="border p-2 mb-2">
-            <button id="brc-gen-map" type="button" class="disabled btn btn-primary brc-util">Generate atlas map data</button>
+            <button id="brc-gen-map" type="button" class="disabled btn btn-primary mb-2">Generate atlas map data</button>
             <div class="form-check form-switch">
               <input class="form-check-input brc-gen-map-chk" disabled type="checkbox" id="brc-gen-hectads">
               <label class="form-check-label" for="brc-gen-hectads">Hectads</label>
@@ -72,8 +76,8 @@
             </div>
           </div>
 
-          <div disable="disabled" class="border p-2">
-            <button id="brc-gen-chart" type="button" class="disabled btn btn-primary brc-util">Generate chart map data</button>
+          <div class="border p-2">
+            <button id="brc-gen-chart" type="button" class="disabled btn btn-primary mb-2">Generate chart map data</button>
             <div class="form-check form-switch">
               <input class="form-check-input brc-gen-chart-chk" disabled type="checkbox" id="brc-gen-weekly">
               <label class="form-check-label" for="brc-gen-weekly">Record count by week in year</label>

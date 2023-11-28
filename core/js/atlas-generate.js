@@ -16,12 +16,11 @@ requirejs(["atlas-general", "atlas-components", "atlas-dates", "d3", "jszip.min"
 
   // Add specific event handlers to controls
   $('#brc-gen-sp').on('click', function() {generateSpData(jszip)})
+  $('#brc-gen-info').on('click', function() {generateSpInfoStubs(jszip)})
   $('#brc-gen-map').on('click', function() {generateMapData(jszip, bigr)})
   $('#brc-gen-chart').on('click', function() {generateChartData(jszip, dateFns)})
 
-  onchange="brcLocalAtlas.atlasTaxonSelected()"
-
-  const taxonId = $('#atlas-taxa-select').find(":selected").val()
+  //const taxonId = $('#atlas-taxa-select').find(":selected").val()
 
   function biologicalRecordsCsvOpened(event) {
 
@@ -62,7 +61,7 @@ requirejs(["atlas-general", "atlas-components", "atlas-dates", "d3", "jszip.min"
 
     const fldTaxon = $('#brc-data-taxon-select').find(":selected").val()
     const fldGridRef = $('#brc-data-gr-select').find(":selected").val()
-    const flDateStart = $('#brc-data-sdate-select').find(":selected").val()
+    const fldDateStart = $('#brc-data-sdate-select').find(":selected").val()
     const fldDateEnd = $('#brc-data-edate-select').find(":selected").val()
     
     // Species list generation
@@ -72,8 +71,15 @@ requirejs(["atlas-general", "atlas-components", "atlas-dates", "d3", "jszip.min"
       $('#brc-gen-sp').addClass('disabled')
     }
 
+    // Species info stub generation
+    if (jsonCsv && fldTaxon) {
+      $('#brc-gen-info').removeClass('disabled')
+    } else {
+      $('#brc-gen-info').addClass('disabled')
+    }
+
     // Map atlas resolution checkboxes
-    if (jsonCsv && fldTaxon && fldGridRef && flDateStart) {
+    if (jsonCsv && fldTaxon && fldGridRef && fldDateStart && fldDateEnd) {
       $('.brc-gen-map-chk').removeAttr('disabled')
     } else {
       $('.brc-gen-map-chk').attr('disabled', '')
@@ -81,7 +87,7 @@ requirejs(["atlas-general", "atlas-components", "atlas-dates", "d3", "jszip.min"
     }
 
     // Chart type checkboxes
-    if (jsonCsv && fldTaxon && flDateStart) {
+    if (jsonCsv && fldTaxon && fldDateStart && fldDateEnd) {
       $('.brc-gen-chart-chk').removeAttr('disabled')
     } else {
       $('.brc-gen-chart-chk').attr('disabled', '')
@@ -89,7 +95,7 @@ requirejs(["atlas-general", "atlas-components", "atlas-dates", "d3", "jszip.min"
     }
 
     // Map generation button
-    if (jsonCsv && fldTaxon && fldGridRef && flDateStart && 
+    if (jsonCsv && fldTaxon && fldGridRef && fldDateStart && fldDateEnd &&
         isChecked('brc-gen-hectads') || isChecked('brc-gen-quadrants') || 
         isChecked('brc-gen-tetrads') || isChecked('brc-gen-monads')) {
       $('#brc-gen-map').removeClass('disabled')
@@ -98,7 +104,7 @@ requirejs(["atlas-general", "atlas-components", "atlas-dates", "d3", "jszip.min"
     }
 
     // Charts generation button
-    if (jsonCsv && fldTaxon && fldGridRef && flDateStart && 
+    if (jsonCsv && fldTaxon && fldGridRef && fldDateStart && fldDateEnd &&
         isChecked('brc-gen-weekly') || isChecked('brc-gen-yearly')) {
       $('#brc-gen-chart').removeClass('disabled')
     } else {
@@ -108,16 +114,6 @@ requirejs(["atlas-general", "atlas-components", "atlas-dates", "d3", "jszip.min"
 
   function isChecked (id) {
     return $(`#${id}`).is(':checked')
-  }
-
-  function getYear(date, bStart) {
-    // For testing, assume all dates of form yyyy-mm-dd
-    // Ignore bStart argument - that will be to deal with formats such as nnnn-mm-dd - nnnn-mm-dd
-    if (date.match(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)) {
-      return Number(date.substr(0,4))
-    } else {
-      return null
-    }
   }
 
   function createMapCsvDataStr(data) {
@@ -138,6 +134,26 @@ requirejs(["atlas-general", "atlas-components", "atlas-dates", "d3", "jszip.min"
 
   function taxonToSafeName(taxon) { 
     return `${taxon.replace(/[^a-z0-9]/gi, '_').toLowerCase()}` 
+  }
+
+  function generateSpInfoStubs(JSZip) {
+
+    console.log('Generate species info stubs')
+    const zip = new JSZip()
+    const fldTaxon = $('#brc-data-taxon-select').find(":selected").val()
+
+    jsonCsv.forEach(d => {
+      const taxonId = taxonToSafeName(d[fldTaxon])
+      if (taxonId) {
+        zip.folder('captions').file(`${taxonId}.md`, getStub(d[fldTaxon]))
+      }
+    })
+    // Download the zip file
+    zip.generateAsync({type:"base64"}).then(function (base64) {
+      window.location = "data:application/zip;base64," + base64
+    }, function (err) {
+        console.log('error', err)
+    })
   }
 
   function generateSpData(JSZip) {
@@ -181,11 +197,11 @@ requirejs(["atlas-general", "atlas-components", "atlas-dates", "d3", "jszip.min"
   }
 
   function generateMapData(JSZip, bigr) {
-    // For test evaluation, working with NBN download of national
-    // earthworm data
-    // Cols for eval: 'Scientific name', 'OSGR' and 'Start date'
-    // For eval, produce hectad, quandrant, tetrad and monad altas files for each taxon
-    // Each CSV to have: gr, yearStart, yearEnd, recn
+
+    const fldTaxon = $('#brc-data-taxon-select').find(":selected").val()
+    const fldGridRef = $('#brc-data-gr-select').find(":selected").val()
+    const fldDateStart = $('#brc-data-sdate-select').find(":selected").val()
+    const fldDateEnd = $('#brc-data-edate-select').find(":selected").val()
     
     const bHec = isChecked('brc-gen-hectads')
     const bQua = isChecked('brc-gen-quadrants')
@@ -198,21 +214,21 @@ requirejs(["atlas-general", "atlas-components", "atlas-dates", "d3", "jszip.min"
       
       let bValidGr = true
       try {
-        bigr.checkGr(d['OSGR'])
+        bigr.checkGr(d[fldGridRef])
       } catch (e) {
         bValidGr = false
       }
 
       if (bValidGr) {
 
-        const taxonId = taxonToSafeName(d['Scientific name'])
-        const grs = bigr.getLowerResGrs(d['OSGR'])
+        const taxonId = taxonToSafeName(d[fldTaxon])
+        const grs = bigr.getLowerResGrs(d[fldGridRef])
 
         let taxonData = allData.find(d => d.taxonId === taxonId)
         if (!taxonData) {
           taxonData = {
             taxonId: taxonId,
-            taxon: d['Scientific name'],
+            taxon: d[fldTaxon],
           }
           if (bHec) taxonData.hectadData = []
           if (bQua) taxonData.quandrantData = []
@@ -232,7 +248,7 @@ requirejs(["atlas-general", "atlas-components", "atlas-dates", "d3", "jszip.min"
 
       function updateDataArray(dataArray, gr) {
         if (gr) {
-          const parsedDates = dateFns.resolveYearsWeek(dateFns.parseDate(d['Start date']), dateFns.parseDate(d['End date']))
+          const parsedDates = dateFns.resolveYearsWeek(dateFns.parseDate(d[fldDateStart]), dateFns.parseDate(d[fldDateEnd]))
           const startYear = parsedDates[0]
           const endYear = parsedDates[1]
 
@@ -267,12 +283,6 @@ requirejs(["atlas-general", "atlas-components", "atlas-dates", "d3", "jszip.min"
       if (bMon) zip.folder("monad").file(`${d.taxonId}.csv`, createMapCsvDataStr(d.monadData))
     })
 
-    // Create the species list CSV and add to zip file
-    const taxaListData = allData.map(d => {
-      return `${d.taxonId},${d.taxon}` 
-    }).sort()
-    zip.file("taxa.csv", `taxonId,taxon\r\n${taxaListData.join("\r\n")}`)
-
     // Download the zip file
     zip.generateAsync({type:"base64"}).then(function (base64) {
       window.location = "data:application/zip;base64," + base64
@@ -282,11 +292,10 @@ requirejs(["atlas-general", "atlas-components", "atlas-dates", "d3", "jszip.min"
   }
 
   function generateChartData(JSZip, dateFns) {
-    // For test evaluation, working with NBN download of national
-    // earthworm data
-    // Cols for eval: 'Scientific name', 'OSGR' and 'Start date'
-    // For eval, produce hectad, quandrant, tetrad and monad altas files for each taxon
-    // Each CSV to have: gr, yearStart, yearEnd, recn
+
+    const fldTaxon = $('#brc-data-taxon-select').find(":selected").val()
+    const fldDateStart = $('#brc-data-sdate-select').find(":selected").val()
+    const fldDateEnd = $('#brc-data-edate-select').find(":selected").val()
     
     console.log('Generate chart data')
 
@@ -297,10 +306,8 @@ requirejs(["atlas-general", "atlas-components", "atlas-dates", "d3", "jszip.min"
 
     jsonCsv.forEach(d => {
 
-      const taxonId = taxonToSafeName(d['Scientific name'])
-      const parsedDates = dateFns.resolveYearsWeek(dateFns.parseDate(d['Start date']), dateFns.parseDate(d['End date']))
-
-      //console.log(d['Start date'], d['End date'], parsedDates)
+      const taxonId = taxonToSafeName(d[fldTaxon])
+      const parsedDates = dateFns.resolveYearsWeek(dateFns.parseDate(d[fldDateStart]), dateFns.parseDate(d[fldDateEnd]))
 
       let taxonData = allData.find(d => d.taxonId === taxonId)
       if (!taxonData) {
@@ -347,5 +354,19 @@ requirejs(["atlas-general", "atlas-components", "atlas-dates", "d3", "jszip.min"
     }, function (err) {
         console.log('error', err)
     })
+  }
+
+  function getStub(name) {
+    const stub = [
+      `### *${name}*`,
+      '#### Section header',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et fringilla tortor. Aliquam sed elit eu lorem auctor finibus.',
+      'Donec euismod nibh felis. Phasellus dapibus diam condimentum purus bibendum tincidunt. Nunc eleifend blandit urna, elementum euismod nisl gravida non. Curabitur at enim dictum, euismod dolor et, scelerisque eros. Vestibulum mattis lacinia nisi porttitor mollis. Pellentesque ut vehicula ex, sit amet volutpat elit. In at ligula vitae tortor rutrum sodales.',
+      '#### Section header',
+      'Donec euismod nibh felis. Phasellus dapibus diam condimentum purus bibendum tincidunt. Nunc eleifend blandit urna, elementum euismod nisl gravida non. Curabitur at enim dictum, euismod dolor et, scelerisque eros',
+      'Vestibulum mattis lacinia nisi porttitor mollis. Pellentesque ut vehicula ex, sit amet volutpat elit. In at ligula vitae tortor rutrum sodales.'
+    ]
+    const ret = stub.join("\r\n")
+    return ret
   }
 })
