@@ -13,7 +13,7 @@ define(
     // Create module
 
     let d3 // Must be made a global variable for brcatlas to work
-    let config, mapStatic, mapSlippy, chartByYear, chartByDay
+    let config, mapStatic, mapSlippy, chartByYear, chartByWeek
 
     components.create()
     general.loadCss('css/brcatlas.umd.css')
@@ -49,6 +49,24 @@ define(
         }
         if (config.tabs.find(t => t.tab === 'charts')) {
           console.log('Call update chart')
+          d3.csv(`../user/data/weekly/${taxonId}.csv`, d => {
+            return {
+              taxon: d.taxon,
+              count: Number(d.count),
+              period: Number(d.period)
+            }
+          }).then(data => {
+            chartByWeek.setChartOpts({data: data})
+          })
+          d3.csv(`../user/data/yearly/${taxonId}.csv`, d => {
+            return {
+              taxon: d.taxon,
+              count: Number(d.count),
+              period: Number(d.period)
+            }
+          }).then(data => {
+            chartByYear.setChartOpts({data: data})
+          })
         }
       }
     }
@@ -149,10 +167,12 @@ define(
 
       const optsByDay = {
         selector: selectorTab,
+        title: 'Records by week',
+        titleFontSize: 16,
         data: [],
-        taxa: ['dummy'],
+        taxa: ['taxon'],
         metrics: [
-          // { prop: '50', label: '50', colour: 'rgb(0,128,0)', fill: 'rgb(221,255,221)'},
+          { prop: 'count', label: 'count', colour: 'rgb(0,128,0)', fill: 'rgb(221,255,221)'},
         ],
         showLegend: false,
         showTaxonLabel: false,
@@ -169,17 +189,19 @@ define(
         chartStyle: 'area',
         // composition: 'spread',
         periodType: 'week',
-        // axisLeftLabel: 'Latitude band',
+        axisLeftLabel: 'Record count',
         margin: {left: 40, right: 0, top: 0, bottom: 15},
       }
-      chartByDay = brccharts.temporal(optsByDay)
+      chartByWeek = brccharts.temporal(optsByDay)
 
       const optsByYear = {
         selector: selectorTab,
+        title: 'Records by year',
+        titleFontSize: 16,
         data: [],
-        taxa: ['dummy'],
+        taxa: ['taxon'],
         metrics: [
-          // { prop: 'dr736', label: 'iRecord ', colour: 'red'},
+          { prop: 'count', colour: 'grey'},
         ],
         minPeriod: 1980,
         maxPeriod: 2020,
@@ -197,6 +219,7 @@ define(
         periodType: 'year',
         lineInterpolator: 'curveMonotoneX',
         chartStyle: 'bar',
+        axisLeftLabel: 'Record count',
         margin: {left: 40, right: 0, top: 0, bottom: 15},
       }
       chartByYear = brccharts.temporal(optsByYear)

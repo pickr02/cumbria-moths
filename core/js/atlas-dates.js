@@ -1,6 +1,9 @@
 define([],function () {
 
   function parseDate(strDate) {
+    // Parse date from a single column
+    // could potentially be a date range
+    // specified in single column.
     let match = false
     for (let i=0; i<dateFormats.length; i++) {
       const df = dateFormats[i]
@@ -15,6 +18,58 @@ define([],function () {
     }
     return null
   }
+
+  function resolveYearsWeek(dateStartParsed, dateEndParsed) {
+    // Given two arrays of form [startYear, endYear, week]
+    // resolve to a single array.
+
+    const yearStart1 = dateStartParsed[0]
+    const yearEnd1 = dateStartParsed[1]
+    const week1 = dateStartParsed[2]
+    const yearStart2 = dateEndParsed[0]
+    const yearEnd2 = dateEndParsed[1]
+    const week2 = dateEndParsed[2]
+
+    const yearStart = getYear(yearStart1, yearStart2, true)
+    const yearEnd = getYear(yearEnd1, yearEnd2, false)
+    const week = getWeek(week1, week2)
+    
+    return [yearStart, yearEnd, week]
+
+    function getYear(year1, year2, bStart) {
+      if (year1 && year2) {
+        return bStart && year1 < year2 ? year1 : year2
+      } else if (year1) {
+        return year1
+      } else if (year2) {
+        return year2
+      } else {
+        return null
+      }
+    }
+
+    function getWeek(week1, week2) {
+      if (week1 && week2) {
+        return week1
+      } else if (week1) {
+        return week1
+      } else if (week2) {
+        return week2
+      } else {
+        return null
+      }
+    }
+  }
+
+  function getWeek(m, d) {
+    const month2day = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334]
+    const days = month2day[m-1]+d
+    return Math.floor(days/7)+1
+  }
+
+  mnthsShort = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+  mnthsLong = ['January','February','March','April','May','June','July','August','September','October','November','December']
+
 
   const dateFormats = [
     {
@@ -94,7 +149,7 @@ define([],function () {
       fn: (dte) => {
         const s = dte.split('-')
         const y = Number(s[0])
-        const w = getWeek(Number(s[0]), Number(s[1]))
+        const w = getWeek(Number(s[1]), Number(s[2]))
         return [y, y, w]
       },
     },
@@ -834,6 +889,7 @@ define([],function () {
   ]
 
   return {
-    parseDate: parseDate
+    parseDate: parseDate,
+    resolveYearsWeek: resolveYearsWeek
   }
 })
