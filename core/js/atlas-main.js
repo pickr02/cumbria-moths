@@ -2,26 +2,27 @@
 brcLocalAtlas = {}
 
 define(
-  ["atlas-general", "atlas-components", "jquery.min", "d3", "brcatlas.umd.min", "brccharts.umd.min"],
+  ["atlas-general", "atlas-components", "jquery.min", "d3", 
+    "brcatlas.umd.min", "brccharts.umd.min", 
+    "lightgallery.umd", "lg-zoom.umd", "lg-thumbnail.umd"],
   // [foo bar] /*optional dependencies*/, 
   // module definition function
   // dependencies (foo and bar) are mapped to function parameters
   //function ( foo, bar ) {
-  function (general, components, jq, d3_7, brcatlas, brccharts) {
+  function (general, components, jq, d3, brcatlas, brccharts, lightGallery, lgZoom, lgThumbnail) {
     // return a value that defines the module export
     // (i.e the functionality we want to expose for consumption)
     // Create module
 
-    let d3 // Must be made a global variable for brcatlas to work
-    let config, mapStatic, mapSlippy, chartByYear, chartByWeek
-
-    components.create()
     general.loadCss('css/brcatlas.umd.css')
     general.loadCss('css/brccharts.umd.css')
     general.loadCss('css/leaflet.css')
-    d3=d3_7 // Make module level variable to work
+    general.loadCss('css/lightgallery-bundle.min.css')
 
-    loadContent(general, brcatlas, brccharts)
+    let config, images, mapStatic, mapSlippy, chartByYear, chartByWeek, inlineGallery
+    components.create()
+
+    loadContent()
 
     $(window).resize(function() {
       resizeSlippyMap()
@@ -30,9 +31,6 @@ define(
     brcLocalAtlas.atlasTaxonSelected = async function () {
       const taxonId = $('#atlas-taxa-select').find(":selected").val()
       console.log('selected', taxonId)
-
-      // Get config
-      config = await general.getConfig("../user/config/site.txt")
 
       // There's always a static map
       mapStatic.setIdentfier(`../user/data/hectad/${taxonId}.csv`)
@@ -68,14 +66,18 @@ define(
             chartByYear.setChartOpts({data: data})
           })
         }
+        if (config.tabs.find(t => t.tab === 'gallery')) {
+          refreshGallery(taxonId)
+        }
       }
     }
 
-    async function loadContent(general, brcatlas, brccharts) {
+    async function loadContent() {
 
-      // Open site config file if it exists
+      // Open site config files
       config = await general.getConfig("../user/config/site.txt") 
-   
+      images = await general.getConfig("../user/config/images.txt") 
+
       // Set site name
       if (config.name) {
         $("#atlas-site-name").text(`${config.name}` )
@@ -95,10 +97,10 @@ define(
       // Create tabs
       if (config.tabs && config.tabs.length) {
         createTabs(config.tabs)
-        populateTabs(config.tabs, brcatlas, brccharts)
+        populateTabs(config.tabs)
       } else { 
         // Default is to just show overview map
-        createOverviewMap(brcatlas, "#brc-tabs", "#brc-controls")
+        createOverviewMap("#brc-tabs", "#brc-controls")
       }
     }
     
@@ -117,6 +119,10 @@ define(
           $(`#brc-control-${tabPrev}`).hide()
           $(`#brc-control-${tabNew}`).show()
 
+          // if (inlineGallery){
+          //   inlineGallery.refresh() // Doesn't seem to do anything
+          //   inlineGallery.openGallery()
+          // }          
           resizeSlippyMap()
         })
         $a.text(t.caption ? t.caption : t.tab)
@@ -141,34 +147,37 @@ define(
       })
     }
     
-    function populateTabs(tabs, brcatlas, brccharts) {
+    function populateTabs(tabs) {
 
       tabs.forEach((t,i) => {
         if (t.tab === "overview") {
-          createOverviewMap(brcatlas, "#brc-tab-overview", "#brc-control-overview")
+          createOverviewMap("#brc-tab-overview", "#brc-control-overview")
         } else if (t.tab === "zoom") {
-          createSlippyMap(brcatlas, "#brc-tab-zoom", "#brc-control-zoom")
+          createSlippyMap("#brc-tab-zoom", "#brc-control-zoom")
         } else if (t.tab === "details") {
           // No action needed here
         } else if (t.tab === "charts") {
-          // No action needed here
-          createCharts(brccharts, "#brc-tab-charts", "#brc-control-charts")
+          createCharts("#brc-tab-charts", "#brc-control-charts")
+        } else if (t.tab === "gallery") {
+          createGallery()
         } else {
           $(`#brc-tab-${t.tab}.tab-pane`).text(`${t.caption ? t.caption : t.tab} content`)
         }
       })
     }
     
-    function createCharts(brccharts, selectorTab, selectorControl) {
+    function createCharts(selectorTab, selectorControl) {
       //$(selectorTab).text('Create the temporal charts')
 
       const width =  450
-      const height = 150
+      const height = config.charts && config.charts.height ? config.charts.height / 2 : 150
 
+      $('<div>Records by week</div>').appendTo($(selectorTab))
+      $(selectorTab)
       const optsByDay = {
         selector: selectorTab,
-        title: 'Records by week',
-        titleFontSize: 16,
+        // title: 'Records by week',
+        // titleFontSize: 14,
         data: [],
         taxa: ['taxon'],
         metrics: [
@@ -181,23 +190,23 @@ define(
         height: height,
         perRow: 1,
         expand: true,
-        //missingValues: 'break', 
+        missingValues: 0, 
         metricExpression: '',
         minMaxY: null,
         minY: 0,
         lineInterpolator: 'curveMonotoneX',
         chartStyle: 'area',
-        // composition: 'spread',
         periodType: 'week',
         axisLeftLabel: 'Record count',
         margin: {left: 40, right: 0, top: 0, bottom: 15},
       }
       chartByWeek = brccharts.temporal(optsByDay)
 
+      $('<div>Records by year</div>').appendTo($(selectorTab))
       const optsByYear = {
         selector: selectorTab,
-        title: 'Records by year',
-        titleFontSize: 16,
+        // title: 'Records by year',
+        // titleFontSize: 14,
         data: [],
         taxa: ['taxon'],
         metrics: [
@@ -225,7 +234,7 @@ define(
       chartByYear = brccharts.temporal(optsByYear)
     }
 
-    function createOverviewMap(brcatlas, selectorTab, selectorControl) {
+    function createOverviewMap(selectorTab, selectorControl) {
       // Initialise map
       const height = config.overview && config.overview.height ? config.overview.height : 500
       // Get value for map width given original height set in config
@@ -265,7 +274,7 @@ define(
       // })
     }
 
-    function createSlippyMap(brcatlas, selectorTab, selectorControl) {
+    function createSlippyMap(selectorTab, selectorControl) {
 
       // Initialise map
       mapSlippy = brcatlas.leafletMap({
@@ -319,6 +328,75 @@ define(
           size: 1
         })
       })
+    }
+
+    function createGallery() {
+
+      const selectorTab = "#brc-tab-gallery"
+      $(selectorTab).css('height', `${config.gallery && config.gallery.height ? config.gallery.height : 350}px`)
+      const lgContainer = $(selectorTab)[0]
+
+      // After https://www.lightgalleryjs.com/demos/inline/ & https://codepen.io/sachinchoolur/pen/zYZqaGm
+      inlineGallery = lightGallery(lgContainer, { // eslint-disable-line no-undef
+        container: lgContainer,
+        dynamic: true,
+        // Turn off hash plugin in case if you are using it
+        // as we don't want to change the url on slide change
+        hash: false,
+        // Do not allow users to close the gallery
+        closable: false,
+        // Hide download button
+        download: false,
+        // Add maximize icon to enlarge the gallery
+        showMaximizeIcon: true,
+        // Append caption inside the slide item
+        // to apply some animation for the captions (Optional)
+        appendSubHtmlTo: '.lg-item',
+        // Delay slide transition to complete captions animations
+        // before navigating to different slides (Optional)
+        // You can find caption animation demo on the captions demo page
+        slideDelay: 400,
+        plugins: [lgZoom, lgThumbnail], // eslint-disable-line no-undef
+        dynamicEl: [
+          {
+            src: `/user/data/images/worm1.jpg`,
+            thumb: `/user/data/images/worm1.jpg`
+          }
+        ],
+        thumbWidth: 90,
+        thumbHeight: "60px",
+        thumbMargin: 4
+      })
+    }
+
+    function refreshGallery(taxonId){
+
+      let dynamicEl
+      if (images[taxonId] && Array.isArray(images[taxonId])) {
+        dynamicEl = images[taxonId].map(i => {
+          return {
+            alt: i.caption,
+            src: `/user/data/images/${i.file}`,
+            thumb: `/user/data/images/${i.thumb ? i.thumb : i.file}`,
+            subHtml: `
+              <div class="lightGallery-captions">
+                <div style="background-color: black; opacity: 0.7">
+                <p style="margin: 0.3em">${i.caption}</p>
+                <div>
+              </div>`
+          }
+        })
+      } else {
+        dynamicEl = []
+      }
+
+      if (inlineGallery) {
+        inlineGallery.openGallery()
+        inlineGallery.updateSlides(
+          dynamicEl,
+          inlineGallery.index
+        )
+      }
     }
   }
 )

@@ -39,6 +39,7 @@ define(
 
         function generateHeader(configSite) {
 
+          console.log('generateHeader')
           // Header tag
           const $header = $("#brc-header")
           $header.attr("class", "xd-flex mb-5 border-bottom fs-1")
