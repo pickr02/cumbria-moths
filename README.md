@@ -23,12 +23,18 @@ A test repo for developing/testing ideas around customisable atlas.
   - Add config option to say which of the two, or both, charts to include.
   - Add config option to specify the year range (or none to derive dynamically from data).
 
+- **Gallery**.
+  - Sort out probelm with caption display.
+
 - **Admin utilities**. Add new admin utilities:
   - Generate grid files from imported geojson boundary.
   - Generate generalised boundary files from imported geojson - for potential use with leaflet.
   - Generated grids from imported geojson boundary file.
   - Records CSV record check and report, e.g. for highlighting invalid GRs or unrecognised date formats.
   - Option to generate raw record data file so that actual records (as opposed to altas aggregations) can be viewed on explore map.
+
+  **General**
+    - When user moves from Home page to another other configured page and then back again - taxon selection is cleared. Needs to remember and reset taxon selection.
 
 
 

@@ -356,8 +356,8 @@ define(
         plugins: [lgZoom, lgThumbnail], // eslint-disable-line no-undef
         dynamicEl: [
           {
-            src: `/user/data/images/worm1.jpg`,
-            thumb: `/user/data/images/worm1.jpg`,
+            src: `../user/data/images/worm1.jpg`,
+            thumb: `../user/data/images/worm1.jpg`,
             subHtml: `<div>worm1</div>`
           }
         ],
@@ -374,8 +374,8 @@ define(
         dynamicEl = images[taxonId].map(i => {
           return {
             alt: i.caption,
-            src: `/user/data/images/${i.file}`,
-            thumb: `/user/data/images/${i.thumb ? i.thumb : i.file}`,
+            src: `../user/data/images/${i.file}`,
+            thumb: `../user/data/images/${i.thumb ? i.thumb : i.file}`,
             subHtml: `
               <div class="lightGallery-captions">
                 <div style="background-color: black; opacity: 0.7">
