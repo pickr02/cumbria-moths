@@ -46,7 +46,6 @@ define(
           general.file2Html(url).then(res => $(`#brc-tab-details.tab-pane`).html(res) )
         }
         if (config.tabs.find(t => t.tab === 'charts')) {
-          console.log('Call update chart')
           d3.csv(`../user/data/weekly/${taxonId}.csv`, d => {
             return {
               taxon: d.taxon,
@@ -118,11 +117,7 @@ define(
           const tabPrev = $(event.relatedTarget).attr('data-tab') // previous active tab
           $(`#brc-control-${tabPrev}`).hide()
           $(`#brc-control-${tabNew}`).show()
-
-          // if (inlineGallery){
-          //   inlineGallery.refresh() // Doesn't seem to do anything
-          //   inlineGallery.openGallery()
-          // }          
+        
           resizeSlippyMap()
         })
         $a.text(t.caption ? t.caption : t.tab)
@@ -185,7 +180,7 @@ define(
         ],
         showLegend: false,
         showTaxonLabel: false,
-        interactivity: 'mousemove',
+        interactivity: 'none',
         width: width,
         height: height,
         perRow: 1,
@@ -216,17 +211,15 @@ define(
         maxPeriod: 2020,
         showLegend: false,
         showTaxonLabel: false,
-        interactivity: 'mousemove',
+        interactivity: 'none',
         width: width,
         height: height,
         perRow: 1,
         expand: true,
-        missingValues: 'bridge', 
         metricExpression: '',
         minMaxY: null,
         minY: 0,
         periodType: 'year',
-        lineInterpolator: 'curveMonotoneX',
         chartStyle: 'bar',
         axisLeftLabel: 'Record count',
         margin: {left: 40, right: 0, top: 0, bottom: 15},
@@ -334,6 +327,10 @@ define(
 
       const selectorTab = "#brc-tab-gallery"
       $(selectorTab).css('height', `${config.gallery && config.gallery.height ? config.gallery.height : 350}px`)
+      $(selectorTab).css('height', 0)
+      $(selectorTab).css('width', '100%')
+      $(selectorTab).css('padding-bottom', '65%')
+
       const lgContainer = $(selectorTab)[0]
 
       // After https://www.lightgalleryjs.com/demos/inline/ & https://codepen.io/sachinchoolur/pen/zYZqaGm
@@ -360,7 +357,8 @@ define(
         dynamicEl: [
           {
             src: `/user/data/images/worm1.jpg`,
-            thumb: `/user/data/images/worm1.jpg`
+            thumb: `/user/data/images/worm1.jpg`,
+            subHtml: `<div>worm1</div>`
           }
         ],
         thumbWidth: 90,
@@ -381,7 +379,7 @@ define(
             subHtml: `
               <div class="lightGallery-captions">
                 <div style="background-color: black; opacity: 0.7">
-                <p style="margin: 0.3em">${i.caption}</p>
+                <p style="margin: 0.3em">Caption: ${i.caption}</p>
                 <div>
               </div>`
           }
@@ -390,12 +388,15 @@ define(
         dynamicEl = []
       }
 
-      if (inlineGallery) {
+      if (inlineGallery && dynamicEl.length) {
+        $('.lg-container').show()
         inlineGallery.openGallery()
         inlineGallery.updateSlides(
           dynamicEl,
           inlineGallery.index
         )
+      } else {
+        $('.lg-container').hide()
       }
     }
   }

@@ -1,5 +1,5 @@
 /*!
- * lightgallery | 2.8.0-beta.1 | November 27th 2023
+ * lightgallery | 2.3.0 | October 28th 2021
  * http://www.lightgalleryjs.com/
  * Copyright (c) 2020 Sachin Neravath;
  * @license GPLv3
@@ -44,120 +44,6 @@
                 r[k] = a[j];
         return r;
     }
-
-    /**
-     * List of lightGallery events
-     * All events should be documented here
-     * Below interfaces are used to build the website documentations
-     * */
-    var lGEvents = {
-        afterAppendSlide: 'lgAfterAppendSlide',
-        init: 'lgInit',
-        hasVideo: 'lgHasVideo',
-        containerResize: 'lgContainerResize',
-        updateSlides: 'lgUpdateSlides',
-        afterAppendSubHtml: 'lgAfterAppendSubHtml',
-        beforeOpen: 'lgBeforeOpen',
-        afterOpen: 'lgAfterOpen',
-        slideItemLoad: 'lgSlideItemLoad',
-        beforeSlide: 'lgBeforeSlide',
-        afterSlide: 'lgAfterSlide',
-        posterClick: 'lgPosterClick',
-        dragStart: 'lgDragStart',
-        dragMove: 'lgDragMove',
-        dragEnd: 'lgDragEnd',
-        beforeNextSlide: 'lgBeforeNextSlide',
-        beforePrevSlide: 'lgBeforePrevSlide',
-        beforeClose: 'lgBeforeClose',
-        afterClose: 'lgAfterClose',
-        rotateLeft: 'lgRotateLeft',
-        rotateRight: 'lgRotateRight',
-        flipHorizontal: 'lgFlipHorizontal',
-        flipVertical: 'lgFlipVertical',
-        autoplay: 'lgAutoplay',
-        autoplayStart: 'lgAutoplayStart',
-        autoplayStop: 'lgAutoplayStop',
-    };
-
-    var lightGalleryCoreSettings = {
-        mode: 'lg-slide',
-        easing: 'ease',
-        speed: 400,
-        licenseKey: '0000-0000-000-0000',
-        height: '100%',
-        width: '100%',
-        addClass: '',
-        startClass: 'lg-start-zoom',
-        backdropDuration: 300,
-        container: '',
-        startAnimationDuration: 400,
-        zoomFromOrigin: true,
-        hideBarsDelay: 0,
-        showBarsAfter: 10000,
-        slideDelay: 0,
-        supportLegacyBrowser: true,
-        allowMediaOverlap: false,
-        videoMaxSize: '1280-720',
-        loadYouTubePoster: true,
-        defaultCaptionHeight: 0,
-        ariaLabelledby: '',
-        ariaDescribedby: '',
-        resetScrollPosition: true,
-        hideScrollbar: false,
-        closable: true,
-        swipeToClose: true,
-        closeOnTap: true,
-        showCloseIcon: true,
-        showMaximizeIcon: false,
-        loop: true,
-        escKey: true,
-        keyPress: true,
-        trapFocus: true,
-        controls: true,
-        slideEndAnimation: true,
-        hideControlOnEnd: false,
-        mousewheel: false,
-        getCaptionFromTitleOrAlt: true,
-        appendSubHtmlTo: '.lg-sub-html',
-        subHtmlSelectorRelative: false,
-        preload: 2,
-        numberOfSlideItemsInDom: 10,
-        selector: '',
-        selectWithin: '',
-        nextHtml: '',
-        prevHtml: '',
-        index: 0,
-        iframeWidth: '100%',
-        iframeHeight: '100%',
-        iframeMaxWidth: '100%',
-        iframeMaxHeight: '100%',
-        download: true,
-        counter: true,
-        appendCounterTo: '.lg-toolbar',
-        swipeThreshold: 50,
-        enableSwipe: true,
-        enableDrag: true,
-        dynamic: false,
-        dynamicEl: [],
-        extraProps: [],
-        exThumbImage: '',
-        isMobile: undefined,
-        mobileSettings: {
-            controls: false,
-            showCloseIcon: false,
-            download: false,
-        },
-        plugins: [],
-        strings: {
-            closeGallery: 'Close gallery',
-            toggleMaximize: 'Toggle maximize',
-            previousSlide: 'Previous slide',
-            nextSlide: 'Next slide',
-            download: 'Download',
-            playVideo: 'Play video',
-            mediaLoadingFailed: 'Oops... Failed to load content...',
-        },
-    };
 
     function initLgPolyfills() {
         (function () {
@@ -416,10 +302,8 @@
         // Does not support IE
         lgQuery.prototype.load = function (url) {
             var _this = this;
-            fetch(url)
-                .then(function (res) { return res.text(); })
-                .then(function (html) {
-                _this.selector.innerHTML = html;
+            fetch(url).then(function (res) {
+                _this.selector.innerHTML = res;
             });
             return this;
         };
@@ -717,7 +601,7 @@
             // No other way of checking: assume it’s ok.
             return true;
         },
-        getVideoPosterMarkup: function (_poster, dummyImg, videoContStyle, playVideoString, _isVideo) {
+        getVideoPosterMarkup: function (_poster, dummyImg, videoContStyle, _isVideo) {
             var videoClass = '';
             if (_isVideo && _isVideo.youtube) {
                 videoClass = 'lg-has-youtube';
@@ -728,15 +612,7 @@
             else {
                 videoClass = 'lg-has-html5';
             }
-            return "<div class=\"lg-video-cont " + videoClass + "\" style=\"" + videoContStyle + "\">\n                <div class=\"lg-video-play-button\">\n                <svg\n                    viewBox=\"0 0 20 20\"\n                    preserveAspectRatio=\"xMidYMid\"\n                    focusable=\"false\"\n                    aria-labelledby=\"" + playVideoString + "\"\n                    role=\"img\"\n                    class=\"lg-video-play-icon\"\n                >\n                    <title>" + playVideoString + "</title>\n                    <polygon class=\"lg-video-play-icon-inner\" points=\"1,0 20,10 1,20\"></polygon>\n                </svg>\n                <svg class=\"lg-video-play-icon-bg\" viewBox=\"0 0 50 50\" focusable=\"false\">\n                    <circle cx=\"50%\" cy=\"50%\" r=\"20\"></circle></svg>\n                <svg class=\"lg-video-play-icon-circle\" viewBox=\"0 0 50 50\" focusable=\"false\">\n                    <circle cx=\"50%\" cy=\"50%\" r=\"20\"></circle>\n                </svg>\n            </div>\n            " + (dummyImg || '') + "\n            <img class=\"lg-object lg-video-poster\" src=\"" + _poster + "\" />\n        </div>";
-        },
-        getFocusableElements: function (container) {
-            var elements = container.querySelectorAll('a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])');
-            var visibleElements = [].filter.call(elements, function (element) {
-                var style = window.getComputedStyle(element);
-                return style.display !== 'none' && style.visibility !== 'hidden';
-            });
-            return visibleElements;
+            return "<div class=\"lg-video-cont " + videoClass + "\" style=\"" + videoContStyle + "\">\n                <div class=\"lg-video-play-button\">\n                <svg\n                    viewBox=\"0 0 20 20\"\n                    preserveAspectRatio=\"xMidYMid\"\n                    focusable=\"false\"\n                    aria-labelledby=\"Play video\"\n                    role=\"img\"\n                    class=\"lg-video-play-icon\"\n                >\n                    <title>Play video</title>\n                    <polygon class=\"lg-video-play-icon-inner\" points=\"1,0 20,10 1,20\"></polygon>\n                </svg>\n                <svg class=\"lg-video-play-icon-bg\" viewBox=\"0 0 50 50\" focusable=\"false\">\n                    <circle cx=\"50%\" cy=\"50%\" r=\"20\"></circle></svg>\n                <svg class=\"lg-video-play-icon-circle\" viewBox=\"0 0 50 50\" focusable=\"false\">\n                    <circle cx=\"50%\" cy=\"50%\" r=\"20\"></circle>\n                </svg>\n            </div>\n            " + (dummyImg || '') + "\n            <img class=\"lg-object lg-video-poster\" src=\"" + _poster + "\" />\n        </div>";
         },
         /**
          * @desc Create dynamic elements array from gallery items when dynamic option is false
@@ -824,6 +700,105 @@
         },
     };
 
+    var lightGalleryCoreSettings = {
+        mode: 'lg-slide',
+        easing: 'ease',
+        speed: 400,
+        licenseKey: '0000-0000-000-0000',
+        height: '100%',
+        width: '100%',
+        addClass: '',
+        startClass: 'lg-start-zoom',
+        backdropDuration: 300,
+        container: '',
+        startAnimationDuration: 400,
+        zoomFromOrigin: true,
+        hideBarsDelay: 0,
+        showBarsAfter: 10000,
+        slideDelay: 0,
+        supportLegacyBrowser: true,
+        allowMediaOverlap: false,
+        videoMaxSize: '1280-720',
+        loadYouTubePoster: true,
+        defaultCaptionHeight: 0,
+        ariaLabelledby: '',
+        ariaDescribedby: '',
+        closable: true,
+        swipeToClose: true,
+        closeOnTap: true,
+        showCloseIcon: true,
+        showMaximizeIcon: false,
+        loop: true,
+        escKey: true,
+        keyPress: true,
+        controls: true,
+        slideEndAnimation: true,
+        hideControlOnEnd: false,
+        mousewheel: false,
+        getCaptionFromTitleOrAlt: true,
+        appendSubHtmlTo: '.lg-sub-html',
+        subHtmlSelectorRelative: false,
+        preload: 2,
+        numberOfSlideItemsInDom: 10,
+        selector: '',
+        selectWithin: '',
+        nextHtml: '',
+        prevHtml: '',
+        index: 0,
+        iframeWidth: '100%',
+        iframeHeight: '100%',
+        iframeMaxWidth: '100%',
+        iframeMaxHeight: '100%',
+        download: true,
+        counter: true,
+        appendCounterTo: '.lg-toolbar',
+        swipeThreshold: 50,
+        enableSwipe: true,
+        enableDrag: true,
+        dynamic: false,
+        dynamicEl: [],
+        extraProps: [],
+        exThumbImage: '',
+        isMobile: undefined,
+        mobileSettings: {
+            controls: false,
+            showCloseIcon: false,
+            download: false,
+        },
+        plugins: [],
+    };
+
+    /**
+     * List of lightGallery events
+     * All events should be documented here
+     * Below interfaces are used to build the website documentations
+     * */
+    var lGEvents = {
+        afterAppendSlide: 'lgAfterAppendSlide',
+        init: 'lgInit',
+        hasVideo: 'lgHasVideo',
+        containerResize: 'lgContainerResize',
+        updateSlides: 'lgUpdateSlides',
+        afterAppendSubHtml: 'lgAfterAppendSubHtml',
+        beforeOpen: 'lgBeforeOpen',
+        afterOpen: 'lgAfterOpen',
+        slideItemLoad: 'lgSlideItemLoad',
+        beforeSlide: 'lgBeforeSlide',
+        afterSlide: 'lgAfterSlide',
+        posterClick: 'lgPosterClick',
+        dragStart: 'lgDragStart',
+        dragMove: 'lgDragMove',
+        dragEnd: 'lgDragEnd',
+        beforeNextSlide: 'lgBeforeNextSlide',
+        beforePrevSlide: 'lgBeforePrevSlide',
+        beforeClose: 'lgBeforeClose',
+        afterClose: 'lgAfterClose',
+        rotateLeft: 'lgRotateLeft',
+        rotateRight: 'lgRotateRight',
+        flipHorizontal: 'lgFlipHorizontal',
+        flipVertical: 'lgFlipVertical',
+    };
+
     // @ref - https://stackoverflow.com/questions/3971841/how-to-resize-images-proportionally-keeping-the-aspect-ratio
     // @ref - https://2ality.com/2017/04/setting-up-multi-platform-packages.html
     // Unique id for each gallery
@@ -841,7 +816,6 @@
             this.currentItemsInDom = [];
             // Scroll top value before lightGallery is opened
             this.prevScrollTop = 0;
-            this.bodyPaddingRight = 0;
             this.isDummyImageRemoved = false;
             this.dragOrSwipeEnabled = false;
             this.mediaContainerPosition = {
@@ -996,7 +970,7 @@
             var subHtmlCont = '';
             // Create controls
             if (this.settings.controls) {
-                controls = "<button type=\"button\" id=\"" + this.getIdName('lg-prev') + "\" aria-label=\"" + this.settings.strings['previousSlide'] + "\" class=\"lg-prev lg-icon\"> " + this.settings.prevHtml + " </button>\n                <button type=\"button\" id=\"" + this.getIdName('lg-next') + "\" aria-label=\"" + this.settings.strings['nextSlide'] + "\" class=\"lg-next lg-icon\"> " + this.settings.nextHtml + " </button>";
+                controls = "<button type=\"button\" id=\"" + this.getIdName('lg-prev') + "\" aria-label=\"Previous slide\" class=\"lg-prev lg-icon\"> " + this.settings.prevHtml + " </button>\n                <button type=\"button\" id=\"" + this.getIdName('lg-next') + "\" aria-label=\"Next slide\" class=\"lg-next lg-icon\"> " + this.settings.nextHtml + " </button>";
             }
             if (this.settings.appendSubHtmlTo !== '.lg-item') {
                 subHtmlCont =
@@ -1015,20 +989,19 @@
                 : '';
             var containerClassName = "lg-container " + this.settings.addClass + " " + (document.body !== this.settings.container ? 'lg-inline' : '');
             var closeIcon = this.settings.closable && this.settings.showCloseIcon
-                ? "<button type=\"button\" aria-label=\"" + this.settings.strings['closeGallery'] + "\" id=\"" + this.getIdName('lg-close') + "\" class=\"lg-close lg-icon\"></button>"
+                ? "<button type=\"button\" aria-label=\"Close gallery\" id=\"" + this.getIdName('lg-close') + "\" class=\"lg-close lg-icon\"></button>"
                 : '';
             var maximizeIcon = this.settings.showMaximizeIcon
-                ? "<button type=\"button\" aria-label=\"" + this.settings.strings['toggleMaximize'] + "\" id=\"" + this.getIdName('lg-maximize') + "\" class=\"lg-maximize lg-icon\"></button>"
+                ? "<button type=\"button\" aria-label=\"Toggle maximize\" id=\"" + this.getIdName('lg-maximize') + "\" class=\"lg-maximize lg-icon\"></button>"
                 : '';
             var template = "\n        <div class=\"" + containerClassName + "\" id=\"" + this.getIdName('lg-container') + "\" tabindex=\"-1\" aria-modal=\"true\" " + ariaLabelledby + " " + ariaDescribedby + " role=\"dialog\"\n        >\n            <div id=\"" + this.getIdName('lg-backdrop') + "\" class=\"lg-backdrop\"></div>\n\n            <div id=\"" + this.getIdName('lg-outer') + "\" class=\"lg-outer lg-use-css3 lg-css3 lg-hide-items " + addClasses + " \">\n\n              <div id=\"" + this.getIdName('lg-content') + "\" class=\"lg-content\">\n                <div id=\"" + this.getIdName('lg-inner') + "\" class=\"lg-inner\">\n                </div>\n                " + controls + "\n              </div>\n                <div id=\"" + this.getIdName('lg-toolbar') + "\" class=\"lg-toolbar lg-group\">\n                    " + maximizeIcon + "\n                    " + closeIcon + "\n                    </div>\n                    " + (this.settings.appendSubHtmlTo === '.lg-outer'
                 ? subHtmlCont
                 : '') + "\n                <div id=\"" + this.getIdName('lg-components') + "\" class=\"lg-components\">\n                    " + (this.settings.appendSubHtmlTo === '.lg-sub-html'
                 ? subHtmlCont
                 : '') + "\n                </div>\n            </div>\n        </div>\n        ";
-            $LG(this.settings.container).append(template);
-            if (document.body !== this.settings.container) {
-                $LG(this.settings.container).css('position', 'relative');
-            }
+            $LG(this.settings.container)
+                .css('position', 'relative')
+                .append(template);
             this.outer = this.getElementById('lg-outer');
             this.$lgComponents = this.getElementById('lg-components');
             this.$backdrop = this.getElementById('lg-backdrop');
@@ -1046,7 +1019,7 @@
             this.$inner.css('transition-timing-function', this.settings.easing);
             this.$inner.css('transition-duration', this.settings.speed + 'ms');
             if (this.settings.download) {
-                this.$toolbar.append("<a id=\"" + this.getIdName('lg-download') + "\" target=\"_blank\" rel=\"noopener\" aria-label=\"" + this.settings.strings['download'] + "\" download class=\"lg-download lg-icon\"></a>");
+                this.$toolbar.append("<a id=\"" + this.getIdName('lg-download') + "\" target=\"_blank\" rel=\"noopener\" aria-label=\"Download\" download class=\"lg-download lg-icon\"></a>");
             }
             this.counter();
             $LG(window).on("resize.lg.global" + this.lgId + " orientationchange.lg.global" + this.lgId, function () {
@@ -1189,27 +1162,6 @@
                 return this.settings.dynamicEl || [];
             }
         };
-        LightGallery.prototype.shouldHideScrollbar = function () {
-            return (this.settings.hideScrollbar &&
-                document.body === this.settings.container);
-        };
-        LightGallery.prototype.hideScrollbar = function () {
-            if (!this.shouldHideScrollbar()) {
-                return;
-            }
-            this.bodyPaddingRight = parseFloat($LG('body').style().paddingRight);
-            var bodyRect = document.documentElement.getBoundingClientRect();
-            var scrollbarWidth = window.innerWidth - bodyRect.width;
-            $LG(document.body).css('padding-right', scrollbarWidth + this.bodyPaddingRight + 'px');
-            $LG(document.body).addClass('lg-overlay-open');
-        };
-        LightGallery.prototype.resetScrollBar = function () {
-            if (!this.shouldHideScrollbar()) {
-                return;
-            }
-            $LG(document.body).css('padding-right', this.bodyPaddingRight + 'px');
-            $LG(document.body).removeClass('lg-overlay-open');
-        };
         /**
          * Open lightGallery.
          * Open gallery with specific slide by passing index of the slide as parameter.
@@ -1245,8 +1197,8 @@
             if (this.lgOpened)
                 return;
             this.lgOpened = true;
+            this.outer.get().focus();
             this.outer.removeClass('lg-hide-items');
-            this.hideScrollbar();
             // Add display block, but still has opacity 0
             this.$container.addClass('lg-show');
             var itemsToBeInsertedToDom = this.getItemsToBeInsertedToDom(index, index);
@@ -1305,12 +1257,6 @@
                     _this.$backdrop.addClass('in');
                     _this.$container.addClass('lg-show-in');
                 }, 10);
-                setTimeout(function () {
-                    if (_this.settings.trapFocus &&
-                        document.body === _this.settings.container) {
-                        _this.trapFocus();
-                    }
-                }, _this.settings.backdropDuration + 50);
                 // lg-visible class resets gallery opacity to 1
                 if (!_this.zoomFromOrigin || !transform) {
                     setTimeout(function () {
@@ -1563,9 +1509,7 @@
                 _this.triggerSlideItemLoad(currentSlide, index, delay, speed, isFirstSlide);
             }, function () {
                 currentSlide.addClass('lg-complete lg-complete_');
-                currentSlide.html('<span class="lg-error-msg">' +
-                    _this.settings.strings['mediaLoadingFailed'] +
-                    '</span>');
+                currentSlide.html('<span class="lg-error-msg">Oops... Failed to load content...</span>');
             });
         };
         LightGallery.prototype.triggerSlideItemLoad = function ($currentSlide, index, delay, speed, isFirstSlide) {
@@ -1655,7 +1599,7 @@
                     if (hasStartAnimation) {
                         dummyImg = this.getDummyImageContent($currentSlide, index, '');
                     }
-                    var markup = utils.getVideoPosterMarkup(poster, dummyImg || '', lgVideoStyle, this.settings.strings['playVideo'], videoInfo);
+                    var markup = utils.getVideoPosterMarkup(poster, dummyImg || '', lgVideoStyle, videoInfo);
                     $currentSlide.prepend(markup);
                 }
                 else if (videoInfo) {
@@ -1700,11 +1644,9 @@
                 if (!$currentSlide.hasClass('lg-loaded')) {
                     setTimeout(function () {
                         if (_this.getSlideType(currentGalleryItem) === 'image') {
-                            var alt = currentGalleryItem.alt;
-                            var altAttr = alt ? 'alt="' + alt + '"' : '';
                             $currentSlide
                                 .find('.lg-img-wrap')
-                                .append(utils.getImgMarkup(index, src, altAttr, srcset, sizes, currentGalleryItem.sources));
+                                .append(utils.getImgMarkup(index, src, '', srcset, sizes, currentGalleryItem.sources));
                             if (srcset || sources) {
                                 var $img = $currentSlide.find('.lg-object');
                                 _this.initPictureFill($img);
@@ -2155,23 +2097,23 @@
                         $item.get().contains(e.target)) &&
                         !_this.outer.hasClass('lg-zoomed') &&
                         !_this.lgBusy &&
-                        e.touches.length === 1) {
+                        e.targetTouches.length === 1) {
                         isSwiping = true;
                         _this.touchAction = 'swipe';
                         _this.manageSwipeClass();
                         startCoords = {
-                            pageX: e.touches[0].pageX,
-                            pageY: e.touches[0].pageY,
+                            pageX: e.targetTouches[0].pageX,
+                            pageY: e.targetTouches[0].pageY,
                         };
                     }
                 });
                 this.$inner.on('touchmove.lg', function (e) {
                     if (isSwiping &&
                         _this.touchAction === 'swipe' &&
-                        e.touches.length === 1) {
+                        e.targetTouches.length === 1) {
                         endCoords = {
-                            pageX: e.touches[0].pageX,
-                            pageY: e.touches[0].pageY,
+                            pageX: e.targetTouches[0].pageX,
+                            pageY: e.targetTouches[0].pageY,
                         };
                         _this.touchMove(startCoords, endCoords, e);
                         isMoved = true;
@@ -2490,36 +2432,6 @@
                 $element.off("click.lgcustom-item-" + $element.attr('data-lg-id'));
             }
         };
-        LightGallery.prototype.trapFocus = function () {
-            var _this = this;
-            this.$container.get().focus({
-                preventScroll: true,
-            });
-            $LG(window).on("keydown.lg.global" + this.lgId, function (e) {
-                if (!_this.lgOpened) {
-                    return;
-                }
-                var isTabPressed = e.key === 'Tab' || e.keyCode === 9;
-                if (!isTabPressed) {
-                    return;
-                }
-                var focusableEls = utils.getFocusableElements(_this.$container.get());
-                var firstFocusableEl = focusableEls[0];
-                var lastFocusableEl = focusableEls[focusableEls.length - 1];
-                if (e.shiftKey) {
-                    if (document.activeElement === firstFocusableEl) {
-                        lastFocusableEl.focus();
-                        e.preventDefault();
-                    }
-                }
-                else {
-                    if (document.activeElement === lastFocusableEl) {
-                        firstFocusableEl.focus();
-                        e.preventDefault();
-                    }
-                }
-            });
-        };
         LightGallery.prototype.manageCloseGallery = function () {
             var _this = this;
             if (!this.settings.closable)
@@ -2570,9 +2482,7 @@
                 return 0;
             }
             this.LGel.trigger(lGEvents.beforeClose);
-            if (this.settings.resetScrollPosition && !this.settings.hideScrollbar) {
-                $LG(window).scrollTop(this.prevScrollTop);
-            }
+            $LG(window).scrollTop(this.prevScrollTop);
             var currentItem = this.items[this.index];
             var transform;
             if (this.zoomFromOrigin && currentItem) {
@@ -2617,8 +2527,6 @@
                     _this.outer.removeClass('lg-zoom-from-image');
                 }
                 _this.$container.removeClass('lg-show');
-                // Reset scrollbar
-                _this.resetScrollBar();
                 // Need to remove inline opacity as it is used in the stylesheet as well
                 _this.$backdrop
                     .removeAttr('style')
@@ -2631,8 +2539,8 @@
                         instance: _this,
                     });
                 }
-                if (_this.$container.get()) {
-                    _this.$container.get().blur();
+                if (_this.outer.get()) {
+                    _this.outer.get().blur();
                 }
                 _this.lgOpened = false;
             }, removeTimeout + 100);
@@ -2696,15 +2604,6 @@
             this.updateCounterTotal();
             this.manageSingleSlideClassName();
         };
-        LightGallery.prototype.destroyGallery = function () {
-            this.destroyModules(true);
-            if (!this.settings.dynamic) {
-                this.invalidateItems();
-            }
-            $LG(window).off(".lg.global" + this.lgId);
-            this.LGel.off('.lg');
-            this.$container.remove();
-        };
         /**
          * Destroy lightGallery.
          * Destroy lightGallery and its plugin instances completely
@@ -2719,13 +2618,17 @@
          *
          */
         LightGallery.prototype.destroy = function () {
+            var _this = this;
             var closeTimeout = this.closeGallery(true);
-            if (closeTimeout) {
-                setTimeout(this.destroyGallery.bind(this), closeTimeout);
-            }
-            else {
-                this.destroyGallery();
-            }
+            setTimeout(function () {
+                _this.destroyModules(true);
+                if (!_this.settings.dynamic) {
+                    _this.invalidateItems();
+                }
+                $LG(window).off(".lg.global" + _this.lgId);
+                _this.LGel.off('.lg');
+                _this.$container.remove();
+            }, closeTimeout);
             return closeTimeout;
         };
         return LightGallery;
@@ -2738,4 +2641,3 @@
     return lightGallery;
 
 })));
-//# sourceMappingURL=lightgallery.umd.js.map

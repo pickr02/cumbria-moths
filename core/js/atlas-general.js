@@ -19,7 +19,6 @@ define(
             // async:  false,
             success: function (data) {
               const json = jsyaml.load(data)
-              console.log(json)
               resolve(json)
             },
             error: function (error) {
