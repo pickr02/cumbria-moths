@@ -30,7 +30,8 @@ define(
 
     brcLocalAtlas.atlasTaxonSelected = async function () {
       const taxonId = $('#atlas-taxa-select').find(":selected").val()
-      console.log('selected', taxonId)
+      general.setCookie('taxonId', taxonId, 365)
+      brcLocalAtlas.taxonId = taxonId
 
       // There's always a static map
       mapStatic.setIdentfier(`../user/data/hectad/${taxonId}.csv`)
@@ -85,12 +86,22 @@ define(
       }
 
       // Populate taxon drop-down
+      const prevTaxonId = general.getCookie('taxonId')
       d3.csv(`../user/data/taxa.csv`).then(data => {
         data.forEach(d => {
           const $opt = $('<option>').appendTo($('#atlas-taxa-select'))
           $opt.text(d.taxon)
           $opt.attr('value', d.taxonId)
+
+          general.getCookie('taxonId')
+
+          if (prevTaxonId === d.taxonId) {
+            $opt.attr('selected', 'selected')
+          }
         })
+        if (prevTaxonId) {
+          brcLocalAtlas.atlasTaxonSelected()
+        }
       })
   
       // Create tabs
