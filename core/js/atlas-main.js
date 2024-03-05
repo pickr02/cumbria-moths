@@ -140,7 +140,7 @@ define(
         // Control pane
         $divc = $(`<div id="brc-control-${t.tab}">`).appendTo("#brc-controls")
         $divc.css('margin-top', '1em')
-        $divc.text(`${t.caption ? t.caption : t.tab} controls`)
+        $divc.html(`TODO - controls for ${t.caption ? t.caption : t.tab} tab`)
         $divc.css('display', 'none')
 
         // Active
