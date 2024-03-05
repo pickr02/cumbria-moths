@@ -1,5 +1,10 @@
-# brevi-atlas-test
+# https://github.com/BiologicalRecordsCentre/brevi-atlas-test
+
 A test repo for developing/testing ideas around customisable atlas.
+
+## BRC recording schemes meeting 2024
+
+
 
 ## TODO
 - **Map controls**. Add user controls (will apply to both overview and explore maps) with associated config options:
