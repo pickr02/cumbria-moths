@@ -12,12 +12,12 @@ The main steps to create your own local atlas, hosted on GitHub, from a spreadsh
 6. Upload these data to your GitHub repo.
 7. Add any further configuration and  files required for your site, taxon images, species accounts, web pages.
 
-Whilst some of these steps are briefly described at the BRC recording schemes meeting, they are not yet documented. The intention is to document them fully here when a first release is nearing completion. At the time of writing (06/03/2024), this 'proof of concept' 
-project only contains the most basic functionality. For example there is currently on hectad mapping on a national scale, but a
+Whilst some of these steps were briefly described at the BRC recording schemes meeting, they are not yet documented. The intention is to document them fully here when a first release is nearing completion. At the time of writing (06/03/2024), this 'proof of concept' 
+project only contains the most basic functionality. For example there is currently only hectad mapping on a national scale, but a
 first proper release will provide facilities to create atlases based on VC boundaries or custom boundaries and provide mapping at 
 hectad, quadrant, tetrad and monad scales (conditional on site configuration).
 
-some links used at the recording schemes meeting:
+Some links used at the recording schemes meeting:
 
 <ul>
  <li>
