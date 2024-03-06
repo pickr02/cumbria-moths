@@ -26,7 +26,7 @@ Some links used at the recording schemes meeting:
       </a>
   </li>
   <li>
-      <a target="_blank" href="https://www.github.com">
+      <a target="_blank" href="https://github.com/about">
           GitHub platform
       </a>
   </li>
