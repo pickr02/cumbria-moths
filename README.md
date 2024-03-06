@@ -45,7 +45,7 @@ some links used at the recording schemes meeting:
           Burkmar brevi-atlas-test forked repo - 'GitHub pages' website
       </a>
   </li>
-<ul>
+</ul>
 
 ## TODO
 - **Map controls**. Add user controls (will apply to both overview and explore maps) with associated config options:
