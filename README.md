@@ -1,18 +1,50 @@
 # https://github.com/BiologicalRecordsCentre/brevi-atlas-test
 
-A test repo for developing/testing ideas around customisable atlas.
+A repository for developing/testing ideas around customisable atlas.
 
-## BRC recording schemes meeting 2024
+## BRC Recording Schemes Meeting 2024
 The main steps to create your own local atlas, hosted on GitHub, from a spreadsheet of biological records are:
-1. Fork the BRC GitHub projet repository into your own GitHub account.
-2. Set up 'GitHub pages' on your project.
-3. Add create and edit text configuration files to tailor the look of your website.
-4. Add any required resources, eg. logo imag
-5. Use a utility provided by the tool to convert a spreadsheet of records into the mapping and charting data required by the site.
-6. Upload these data to your project.
-7. Add any further configuration and info files required for your site.
+1. Fork the BRC GitHub project repository ('repo') into your own GitHub account.
+2. Set up 'GitHub pages' on your forked repo.
+3. Create, add and edit text configuration files to tailor the look of your website.
+4. Add any required resources, eg. a logo image.
+5. Use the utility on your new site to convert a spreadsheet of records into the mapping and charting data required by the site.
+6. Upload these data to your GitHub repo.
+7. Add any further configuration and  files required for your site, taxon images, species accounts, web pages.
 
-Whilst some of these steps are briefly described at the BRC recording schemes meeting, they are not yet document. However the intention is to document them fully here when a first release is nearing completion.
+Whilst some of these steps are briefly described at the BRC recording schemes meeting, they are not yet documented. The intention is to document them fully here when a first release is nearing completion. At the time of writing (06/03/2024), this 'proof of concept' 
+project only contains the most basic functionality. For example there is currently on hectad mapping on a national scale, but a
+first proper release will provide facilities to create atlases based on VC boundaries or custom boundaries and provide mapping at 
+hectad, quadrant, tetrad and monad scales (conditional on site configuration).
+
+some links used at the recording schemes meeting:
+
+ <li>
+      <a target="_blank" href="https://www.fscbiodiversity.uk/fullscreen/springtailatlas">
+          FSC Tomorrow's Biodiversity atlases
+      </a>
+  </li>
+  <li>
+      <a target="_blank" href="https://www.github.com">
+          GitHub platform
+      </a>
+  </li>
+  <li>
+      <a target="_blank" href="https://github.com/BiologicalRecordsCentre/brevi-atlas-test">
+          BRC brevi-atlas-test repo
+      </a>
+  </li>
+  <li>
+      <a target="_blank" href="https://github.com/burkmarr/brevi-atlas-test">
+          Burkmar brevi-atlas-test forked repo
+      </a>
+  </li>
+  <li>
+      <a target="_blank" href="https://burkmarr.github.io/brevi-atlas-test/">
+          Burkmar brevi-atlas-test forked repo - 'GitHub pages' website
+      </a>
+  </li>
+<ul>
 
 ## TODO
 - **Map controls**. Add user controls (will apply to both overview and explore maps) with associated config options:
