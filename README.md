@@ -26,16 +26,6 @@ Some links used at the recording schemes meeting:
       </a>
   </li>
   <li>
-      <a target="_blank" href="https://github.com/about">
-          GitHub platform
-      </a>
-  </li>
-  <li>
-      <a target="_blank" href="https://github.com/BiologicalRecordsCentre/brevi-atlas-test">
-          BRC brevi-atlas-test repo
-      </a>
-  </li>
-  <li>
       <a target="_blank" href="https://github.com/burkmarr/brevi-atlas-test">
           Burkmar brevi-atlas-test forked repo
       </a>
@@ -43,6 +33,11 @@ Some links used at the recording schemes meeting:
   <li>
       <a target="_blank" href="https://burkmarr.github.io/brevi-atlas-test/">
           Burkmar brevi-atlas-test forked repo - 'GitHub pages' website
+      </a>
+  </li>
+  <li>
+      <a target="_blank" href="https://github.com/BiologicalRecordsCentre/brevi-atlas-test">
+          BRC brevi-atlas-test repo
       </a>
   </li>
 </ul>
