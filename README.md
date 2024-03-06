@@ -26,18 +26,23 @@ Some links used at the recording schemes meeting:
       </a>
   </li>
   <li>
+      <a target="_blank" href="https://en.wikipedia.org/wiki/GitHub">
+          GitHub - Wikipedia
+      </a>
+  </li>
+  <li>
+      <a target="_blank" href="https://github.com/BiologicalRecordsCentre/brevi-atlas-test">
+          BRC brevi-atlas-test repo
+      </a>
+  </li>
+  <li>
       <a target="_blank" href="https://github.com/burkmarr/brevi-atlas-test">
           Burkmar brevi-atlas-test forked repo
       </a>
   </li>
   <li>
       <a target="_blank" href="https://burkmarr.github.io/brevi-atlas-test/">
-          Burkmar brevi-atlas-test forked repo - 'GitHub pages' website
-      </a>
-  </li>
-  <li>
-      <a target="_blank" href="https://github.com/BiologicalRecordsCentre/brevi-atlas-test">
-          BRC brevi-atlas-test repo
+          'GitHub pages' website for Burkmar brevi-atlas-test forked repo
       </a>
   </li>
 </ul>
