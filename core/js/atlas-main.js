@@ -255,8 +255,9 @@ define(
       })
       const maxWidth = mapTemp.getMapWidth()
       $divTemp.remove()
+
       // Now the real map
-      mapStatic = brcatlas.svgMap({
+      const mapStaticOpts = {
         selector: selectorTab,
         mapTypesKey: 'Standard hectad',
         seaFill: 'white',
@@ -267,7 +268,62 @@ define(
         transOptsControl: false,
         mapTypesSel: {hectad: genHecatdMap},
         mapTypesKey: 'hectad'
-      })
+      }
+
+      // If a VC is specified, set up the transOptsSel
+      if (config.overview && config.overview.vc) {
+
+        const match = config.overview.vc.match(/(gb|ir)(\d+)/)
+        if (match) {
+          // Set correct projection for VC (British or Irish)
+          mapStaticOpts.proj = match[1]
+
+          // Open the lowest resolution geojson file in order
+          // to get the minimum bounding box.
+          const gjsonFile = `./data/vc-${match[1]}-simp-100/vc-${match[1]}-${match[1] === 'ir' ? 'H' : ''}${match[2]}.geojson`
+          let gjson
+          $.ajax({
+            url: gjsonFile,
+            cache: false,
+            async:  false,
+            success: function (data) {
+              gjson = data
+            }
+          })
+          console.log(gjsonFile)
+          const props = gjson.features[0].properties
+          const xminBuffer = config.overview['vc-buffer-xmin'] ? Number(config.overview['vc-buffer-xmin']) : 0
+          const xmaxBuffer = config.overview['vc-buffer-xmax'] ? Number(config.overview['vc-buffer-xmax']) : 0
+          const yminBuffer = config.overview['vc-buffer-ymin'] ? Number(config.overview['vc-buffer-ymin']) : 0
+          const ymaxBuffer = config.overview['vc-buffer-ymax'] ? Number(config.overview['vc-buffer-ymax']) : 0
+
+          // Set the transOptsSel
+          mapStaticOpts.transOptsSel = {
+            vc: {
+              id: 'vc',
+              bounds: {
+                xmin: props.xmin - xminBuffer,
+                ymin: props.ymin - yminBuffer,
+                xmax: props.xmax + xmaxBuffer,
+                ymax: props.ymax + ymaxBuffer
+              }
+            }
+          }
+          mapStaticOpts.transOptsKey = 'vc'
+          mapStaticOpts.boundaryGjson = gjsonFile
+
+          console.log('asdf', config.overview['hectad-grid'])
+
+          // Remove default UK grid
+          if (config.overview['hectad-grid'] && config.overview['hectad-grid'] === true) {
+            mapStaticOpts.gridGjson = `./data/vc-${match[1]}-hectad-grids/vc-${match[1]}-${match[1] === 'ir' ? 'H' : ''}${match[2]}-hectads.geojson`
+          } else {
+            mapStaticOpts.gridGjson = ''
+          }
+        }
+      }
+
+      mapStatic = brcatlas.svgMap(mapStaticOpts)
 
       $(selectorTab).css('max-width', `${maxWidth}px`)
 
