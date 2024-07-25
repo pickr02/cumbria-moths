@@ -5,10 +5,10 @@ A repository for developing/testing ideas around customisable atlas.
 ## BRC Recording Schemes Meeting 2024
 The main steps to create your own local atlas, hosted on GitHub, from a spreadsheet of biological records are:
 1. Fork the BRC GitHub project repository ('repo') into your own GitHub account.
-2. Set up 'GitHub pages' on your forked repo.
+2. Set up 'GitHub pages' on your forked repo: this creates your website.
 3. Create, add and edit text configuration files to tailor the look of your website.
 4. Add any required resources, eg. a logo image.
-5. Use the utility on your new site to convert a spreadsheet of records into the mapping and charting data required by the site.
+5. Use the utility on your new site to convert a spreadsheet of records into the mapping and charting data required by the site. These are generated on your own computer.
 6. Upload these data to your GitHub repo.
 7. Add any further configuration and  files required for your site, taxon images, species accounts, web pages.
 
