@@ -8,7 +8,7 @@ and configure it to create an atlas website for other people - their users - to 
 (The documentation on this page is incomplete - it should be completed by the end of August 2024,)
 
 ## General configuration
-- [*] Ability to set the background colour for the website banner.
+- [x] Ability to set the background colour for the website banner.
 - [ ] Blah blah
 
 - **Map controls**. Add user controls (will apply to both overview and explore maps) with associated config options:
