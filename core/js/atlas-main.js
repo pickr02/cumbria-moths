@@ -18,6 +18,7 @@ define(
     general.loadCss('css/brccharts.umd.css')
     general.loadCss('css/leaflet.css')
     general.loadCss('css/lightgallery-bundle.min.css')
+    general.loadCss('css/atlas-css.css')
 
     let config, images, mapStatic, mapSlippy, chartByYear, chartByWeek, inlineGallery
     components.create()
@@ -34,12 +35,12 @@ define(
       brcLocalAtlas.taxonId = taxonId
 
       // There's always a static map
-      mapStatic.setIdentfier(`../user/data/hectad/${taxonId}.csv`)
+      mapStatic.setIdentfier(`../user/data/${config.overview['default-res']}/${taxonId}.csv`)
       mapStatic.redrawMap()
     
       if (config.tabs) {
         if (config.tabs.find(t => t.tab === 'zoom')) {
-          mapSlippy.setIdentfier(`../user/data/hectad/${taxonId}.csv`)
+          mapSlippy.setIdentfier(`../user/data/${config.overview['default-res']}/${taxonId}.csv`)
           mapSlippy.redrawMap()
         }
         if (config.tabs.find(t => t.tab === 'details')) {
@@ -259,15 +260,14 @@ define(
       // Now the real map
       const mapStaticOpts = {
         selector: selectorTab,
-        mapTypesKey: 'Standard hectad',
         seaFill: 'white',
         expand: true,
         height: height,
         transOptsKey: 'BI4',
         mapTypesControl: false,
         transOptsControl: false,
-        mapTypesSel: {hectad: genHecatdMap},
-        mapTypesKey: 'hectad'
+        mapTypesSel: {standard: genMap},
+        mapTypesKey: 'standard'
       }
 
       // If a VC is specified, set up the transOptsSel
@@ -312,8 +312,6 @@ define(
           mapStaticOpts.transOptsKey = 'vc'
           mapStaticOpts.boundaryGjson = gjsonFile
 
-          console.log('asdf', config.overview['hectad-grid'])
-
           // Remove default UK grid
           if (config.overview['hectad-grid'] && config.overview['hectad-grid'] === true) {
             mapStaticOpts.gridGjson = `./data/vc-${match[1]}-hectad-grids/vc-${match[1]}-${match[1] === 'ir' ? 'H' : ''}${match[2]}-hectads.geojson`
@@ -340,9 +338,8 @@ define(
       mapSlippy = brcatlas.leafletMap({
         selector: selectorTab,
         height: 500,
-        mapTypesKey: 'Standard hectad',
-        mapTypesSel: {hectad: genHecatdMap},
-        mapTypesKey: 'hectad'
+        mapTypesSel: {standard: genMap},
+        mapTypesKey: 'standard'
       })
 
       // $(selectorControl).text('') // Clear
@@ -369,8 +366,8 @@ define(
       $slider.on("change", () => callback($slider.val()))
     }
     
-    async function genHecatdMap(file) {
-    
+    async function genMap(file) {
+
       const data = await d3.csv(file)
     
       const dataMap = data.map(d => {
@@ -378,11 +375,26 @@ define(
       })
     
       //console.log('dataMap', dataMap)
+
+      let precision 
+      switch(config.overview['default-res']) {
+        case 'hectad':
+          precision = 10000
+          break
+        case 'quadrant':
+          precision = 5000
+          break
+        case 'tetrad':
+          precision = 2000
+          break
+        case 'monad':
+          precision = 1000
+      }
     
       return new Promise((resolve) => {
         resolve({
           records: dataMap,
-          precision: 10000,
+          precision: precision,
           shape: 'circle',
           opacity: 1,
           size: 1
@@ -421,17 +433,12 @@ define(
         // You can find caption animation demo on the captions demo page
         slideDelay: 400,
         plugins: [lgZoom, lgThumbnail], // eslint-disable-line no-undef
-        dynamicEl: [
-          {
-            src: `../user/data/images/worm1.jpg`,
-            thumb: `../user/data/images/worm1.jpg`,
-            subHtml: `<div>worm1</div>`
-          }
-        ],
+        dynamicEl: [{src: `./images/no-image.jpg`}],
         thumbWidth: 90,
         thumbHeight: "60px",
         thumbMargin: 4
       })
+      setTimeout(() => {inlineGallery.openGallery()}, 200)
     }
 
     function refreshGallery(taxonId){
@@ -445,25 +452,35 @@ define(
             thumb: `../user/data/images/${i.thumb ? i.thumb : i.file}`,
             subHtml: `
               <div class="lightGallery-captions">
-                <div style="background-color: black; opacity: 0.7">
-                <p style="margin: 0.3em">Caption: ${i.caption}</p>
-                <div>
+                <div style="background-color: black; opacity: 0.7; margin: 0.3em; font-size: 1em">${i.caption}<div>
               </div>`
           }
         })
       } else {
-        dynamicEl = []
+        dynamicEl = [{src: `./images/no-image.jpg`, thumb: `./images/no-image.jpg`}]
       }
+      inlineGallery.updateSlides(dynamicEl,0)
 
-      if (inlineGallery && dynamicEl.length) {
-        $('.lg-container').show()
-        inlineGallery.openGallery()
-        inlineGallery.updateSlides(
-          dynamicEl,
-          inlineGallery.index
-        )
+      // Workaround for appendSubHtmlTo problem 25/07/2024
+      // For some reason, setting appendSubHtmlTo: '.lg-item'
+      // on gallery control places the caption behind the thumb
+      // strip. Doesn't do this in other implementations I've made.
+      // Couldn't get to the bottom of it, so this is a workaround
+      // to move it. Can't just target '.lightGallery-captions' in
+      // CSS because then it's always shifted even for single images
+      // when no thumb strip displayed. Can't use JS/d3 here to update
+      // the caption directly because it seems to be recreated by
+      // gallery, e.g. when image changes, and so loses styling.
+      // Instead target #brc-tab-gallery.shift-caption .lightGallery-captions
+      // in CSS and add/remove the 'shoft-caption' class on #brc-tab-gallery
+      // which is always available.
+      // Note setting appendSubHtmlTo to '.lg-sub-html' positions the 
+      // caption correctly, but does not change the caption when 
+      // the gallery images are reloaded.
+      if (dynamicEl.length > 1) {
+        d3.select('#brc-tab-gallery').classed('shift-caption', true)
       } else {
-        $('.lg-container').hide()
+        d3.select('#brc-tab-gallery').classed('shift-caption', false)
       }
     }
   }

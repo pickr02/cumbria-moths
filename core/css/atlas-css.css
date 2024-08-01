@@ -16,3 +16,8 @@
   position: relative;
   top: 10px;
 }
+
+#brc-tab-gallery.shift-caption .lightGallery-captions {
+  transform: translate(0, -80px);
+}
+
