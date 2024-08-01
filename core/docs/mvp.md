@@ -1,6 +1,6 @@
-# Minimal viable product
-This is a description of the minimum functionality required for a useful product - the Minimal Viable Product (MVP).
-The MVP will be the first official release of the product.
+# Minimum viable product
+This is a description of the minimum functionality required for a useful product - the Minimum Viable Product (MVP).
+The MVP will be the first official release of the atlas.
 
 Two types of 'users' are mentioned below: *admins* and *users*. Admins are people who fork this GitHub project 
 and configure it to create an atlas website for other people - their users - to use.
@@ -64,7 +64,7 @@ and configure it to create an atlas website for other people - their users - to 
 - [x] Utility for admins to generate taxon information stubs fro a CSV of records.
 - [ ] Utility for admins to generate grid files from imported geojson boundary.
 - [ ] Utility for admins to generate generalised boundary files from imported geojson (for potential use with zoomable map at different resolutions).
-- [ ] Utility for admins to generated hedtad grid from imported geojson boundary file.
+- [ ] Utility for admins to generate hectad grid from imported geojson boundary file.
 - [ ] Utility for admins to check and report potential problems on a CSV of records, e.g. for highlighting invalid GRs or unrecognised date formats.
 
 ## Bugs/issues
