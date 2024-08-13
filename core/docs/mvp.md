@@ -68,8 +68,9 @@ and configure it to create an atlas website for other people - their users - to 
 - [ ] Utility for admins to generate hectad grid from imported geojson boundary file.
 - [ ] Utility for admins to check and report potential problems on a CSV of records, e.g. for highlighting invalid GRs or unrecognised date formats.
 
-## Admin documentation
+## Documentation
 - [ ] Detailed documentation to take an admin through the process of setting up an atlas website. This will be implemented as a series of readme files in this repository.
+- [ ] Technical documentation explaining the architecture of the website - aimed at coders developing or maintaining site functionlity.
 
 ## Bugs/issues
 - When user moves from Home page to another other configured page and then back again - taxon selection is cleared. Needs to remember and reset taxon selection.
