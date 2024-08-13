@@ -1,6 +1,7 @@
 # Site config options: user/config/site.txt
 The file `site.txt` is the main site configuration page which must be created by the site admin and placed in the folder `user/config`. The format in which the configuration options are laid out (described below) is known as YAML (pronounced 'yamel'). YAML files normally have a '.yml' file extension, but this configuration file has the file extension '.txt' to make it easy to open and edit with any text editor.
 
+## General format
 The general format for configuration options is:
 ```
 option_name: option_value
@@ -42,3 +43,55 @@ nav:
   - caption: About
     page: about.md
 ```
+In code, this would translate to a collection of two nav items, each with a *caption* and *page* property.
+
+## Site banner options
+- **name**: specifies the name of the atlas website which is displayed in the site banner. Example:
+  - `name: Shropshire Earthworm Atlas`
+- **header-background-colour**: specifies the background colour of the website banner. Will accept any of the colour formats know to HTML. Examples:
+  - `header-background-colour: red` (HTML color name)
+  - `header-background-colour: rgb(100,120,30)` (red, green blue format)
+  - `header-background-colour: "#EF9766"` (Hex color format - double-quotes required)
+- **header-text-colour**: specifies the colour of text on the website banner. Will accept any of the colour formats known to HTML. Example:
+  - `header-text-colour: white`
+
+## Example site.txt config file
+```
+name: Shropshire Earthworm Atlas
+header-background-colour: "#EF9766"
+header-text-colour: white
+header-logo: badge-circle.png
+header-logo-height: 80
+nav:
+  - caption: Info
+    page: info.html
+  - caption: About
+    page: about.md
+tabs:
+  - tab: overview
+    caption: Overview
+  - tab: zoom
+    caption: Explore
+  - tab: details
+    caption: Info
+  - tab: charts
+    caption: Temporal
+  - tab: gallery
+    caption: Gallery
+overview:
+  height: 900
+  vc: gb40
+  vc-buffer-xmin: 10000
+  vc-buffer-xmax: 10000
+  vc-buffer-ymin: 10000
+  vc-buffer-ymax: 10000
+  hectad-grid: true
+  default-res: tetrad
+zoom:
+  height: 700
+charts:
+  height: 500
+gallery:
+  height: 500
+```
+
