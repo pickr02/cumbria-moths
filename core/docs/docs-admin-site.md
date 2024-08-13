@@ -49,9 +49,9 @@ In code, this would translate to a collection of two nav items, each with a *cap
 - **name**: specifies the name of the atlas website which is displayed in the site banner. Example:
   - `name: Shropshire Earthworm Atlas`
 - **header-background-colour**: specifies the background colour of the website banner. Will accept any of the colour formats know to HTML. Examples:
-  - `header-background-colour: red` (HTML color name)
+  - `header-background-colour: red` (HTML colour name)
   - `header-background-colour: rgb(100,120,30)` (red, green blue format)
-  - `header-background-colour: "#EF9766"` (Hex color format - double-quotes required)
+  - `header-background-colour: "#EF9766"` (hex colour format - double-quotes required)
 - **header-text-colour**: specifies the colour of text on the website banner. Will accept any of the colour formats known to HTML. Example:
   - `header-text-colour: white`
 
