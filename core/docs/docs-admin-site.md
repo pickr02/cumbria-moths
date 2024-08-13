@@ -10,7 +10,7 @@ An example is:
 name: Shropshire Earthworm Atlas
 ```
 
-Some options are nested indicating a related group of options, e.g:
+Some options are nested indicating a related group of options like this:
 ```
 group_name:
   group_option_1_name: group_option_1_value
@@ -22,4 +22,23 @@ overview:
   height: 900
   vc: gb40
   hectad-grid: true
+```
+In the preceding example, the options *height*, *vc* and *hectad-grid all* relate to the *overview* map. In code - and in this documentation - these are referenced like this: *overview.height*, *overview.vc* and *overview.hectad-grid*.
+
+Some options reference a collection, or array, of sets of option values like this:
+```
+collection_name:
+  - set1_option1_name: set1_option1_value
+    set1_option2_name: set1_option2_value
+  - set2_option1_name: set2_option1_value
+    set2_option2_name: set2_option2_value
+```
+
+For example:
+```
+nav:
+  - caption: Info
+    page: info.html
+  - caption: About
+    page: about.md
 ```
