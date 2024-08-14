@@ -1,0 +1,2 @@
+## Initial steps
+TODO - this page will take you through the initial steps of creating your own local website from the BRC GitHub repository by forking the repository and linking it to a GitHub pages site.
