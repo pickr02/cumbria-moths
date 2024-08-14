@@ -125,6 +125,19 @@ These options are used to tailor the appearance and behaviour of the classic atl
 - **default-res**: indicates the default dot map size to use for the atlas map. Can be one of *hectad* (10x10 km), *quandrant* (5x5 km), *tetrad* (2x2 km) or *monad* (1x1 km). If not specified, then *hectad* is used. Example:
   - `default-res: tetrad`
 
+A full example:
+```
+overview:
+  height: 900
+  vc: gb40
+  hectad-grid: true
+  vc-buffer-west: 10000
+  vc-buffer-east: 10000
+  vc-buffer-south: 10000
+  vc-buffer-north: 10000
+  default-res: tetrad
+```
+
 ## Example site.txt config file
 ```
 name: Shropshire Earthworm Atlas
