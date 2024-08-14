@@ -1,2 +1,2 @@
-## Configuring an image gallery
+# Configuring an image gallery
 TODO

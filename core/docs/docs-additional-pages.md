@@ -1,4 +1,26 @@
-## Creating additional HTML or Markdown pages
+# Creating additional HTML or Markdown pages
 You may add any number of additional HTML or Markdown pages to your atlas website. These should be stored under the *user/config* folder, but typically you would place them in a subfolder (or multiple sub-folders) of the */user/config* folder in order to keep that space organised.
 
-adf
+If you have some HTML skills, then you may want to stick with providing additional pages in HTML format to give you full flexibility of HTML layout and styling. Markdown is a good option for those without HTML skills. If you don't have any Markdown skills, you can easily pick up the basics in just a few minutes by looking at online resources, e.g: https://www.markdownguide.org/.
+
+## HTML pages
+When you write HTML pages for your atlas, you don't write full HTML pages because the atlas software embeds them within the general HTML page framework of the atlas. The HTML you provide is inserted into a `<div>` tag that sits between the atlas header (including navigation bar) and the footer. So you don't need to use, for example, `<header>` or `<body>` tags.
+
+If you want to apply CSS styling to any elements within your page, you need to do it directly on the elements themsleves using the HTML `style` attribute.
+
+To use an image in a page, the best way is to place the image in the same folder as the page (or a sub-folder you create for it) and set the `src` attribute of the image to the path of the image relative to the website root which will be something like: `<img src="/user/config/pages/logo.png">`
+
+The example below will create a couple of paragraphs of text with an image floating to the right:
+
+```
+<h2>Project information</h2>
+<img src="/user/config/pages/badge-circle.png" alt="Earthworm Society logo" style="float:right"/>
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a purus maximus, fermentum tortor in, facilisis est. Curabitur hendrerit justo eu erat laoreet, non aliquet lacus lobortis. Proin dapibus commodo mi a commodo. In quis orci a turpis cursus porta et id tortor.
+</p>
+<p>
+    Nulla fringilla lacus vel ornare ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris dictum turpis non vestibulum bibendum. Curabitur commodo sapien id augue condimentum convallis et eget nibh.
+</p>
+```
+## Markdown pages
+
