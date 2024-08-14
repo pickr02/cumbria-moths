@@ -65,7 +65,7 @@ These options are used to tailor the overall look of the site banner.
 ## Navigation bar configuration
 A navigation bar appears at the base of the site banner if the site admin has configured additional HTML and/or markdown pages to be added to the site. The navigation bar provides users with the means to navigate to to pages. A typical use of this would be to add various information pages.
 
-There is a separate help page with guidance on [setting up additional HTML or Markdown pages](./core/docs/docs-additional-pages.md). Here we are only concerned with configuring the navigation bar to provide links to them.
+There is a separate help page with guidance on [setting up additional HTML or Markdown pages](./docs-additional-pages.md). Here we are only concerned with configuring the navigation bar to provide links to them.
 
 - **nav**: the collection name under which navigation items are configured.
 - **caption**: the text that will appear in the navigation bar for the link.
