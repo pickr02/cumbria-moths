@@ -1,5 +1,5 @@
 # General site configuration
-The file `site.txt` is the main site configuration page which must be created by the site admin and placed in the folder `user/config`. The format in which the configuration options are laid out (described below) is known as YAML (pronounced 'yamel'). YAML files normally have a '.yml' file extension, but this configuration file has the file extension '.txt' to make it easy to open and edit with any text editor.
+The file `site.txt` is the main site configuration page which you must be create and place in the folder `user/config`. The format in which the configuration options are laid out (described below) is known as YAML (pronounced 'yamel'). YAML files normally have a '.yml' file extension, but this configuration file has the file extension '.txt' to make it easy to open and edit with any text editor.
 
 ## General format
 The general format for configuration options is:
@@ -63,7 +63,7 @@ These options are used to tailor the overall look of the site banner.
   - `header-logo-height: 80`
 
 ## Navigation bar configuration
-A navigation bar appears at the base of the site banner if the site admin has configured additional HTML and/or markdown pages to be added to the site. The navigation bar provides users with the means to navigate to to pages. A typical use of this would be to add various information pages.
+A navigation bar appears at the base of the site banner if you have configured additional HTML and/or markdown pages to be added to the site. The navigation bar provides users with the means to navigate to to pages. A typical use of this would be to add various information pages.
 
 There is a separate help page with guidance on [setting up additional HTML or Markdown pages](./docs-additional-pages.md). Here we are only concerned with configuring the navigation bar to provide links to them.
 
