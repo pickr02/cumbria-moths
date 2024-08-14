@@ -8,6 +8,7 @@ define(
     // return a value that defines the module export
     // (i.e the functionality we want to expose for consumption)
     // Create module
+
     const components = {
 
       create: async function loadContent() {
@@ -39,14 +40,13 @@ define(
 
         function generateHeader(configSite) {
 
-          console.log('generateHeader')
           // Header tag
           const $header = $("#brc-header")
-          $header.attr("class", "xd-flex mb-5 border-bottom fs-1")
+          $header.attr("class", "xd-flex mb-5 border-bottom")
 
           // Logo and name
           const $divLogoNameNav = $("<div>")
-          $divLogoNameNav.attr("class", "d-flex flex-row p-2 align-items-center").appendTo($header)
+          $divLogoNameNav.attr("class", "d-flex flex-row p-2 align-items-center fs-1").appendTo($header)
 
           // Header background colour
           const headerColour = configSite['header-background-colour']
@@ -109,6 +109,7 @@ define(
           }
 
           // Carousel
+          // Undocumented feature for adding a carousel image to top of page
           if (location.pathname.substring(location.pathname.length - 9) === "main.html" && configSite['header-carousel']) {
             //console.log('carousel', configSite['header-carousel'])
 
@@ -141,6 +142,15 @@ define(
 
             const carousel = new bootstrap.Carousel(document.getElementById("brc-header-carousel-div"))
             //carousel.cycle
+          }
+
+          // Error message (to display YAML config file errors back to site admins)
+          const $err = $('<div>').appendTo($header)
+          if (configSite.errName) {
+            $err.html(`
+              <p>There was a problem reading the 'site.txt' config file...</p>
+              <pre>${configSite.errName}: ${configSite.errMessage}</pre>`
+            )
           }
         }
 

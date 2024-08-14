@@ -18,7 +18,15 @@ define(
             cache: false,
             // async:  false,
             success: function (data) {
-              const json = jsyaml.load(data)
+              let json = {}
+              try {
+                json = jsyaml.load(data)
+              } catch (e) {
+                json = {
+                  errName: e.name,
+                  errMessage: e.message
+                }
+              }
               resolve(json)
             },
             error: function (error) {
