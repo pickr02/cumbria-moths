@@ -70,7 +70,7 @@ There is a separate help page with guidance on (setting up additional HTML or Ma
 - **nav**: the collection name under which navigation items are configured.
 - **caption**: the text that will appear in the navigation bar for the link.
 - **page**: the file path and name of the HTML/Markdown page to be displayed when the link is clicked. This path is relative to the *user/config* folder. Typically you would add information pages in a subfolder you create in the *user/config* folder, e.g. *user/config/pages*, as in the example below:
- -```
+ - ```
   nav:
     - caption: Info
       page: pages/info.html
