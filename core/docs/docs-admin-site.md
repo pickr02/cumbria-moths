@@ -49,7 +49,7 @@ In code, this would translate to a collection of two nav items, each with a *cap
 These options are used to tailor the overall look of the site banner.
 - **name**: specifies the name of the atlas website which is displayed in the site banner. Example:
   - `name: Shropshire Earthworm Atlas`
-  If no name option is provided, the banner text will say 'Site name configuration not specified'.
+If no name option is provided, the banner text will say 'Site name configuration not specified'.
 - **header-background-colour**: specifies the background colour of the website banner. Will accept any of the colour formats understood by HTML/CSS. Examples:
   - `header-background-colour: red` (HTML colour name)
   - `header-background-colour: rgb(100,120,30)` (red, green blue format)
