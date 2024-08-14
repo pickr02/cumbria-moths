@@ -71,7 +71,7 @@ define(
             }
           }
           // Header text
-          const headerName = configSite.name ? configSite.name : "Site name configuration not specied"
+          const headerName = configSite.name ? configSite.name : "Site name configuration not specified"
           $('<div>').text(headerName).appendTo($divLogoNameNav)
 
           // Navigation

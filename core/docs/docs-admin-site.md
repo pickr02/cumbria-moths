@@ -49,16 +49,21 @@ In code, this would translate to a collection of two nav items, each with a *cap
 These options are used to tailor the overall look of the site banner.
 - **name**: specifies the name of the atlas website which is displayed in the site banner. Example:
   - `name: Shropshire Earthworm Atlas`
-- **header-background-colour**: specifies the background colour of the website banner. Will accept any of the colour formats know to HTML. Examples:
+  If no name option is provided, the banner text will say 'Site name configuration not specified'.
+- **header-background-colour**: specifies the background colour of the website banner. Will accept any of the colour formats understood by HTML/CSS. Examples:
   - `header-background-colour: red` (HTML colour name)
   - `header-background-colour: rgb(100,120,30)` (red, green blue format)
   - `header-background-colour: "#EF9766"` (hex colour format - double-quotes required)
-- **header-text-colour**: specifies the colour of text on the website banner. Will accept any of the colour formats known to HTML. Example:
+- **header-text-colour**: specifies the colour of text on the website banner. Will accept any of the colour formats understood by HTML/CSS. Example:
   - `header-text-colour: white`
 - **header-logo**: specifies the name of an image file to use as a site logo on the banner. The image must be uploaded to the *user/config* folder. Example:
   - `header-logo: badge-circle.png`
-- **header-logo-height**: A number indicating the height (in pixels) to be used to display the header-logo image. The width of the image will be automatically calculated, preserving the aspect ration of the original image. Example:
+- **header-logo-height**: A number indicating the height (in pixels) to be used to display the header-logo image. The width of the image will be automatically calculated, preserving the aspect ratio of the original image. Example:
   - `header-logo-height: 80`
+
+## Navigation menu bar configuration
+The navigation menu appears at the base of the site banner and provides users with the means to navigate to HTML or Markdown pages that the admin has added to the local atlas. A typical use of this would be to add various information pages.
+
 
 ## Example site.txt config file
 ```
