@@ -27,7 +27,7 @@ The example below will create a couple of paragraphs of text with an image float
 </p>
 ```
 ## Markdown pages
-Markdown pages are the simplest way to provide additional pages for an atlas website, especially where there are minimal special layout requirements.
+Markdown pages are the simplest way to provide additional pages for an atlas website, especially where there are minimal special layout requirements. Note that all this documentation is provided in Markdown format - so you can see that it is easy to produce well organised and laid-out pages using pure Markdown.
 
 The example below will create a couple of paragraphs of text preceded by an image:
 

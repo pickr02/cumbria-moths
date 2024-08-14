@@ -62,6 +62,9 @@ These options are used to tailor the overall look of the site banner.
 - **header-logo-height**: A number indicating the height (in pixels) to be used to display the header-logo image. The width of the image will be automatically calculated, preserving the aspect ratio of the original image. If the option is not specified, the image is shown at its original size. Example:
   - `header-logo-height: 80`
 
+## Main tabs configuration
+
+
 ## Navigation bar configuration
 A navigation bar appears at the base of the site banner if you have configured additional HTML and/or markdown pages to be added to the site. The navigation bar provides users with the means to navigate to to pages. A typical use of this would be to add various information pages.
 
