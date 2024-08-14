@@ -108,7 +108,7 @@ To exclude a visualisation from your atlas, e.g. the temporal charts, simply do 
 
 ## Configuring the main atlas map
 These options are used to tailor the appearance and behaviour of the classic atlas map. These are specified as a group of options with the group name *overview*.
-- **height**: specifies the maximum height of the atlas map. The nominal width of the map is calculated from the height you specify and the aspect ratio of your atlas area. If the nominal width exceeds the area available to display it (e.g. on small devices), then the width is reduced to fit it in and the height is also reduced to maintain the aspect ratio. Therefore the height you speciy here should be regarded as a maximum height that will not be exceeded. Example:
+- **height**: specifies the maximum height of the atlas map in pixels. The nominal width of the map is calculated from the height you specify and the aspect ratio of your atlas area. If the nominal width exceeds the area available to display it (e.g. on small devices), then the width is reduced to fit it in and the height is also reduced to maintain the aspect ratio. Therefore the height you speciy here should be regarded as a maximum height that will not be exceeded. Example:
   - `height: 800`
 - **vc**: specifies a British or Irish vice-county to use as the atlas area. Values are of the format 'gb*n*' or 'ir*n*' where *n* is the vice-county number, e.g. gb40 (Shropshire), gb1 (West Cornwall with Scilly) or ir21 (Dublin). Vice-county boundaries for Britain and Ireland are supplied with the core software. If uspecified, then the atlas area covers the whole of Britain and Ireland.
   - `vc: gb40`
@@ -136,6 +136,17 @@ overview:
   vc-buffer-south: 10000
   vc-buffer-north: 10000
   default-res: tetrad
+```
+
+## Configuring the zoomable map
+These options are used to tailor the appearance and behaviour of the zoomable map. These are specified as a group of options with the group name *zoom*.
+- **height**: specifies the height of the zoomable map in pixels. The width of the zoomable map is always set to fill the available display area. If not specified, a value of 500 is used. Example:
+  - `height: 800`
+
+A full example:
+```
+zoom:
+  height: 700
 ```
 
 ## Example site.txt config file
