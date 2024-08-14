@@ -45,7 +45,7 @@ montes, nascetur ridiculus mus. Mauris dictum turpis non vestibulum bibendum. Cu
 id augue condimentum convallis et eget nibh.
 ```
 
-In the example above, the image won't float to the right as it did with the HTML example - there is no facility to do that in pure Markdown. However, if you have occassional more sophisticated requirements like that, you can use HTML within a Markdown document. So the example below would give exactly the same results as the HTML page:
+In the example above, the image won't float to the right as it did with the HTML example - there is no facility to do that in pure Markdown. However, if you have the occassional more sophisticated requirement like that, you can use HTML within a Markdown document. So the example below would give exactly the same results as the HTML page:
 
 ```
 ## Project information
