@@ -128,7 +128,7 @@ These options are used to tailor the appearance and behaviour of the classic atl
 A full example:
 ```
 overview:
-  height: 900
+  height: 800
   vc: gb40
   hectad-grid: true
   vc-buffer-west: 10000
@@ -146,8 +146,24 @@ These options are used to tailor the appearance and behaviour of the zoomable ma
 A full example:
 ```
 zoom:
-  height: 700
+  height: 800
 ```
+
+## Configuring the temporal charts
+These options are used to tailor the appearance and behaviour of the temporal charts. These are specified as a group of options with the group name *charts*.
+- **aspect-ratio**: a numeric value between 0 and 1 that indicates the height of each chart as a fraction of its width. The width of the charts is always set to fill the available display area. If not specified, a value of 0.5 is used. Example:
+  - `aspect-ratio: 0.4`
+
+A full example:
+```
+charts:
+  aspect-ratio: 0.4
+```
+
+## Configuring the image gallery
+These options are used to tailor the appearance and behaviour of the image gallery. These are specified as a group of options with the group name *gallery*. (No options as yet.)
+
+The available images and their captions are configured separately in a file called *images.txt* which also sits in the *user/config* folder. There is a separate help page with guidance on [setting up an image gallery](./docs-image-gallery.md).
 
 ## Example site.txt config file
 ```
@@ -173,7 +189,7 @@ tabs:
   - tab: gallery
     caption: Gallery
 overview:
-  height: 900
+  height: 800
   vc: gb40
   hectad-grid: true
   vc-buffer-west: 10000
@@ -182,9 +198,9 @@ overview:
   vc-buffer-north: 10000
   default-res: tetrad
 zoom:
-  height: 700
+  height: 800
 charts:
-  height: 500
+  aspect-ratio: 0.4
 gallery:
   height: 500
 ```

@@ -176,8 +176,8 @@ define(
     function createCharts(selectorTab, selectorControl) {
       //$(selectorTab).text('Create the temporal charts')
 
-      const width =  450
-      const height = config.charts && config.charts.height ? config.charts.height / 2 : 150
+      const width =  600
+      const ar = config.charts && config.charts['aspect-ratio'] ? config.charts['aspect-ratio'] : 0.5
 
       $('<div>Records by week</div>').appendTo($(selectorTab))
       $(selectorTab)
@@ -194,7 +194,8 @@ define(
         showTaxonLabel: false,
         interactivity: 'none',
         width: width,
-        height: height,
+        //height: height,
+        height: width * ar,
         perRow: 1,
         expand: true,
         missingValues: 0, 
@@ -225,7 +226,7 @@ define(
         showTaxonLabel: false,
         interactivity: 'none',
         width: width,
-        height: height,
+        height: width * ar,
         perRow: 1,
         expand: true,
         metricExpression: '',
@@ -405,7 +406,6 @@ define(
     function createGallery() {
 
       const selectorTab = "#brc-tab-gallery"
-      $(selectorTab).css('height', `${config.gallery && config.gallery.height ? config.gallery.height : 350}px`)
       $(selectorTab).css('height', 0)
       $(selectorTab).css('width', '100%')
       $(selectorTab).css('padding-bottom', '65%')
