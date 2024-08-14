@@ -103,6 +103,9 @@ tabs:
     caption: Gallery
 ```
 If you do not specify the *tabs* option, the classic altas map is shown without any tab control. If you don't specify the *caption* option for any of the tabs, then the text shown on the tab defaults to the identifying label, e.g. 'overview'. If you specify a tab with an identifier that is not one of the five recognised types then a tab will be created but nothing shown on it. The order in which you specify the tabs specifies the order they appear on the page. The first tab you specify is always selected by default.
+
+To exclude a visualisation from your atlas, e.g. the temporal charts, simply do not specify it in the tabs collection.
+
 ## Example site.txt config file
 ```
 name: Shropshire Earthworm Atlas

@@ -15,7 +15,7 @@ This documenation is provided for site admins and the text in these pages often 
 No documetation is provided for atlas website users. It is intended that the atlas website facilities are intuitive and easy to use without instruction. If, as an admin, you feel that more documentation is required for your users, you can provide that in additional HTML or Markdown page(s) as described in the help page listed below.
 
 - [Initial steps](./core/docs/docs-initial-steps.md)
-- [Using the admin utilities](./core/docs/docs-admin-utilities.md)
+- [Using the admin utilities](./core/docs/docs-admin-utilities.md) - this includes how to generate all the required data for your site (e.g. taxon list, map and chart data), from a CSV of biological records.
 - [General site configuration](./core/docs/docs-site-config.md)
 - [Creating additional HTML or Markdown pages](./core/docs/docs-additional-pages.md)
 - [Configuring an image gallery](./core/docs/docs-image-gallery.md)
