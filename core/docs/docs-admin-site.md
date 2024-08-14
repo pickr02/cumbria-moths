@@ -45,7 +45,9 @@ nav:
 ```
 In code, this would translate to a collection of two nav items, each with a *caption* and *page* property.
 
-## Site banner options
+**Important note**: In YAML format, the indentation is all important. The number of characters you use for an indentation is not that important as long as you are consistent in your usage. Items should line up as shown in the example above. If the software cannot read your *site.txt* configuration file because of a YAML formatting error, the error will be reported to you on the page and that should help you track down the problem.
+
+## Site banner configuration
 These options are used to tailor the overall look of the site banner.
 - **name**: specifies the name of the atlas website which is displayed in the site banner. If the option is not specified, the banner text will say 'Site name configuration not specified'. Example:
   - `name: Shropshire Earthworm Atlas`

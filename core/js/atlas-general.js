@@ -55,7 +55,7 @@ define(
               return ext === 'md' ? md.marked.parse(data) : data
             })
           } catch(e) {
-            ret = `There was an reading file '${file}'.`
+            ret = `There was an error reading file '${file}'.`
           }
         } else {
           ret = `File '${file}' does not have an .md or .html extension.`
