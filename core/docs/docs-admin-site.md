@@ -77,7 +77,7 @@ nav:
   - caption: About
     page: pages/about.md
 ```
-
+The example above will display two navigation links in the navigation bar with the text *Info* and *About*. The first one is linking to an HMTL page called *info.html* in a subfolder of the *user/config* folder called *pages*. The second one is linking to a Markdown page called *about.md*, also in a subfolder of the *user/config* folder called *pages*. 
 
 ## Example site.txt config file
 ```
