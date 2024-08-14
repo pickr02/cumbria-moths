@@ -46,6 +46,7 @@ nav:
 In code, this would translate to a collection of two nav items, each with a *caption* and *page* property.
 
 ## Site banner options
+These options are used to tailor the overall look of the site banner.
 - **name**: specifies the name of the atlas website which is displayed in the site banner. Example:
   - `name: Shropshire Earthworm Atlas`
 - **header-background-colour**: specifies the background colour of the website banner. Will accept any of the colour formats know to HTML. Examples:
@@ -54,6 +55,10 @@ In code, this would translate to a collection of two nav items, each with a *cap
   - `header-background-colour: "#EF9766"` (hex colour format - double-quotes required)
 - **header-text-colour**: specifies the colour of text on the website banner. Will accept any of the colour formats known to HTML. Example:
   - `header-text-colour: white`
+- **header-logo**: specifies the name of an image file to use as a site logo on the banner. The image must be uploaded to the *user/config* folder. Example:
+  - `header-logo: badge-circle.png`
+- **header-logo-height**: A number indicating the height (in pixels) to be used to display the header-logo image. The width of the image will be automatically calculated, preserving the aspect ration of the original image. Example:
+  - `header-logo-height: 80`
 
 ## Example site.txt config file
 ```
