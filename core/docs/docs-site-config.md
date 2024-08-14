@@ -80,10 +80,29 @@ nav:
 The example above will display two navigation links in the navigation bar with the text *Info* and *About*. The first one is linking to an HMTL page called *info.html* in a subfolder of the *user/config* folder called *pages*. The second one is linking to a Markdown page called *about.md*, also in a subfolder of the *user/config* folder called *pages*. 
 
 ## Main tabs configuration
-The main body of the atlas web page is split into to regions: 1) a toolpane on the left of the page where the taxon selector and other user-interface elements are placed and 2) the main display area on the right where the various atlas visualisations are displayed. There are five visualisations which can be included in your atlas: the classic atlas map, a zoomable map, temporal charts, an image gallery and taxon information pages. The classic atlas map is always included, but the other four are optional.
+The main body of the atlas web page is split into to regions: 1) a toolpane on the left of the page where the taxon selector and other user-interface elements are placed and 2) the main display area on the right where the various atlas visualisations are displayed. There are five visualisations which can be included in your atlas: the classic atlas map, a zoomable map, temporal charts, an image gallery and taxon information pages. The classic atlas map is always included, but the other four are optional. 
 
+When more than one of these visualisations is made available, the user can switch between them using a tab control. You specify which of the visualisations (tabs) is available using these options:
 
+- **tabs**: the collection name under which tab items are configured.
+- **tab**: a label identifying the visualisation - must be one of *overview* (classic atlas map), *zoom* (zoomable map), *details* (taxon info pages), *charts* (temporal charts), *gallery* (image gallery).
+- **caption**: the text that will appear on the tab control.
 
+An example that would display all five tabs is shown below:
+```
+tabs:
+  - tab: overview
+    caption: Overview
+  - tab: zoom
+    caption: Explore
+  - tab: details
+    caption: Info
+  - tab: charts
+    caption: Temporal
+  - tab: gallery
+    caption: Gallery
+```
+If you do not specify the *tabs* option, the classic altas map is shown without any tab control. If you don't specify the *caption* option for any of the tabs, then the text shown on the tab defaults to the identifying label, e.g. 'overview'. If you specify a tab with an identifier that is not one of the five recognised types then a tab will be created but nothing shown on it. The order in which you specify the tabs specifies the order they appear on the page. The first tab you specify is always selected by default.
 ## Example site.txt config file
 ```
 name: Shropshire Earthworm Atlas
