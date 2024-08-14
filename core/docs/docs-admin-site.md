@@ -62,8 +62,21 @@ These options are used to tailor the overall look of the site banner.
 - **header-logo-height**: A number indicating the height (in pixels) to be used to display the header-logo image. The width of the image will be automatically calculated, preserving the aspect ratio of the original image. If the option is not specified, the image is shown at its original size. Example:
   - `header-logo-height: 80`
 
-## Navigation menu bar configuration
-The navigation menu appears at the base of the site banner and provides users with the means to navigate to HTML or Markdown pages that the admin has added to the local atlas. A typical use of this would be to add various information pages.
+## Navigation bar configuration
+A navigation bar appears at the base of the site banner if the site admin has configured additional HTML and/or markdown pages to be added to the site. The navigation bar provides users with the means to navigate to to pages. A typical use of this would be to add various information pages.
+
+There is a separate help page with guidance on (setting up additional HTML or Markdown pages)[./core/docs/docs-additional-pages.md]. Here we are only concerned with configuring the navigation bar to provide links to them.
+
+- **nav**: the collection name under which navigation items are configured.
+- **caption**: the text that will appear in the navigation bar for the link.
+- **page**: the file path and name of the HTML/Markdown page to be displayed when the link is clicked. This path is relative to the *user/config* folder. Typically you would add information pages in a subfolder you create in the *user/config* folder, e.g. *user/config/pages*, as in the example below:
+```
+    nav:
+      - caption: Info
+        page: pages/info.html
+      - caption: About
+        page: pages/about.md
+```
 
 
 ## Example site.txt config file
@@ -75,9 +88,9 @@ header-logo: badge-circle.png
 header-logo-height: 80
 nav:
   - caption: Info
-    page: info.html
+    page: pages/info.html
   - caption: About
-    page: about.md
+    page: pages/about.md
 tabs:
   - tab: overview
     caption: Overview
