@@ -80,7 +80,9 @@ nav:
 The example above will display two navigation links in the navigation bar with the text *Info* and *About*. The first one is linking to an HMTL page called *info.html* in a subfolder of the *user/config* folder called *pages*. The second one is linking to a Markdown page called *about.md*, also in a subfolder of the *user/config* folder called *pages*. 
 
 ## Main tabs configuration
-fdadf
+The main body of the atlas web page is split into to regions: 1) a toolpane on the left of the page where the taxon selector and other user-interface elements are placed and 2) the main display area on the right where the various atlas visualisations are displayed. There are five visualisations which can be included in your atlas: the classic atlas map, a zoomable map, temporal charts, an image gallery and taxon information pages. The classic atlas map is always included, but the other four are optional.
+
+
 
 ## Example site.txt config file
 ```
