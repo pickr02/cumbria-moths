@@ -292,10 +292,10 @@ define(
           })
           console.log(gjsonFile)
           const props = gjson.features[0].properties
-          const xminBuffer = config.overview['vc-buffer-xmin'] ? Number(config.overview['vc-buffer-xmin']) : 0
-          const xmaxBuffer = config.overview['vc-buffer-xmax'] ? Number(config.overview['vc-buffer-xmax']) : 0
-          const yminBuffer = config.overview['vc-buffer-ymin'] ? Number(config.overview['vc-buffer-ymin']) : 0
-          const ymaxBuffer = config.overview['vc-buffer-ymax'] ? Number(config.overview['vc-buffer-ymax']) : 0
+          const xminBuffer = config.overview['vc-buffer-west'] ? Number(config.overview['vc-buffer-west']) : 0
+          const xmaxBuffer = config.overview['vc-buffer-east'] ? Number(config.overview['vc-buffer-east']) : 0
+          const yminBuffer = config.overview['vc-buffer-south'] ? Number(config.overview['vc-buffer-south']) : 0
+          const ymaxBuffer = config.overview['vc-buffer-north'] ? Number(config.overview['vc-buffer-north']) : 0
 
           // Set the transOptsSel
           mapStaticOpts.transOptsSel = {

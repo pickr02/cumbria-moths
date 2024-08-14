@@ -102,9 +102,28 @@ tabs:
   - tab: gallery
     caption: Gallery
 ```
-If you do not specify the *tabs* option, the classic altas map is shown without any tab control. If you don't specify the *caption* option for any of the tabs, then the text shown on the tab defaults to the identifying label, e.g. 'overview'. If you specify a tab with an identifier that is not one of the five recognised types then a tab will be created but nothing shown on it. The order in which you specify the tabs specifies the order they appear on the page. The first tab you specify is always selected by default.
+If you do not specify the *tabs* option, the classic atlas map is shown without any tab control. If you don't specify the *caption* option for any of the tabs, then the text shown on the tab defaults to the identifying label, e.g. 'overview'. If you specify a tab with an identifier that is not one of the five recognised types then a tab will be created but nothing shown on it. The order in which you specify the tabs specifies the order they appear on the page. The first tab you specify is always selected by default.
 
 To exclude a visualisation from your atlas, e.g. the temporal charts, simply do not specify it in the tabs collection.
+
+## Configuring the main atlas map
+These options are used to tailor the appearance and behaviour of the classic atlas map. These are specified as a group of options with the group name *overview*.
+- **height**: specifies the maximum height of the atlas map. The nominal width of the map is calculated from the height you specify and the aspect ratio of your atlas area. If the nominal width exceeds the area available to display it (e.g. on small devices), then the width is reduced to fit it in and the height is also reduced to maintain the aspect ratio. Therefore the height you speciy here should be regarded as a maximum height that will not be exceeded. Example:
+  - `height: 800`
+- **vc**: specifies a British or Irish vice-county to use as the atlas area. Values are of the format 'gb*n*' or 'ir*n*' where *n* is the vice-county number, e.g. gb40 (Shropshire), gb1 (West Cornwall with Scilly) or ir21 (Dublin). Vice-county boundaries for Britain and Ireland are supplied with the core software. If uspecified, then the atlas area covers the whole of Britain and Ireland.
+  - `vc: gb40`
+- **hectad-grid**: if set to 'true', this indicates that a hectad grid is to be drawn over the map boundary if a vice-county is used to specify the map extent and boundary. Hectad grids for all the vice-counties are supplied with the core software. If not specified or specified and set to any value other than 'true', a grid is not drawn. Example:
+  - `hectad-grid: true`
+- **vc-buffer-west**: specifies a value in metres by which to extend the real-world extent of the map (as calculated from the map boundary) in the *westward* direction. This can be useful when specifying a vice-county map with a hectad grid - it enables the map to be extended so that the whole grid is visible. Example:
+  - `vc-buffer-west: 10000`
+- **vc-buffer-east**: specifies a value in metres by which to extend the real-world extent of the map (as calculated from the map boundary) in the *eastward* direction. This can be useful when specifying a vice-county map with a hectad grid - it enables the map to be extended so that the whole grid is visible. Example:
+  - `vc-buffer-east: 10000`
+- **vc-buffer-south**: specifies a value in metres by which to extend the real-world extent of the map (as calculated from the map boundary) in the *southward* direction. This can be useful when specifying a vice-county map with a hectad grid - it enables the map to be extended so that the whole grid is visible. Example:
+  - `vc-buffer-south: 10000`
+- **vc-buffer-north**: specifies a value in metres by which to extend the real-world extent of the map (as calculated from the map boundary) in the *northward* direction. This can be useful when specifying a vice-county map with a hectad grid - it enables the map to be extended so that the whole grid is visible. Example:
+  - `vc-buffer-north: 10000`
+- **default-res**: indicates the default dot map size to use for the atlas map. Can be one of *hectad* (10x10 km), *quandrant* (5x5 km), *tetrad* (2x2 km) or *monad* (1x1 km). If not specified, then *hectad* is used. Example:
+  - `default-res: tetrad`
 
 ## Example site.txt config file
 ```
@@ -132,11 +151,11 @@ tabs:
 overview:
   height: 900
   vc: gb40
-  vc-buffer-xmin: 10000
-  vc-buffer-xmax: 10000
-  vc-buffer-ymin: 10000
-  vc-buffer-ymax: 10000
   hectad-grid: true
+  vc-buffer-west: 10000
+  vc-buffer-east: 10000
+  vc-buffer-south: 10000
+  vc-buffer-north: 10000
   default-res: tetrad
 zoom:
   height: 700

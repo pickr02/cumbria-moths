@@ -17,7 +17,7 @@ and configure it to create an atlas website for other people - their users - to 
 
 ## Both overview map and explore map
 - [ ] Map resolution selector. Allows  user to switch between different map resolutions: hectad (10 km), quadrant (5 km), tetrad (2 km) or monad (1 km). Config options for admins to specify what resolutions are available. If the admin only specifies one resolution, do not show the resolution selector to users.
-- [ ] Config option to allow admins to specify whether altas dots are shown as circles or squares.
+- [ ] Config option to allow admins to specify whether atlas dots are shown as circles or squares.
 - [ ] Config option to allow admins to specify the colour of atlas dots for standard map display.
 - [ ] A map type selector which provides different views of the dot map. Possible map types are: dots coloured to indicate record number; dots coloured to indicate temporal bands (as used on the [iRecord species details map](https://irecord.org.uk/species-details?taxa_taxon_list_id=250358)). Config options for admins to specify what map types are available to users.
 - [ ] Other controls - to be displayed conditionally - required for the operation of additional map types (e.g. those for specifying temporal bands).
@@ -74,6 +74,8 @@ and configure it to create an atlas website for other people - their users - to 
 
 ## Bugs/issues
 - When user moves from Home page to another other configured page and then back again - taxon selection is cleared. Needs to remember and reset taxon selection.
+- If the zoomable map is specified as the first tab option, the map is not initially sized correctly.
+- If the zoomable map is specified without the overview map option, the software falls over. Best option to fix is to always make the overiew map available.
 
 
 
