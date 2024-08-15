@@ -168,7 +168,7 @@ The available images and their captions are configured separately in a file call
 ## Configuring the taxon details
 These options are used to tailor the appearance and behaviour of the taxon details pages. These are specified as a group of options with the group name *details*. (No options as yet.)
 
-Taxon details are Markdown pages placed in the  *user/data/captions* folder. Each file is named after the identifier used for the taxon in the taxon list file (*TODO - link to taxon list file doc*). The pages can contain any information and be laid out in whatever way you wish. There is an admin utility to generate stub details pages for each of your taxa if you wish to use it (see [documentation on admin utilities](./core/docs/docs-admin-utilities.md))
+Taxon details are Markdown pages placed in the  *user/data/captions* folder. Each file is named after the identifier used for the taxon in the taxon list file (*TODO - link to taxon list file doc*). The pages can contain any information and be laid out in whatever way you wish. There is an admin utility to generate stub details pages for each of your taxa if you wish to use it (see [documentation on admin utilities](./docs-admin-utilities.md)).
 
 ## Example site.txt config file
 ```
