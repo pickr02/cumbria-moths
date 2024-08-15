@@ -18,5 +18,5 @@ aporrectodea_rosea:
     thumb: 202040801-crop-enhanced.jpg
     caption: Head close-up
 ```
-
+Note that there is no specified format for image names - how you name them is entirely up to you. The gallery control supports all common image formats (e.g. png, tif, jpeg, gif).
 
