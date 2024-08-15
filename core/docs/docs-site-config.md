@@ -163,7 +163,12 @@ charts:
 ## Configuring the image gallery
 These options are used to tailor the appearance and behaviour of the image gallery. These are specified as a group of options with the group name *gallery*. (No options as yet.)
 
-The available images and their captions are configured separately in a file called *images.txt* which also sits in the *user/config* folder. There is a separate help page with guidance on [setting up an image gallery](./docs-image-gallery.md).
+The available images and their captions are configured separately in a file called *images.txt* which also sits in the *user/config* folder. There is a separate help page with guidance on [setting up an image gallery](./docs-image-gallery.md). The images themselves are placed in the *user/data/images* folder (also described in the [setting up an image gallery](./docs-image-gallery.md) document).
+
+## Configuring the taxon details
+These options are used to tailor the appearance and behaviour of the taxon details pages. These are specified as a group of options with the group name *details*. (No options as yet.)
+
+Taxon details are Markdown pages placed in the  *user/data/captions* folder. Each file is named after the identifier used for the taxon in the taxon list file (*TODO - link to taxon list file doc*). The pages can contain any information and be laid out in whatever way you wish. There is an admin utility to generate stub details pages for each of your taxa if you wish to use it (see [documentation on admin utilities](./core/docs/docs-admin-utilities.md))
 
 ## Example site.txt config file
 ```
@@ -201,7 +206,5 @@ zoom:
   height: 800
 charts:
   aspect-ratio: 0.4
-gallery:
-  height: 500
 ```
 
