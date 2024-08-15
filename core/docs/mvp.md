@@ -73,9 +73,7 @@ and configure it to create an atlas website for other people - their users - to 
 - [ ] Technical documentation explaining the architecture of the website - aimed at coders developing or maintaining site functionlity.
 
 ## Bugs/issues
-- When user moves from Home page to another other configured page and then back again - taxon selection is cleared. Needs to remember and reset taxon selection.
-- If the zoomable map is specified as the first tab option, the map is not initially sized correctly.
-- If the zoomable map is specified without the overview map option, the software falls over. Best option to fix is to always make the overiew map available.
+Note any development issues here.
 
 
 

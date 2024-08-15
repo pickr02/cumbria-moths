@@ -31,8 +31,8 @@ define(
 
     brcLocalAtlas.atlasTaxonSelected = async function () {
       const taxonId = $('#atlas-taxa-select').find(":selected").val()
-      general.setCookie('taxonId', taxonId, 365)
-      brcLocalAtlas.taxonId = taxonId
+      //general.setCookie('taxonId', taxonId, 365)
+      localStorage.setItem('taxonId', taxonId)
 
       // There's always a static map
       mapStatic.setIdentfier(`../user/data/${config.overview['default-res']}/${taxonId}.csv`)
@@ -91,14 +91,15 @@ define(
       }
 
       // Populate taxon drop-down
-      const prevTaxonId = general.getCookie('taxonId')
+      //const prevTaxonId = general.getCookie('taxonId')
+      const prevTaxonId = localStorage.getItem('taxonId')
       d3.csv(`../user/data/taxa.csv`).then(data => {
         data.forEach(d => {
           const $opt = $('<option>').appendTo($('#atlas-taxa-select'))
           $opt.text(d.taxon)
           $opt.attr('value', d.taxonId)
 
-          general.getCookie('taxonId')
+          //general.getCookie('taxonId')
 
           if (prevTaxonId === d.taxonId) {
             $opt.attr('selected', 'selected')
@@ -109,6 +110,14 @@ define(
         }
       })
   
+      // Overview map is always displayed but not on a tab if no tabs specified
+      // If tabs are specified, but overview map is not included, then add it to tabs.
+      if (config.tabs && config.tabs.length && !config.tabs.find(t => t.tab === 'overview')) {
+        config.tabs.push({
+          tab: 'overview',
+          caption: 'Overview'
+        })
+      }
       // Create tabs
       if (config.tabs && config.tabs.length) {
         createTabs(config.tabs)
@@ -365,6 +374,8 @@ define(
         mapTypesSel: {standard: genMap},
         mapTypesKey: 'standard'
       })
+
+      resizeSlippyMap() // Required here in case slipply map is first tab
 
       // $(selectorControl).text('') // Clear
       // createSlider (selectorControl, "Map size:", "80px", function(v) {
