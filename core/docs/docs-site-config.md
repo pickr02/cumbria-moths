@@ -137,6 +137,7 @@ overview:
   vc-buffer-north: 10000
   default-res: tetrad
 ```
+Data for the atlas map are stored in subfolders of the *user/data* folder as described in the documentation on [admin utilities](./docs-admin-utilities.md).
 
 ## Configuring the zoomable map
 These options are used to tailor the appearance and behaviour of the zoomable map. These are specified as a group of options with the group name *zoom*.
@@ -149,6 +150,8 @@ zoom:
   height: 800
 ```
 
+Data for the zoomable map are stored in subfolders of the *user/data* folder as described in the documentation on [admin utilities](./docs-admin-utilities.md).
+
 ## Configuring the temporal charts
 These options are used to tailor the appearance and behaviour of the temporal charts. These are specified as a group of options with the group name *charts*.
 - **aspect-ratio**: a numeric value between 0 and 1 that indicates the height of each chart as a fraction of its width. The width of the charts is always set to fill the available display area. If not specified, a value of 0.5 is used. Example:
@@ -159,6 +162,8 @@ A full example:
 charts:
   aspect-ratio: 0.4
 ```
+
+Data for the temporal are stored in subfolders of the *user/data* folder as described in the documentation on [admin utilities](./docs-admin-utilities.md).
 
 ## Configuring the image gallery
 These options are used to tailor the appearance and behaviour of the image gallery. These are specified as a group of options with the group name *gallery*. (No options as yet.)
