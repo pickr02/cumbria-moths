@@ -18,5 +18,5 @@ No documetation is provided for atlas website users. It is intended that the atl
 - [Using the admin utilities](./core/docs/docs-admin-utilities.md) - this includes how to generate all the required data for your site (e.g. taxon list, map and chart data), from a CSV of biological records.
 - [General site configuration](./core/docs/docs-site-config.md)
 - [Creating additional HTML or Markdown pages](./core/docs/docs-additional-pages.md)
-- [Configuring an image gallery](./core/docs/docs-image-gallery.md)
+- [Configuring gallery images](./core/docs/docs-image-gallery.md)
 
