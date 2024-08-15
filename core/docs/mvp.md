@@ -48,7 +48,7 @@ and configure it to create an atlas website for other people - their users - to 
 
 ## Temporal charts
 - [ ] A config option for admins to indicate which of the two temporal charts to include.
-- [ ] A config option for admins to indicate a year range for the *Records by year* chart.
+- [x] A config option for admins to indicate a year range for the *Records by year* chart.
 - [x] Config option for admins to specify the height of the temporal charts.
 - [x] Config option for admins to specify whether or not to show the temporal charts.
 

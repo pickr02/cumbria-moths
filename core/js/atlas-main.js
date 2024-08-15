@@ -48,24 +48,28 @@ define(
           general.file2Html(url).then(res => $(`#brc-tab-details.tab-pane`).html(res) )
         }
         if (config.tabs.find(t => t.tab === 'charts')) {
-          d3.csv(`../user/data/weekly/${taxonId}.csv`, d => {
-            return {
-              taxon: d.taxon,
-              count: Number(d.count),
-              period: Number(d.period)
-            }
-          }).then(data => {
-            chartByWeek.setChartOpts({data: data})
-          })
-          d3.csv(`../user/data/yearly/${taxonId}.csv`, d => {
-            return {
-              taxon: d.taxon,
-              count: Number(d.count),
-              period: Number(d.period)
-            }
-          }).then(data => {
-            chartByYear.setChartOpts({data: data})
-          })
+          if (chartByWeek) {
+            d3.csv(`../user/data/weekly/${taxonId}.csv`, d => {
+              return {
+                taxon: d.taxon,
+                count: Number(d.count),
+                period: Number(d.period)
+              }
+            }).then(data => {
+              chartByWeek.setChartOpts({data: data})
+            })
+          }
+          if (chartByYear) {
+            d3.csv(`../user/data/yearly/${taxonId}.csv`, d => {
+              return {
+                taxon: d.taxon,
+                count: Number(d.count),
+                period: Number(d.period)
+              }
+            }).then(data => {
+              chartByYear.setChartOpts({data: data})
+            })
+          }
         }
         if (config.tabs.find(t => t.tab === 'gallery')) {
           refreshGallery(taxonId)
@@ -178,8 +182,10 @@ define(
 
       const width =  600
       const ar = config.charts && config.charts['aspect-ratio'] ? config.charts['aspect-ratio'] : 0.5
+      let whichCharts = config.charts && config.charts['include'] ? config.charts['include'] : 'weekly yearly'
+      whichCharts = whichCharts.split(' ')
       
-      $('<div>Records by week</div>').appendTo($(selectorTab))
+      const $labelWeeklyChart = $('<div>Records by week</div>').appendTo($(selectorTab))
       $(selectorTab)
       const optsByDay = {
         selector: selectorTab,
@@ -208,9 +214,13 @@ define(
         axisLeftLabel: 'Record count',
         margin: {left: 40, right: 0, top: 0, bottom: 15},
       }
-      chartByWeek = brccharts.temporal(optsByDay)
+      if (whichCharts.includes('weekly')) {
+        chartByWeek = brccharts.temporal(optsByDay)
+      } else {
+        $labelWeeklyChart.hide()
+      }
 
-      $('<div>Records by year</div>').appendTo($(selectorTab))
+      const $labelYearlyChart = $('<div>Records by year</div>').appendTo($(selectorTab))
       const optsByYear = {
         selector: selectorTab,
         // title: 'Records by year',
@@ -246,7 +256,11 @@ define(
         optsByYear.maxPeriod = maxYear
       }
       
-      chartByYear = brccharts.temporal(optsByYear)
+      if (whichCharts.includes('yearly')) {
+        chartByYear = brccharts.temporal(optsByYear)
+      } else {
+        $labelYearlyChart.hide()
+      }
     }
 
     function createOverviewMap(selectorTab, selectorControl) {

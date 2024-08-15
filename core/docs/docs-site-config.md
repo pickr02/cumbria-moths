@@ -160,6 +160,8 @@ These options are used to tailor the appearance and behaviour of the temporal ch
   - `yearly-min: 1980`
 - **yearly-max**: a year indicating the latest year to show on the x axis of the *yearly* chart showing record accumulation over time. If not specified, the latest year present in the data is used. Example:
   - `yearly-max: 2020`
+- **include**: indicates which of the charts to show. Values can be *weekly*, *yearly* or *weekly yearly*. If not specified, a value of *weekly yearly* is used and both charts are displayed. Example:
+  - `include: weekly yearly`
 
 A full example:
 ```
@@ -167,6 +169,7 @@ charts:
   aspect-ratio: 0.4
   yearly-min: 1980
   yearly-max: 2020
+  include: weely yearly
 ```
 
 Data for the temporal are stored in subfolders of the *user/data* folder as described in the documentation on [admin utilities](./docs-admin-utilities.md).
@@ -219,5 +222,6 @@ charts:
   aspect-ratio: 0.4
   yearly-min: 1980
   yearly-max: 2020
+  include: weekly yearly
 ```
 
