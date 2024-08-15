@@ -178,7 +178,7 @@ define(
 
       const width =  600
       const ar = config.charts && config.charts['aspect-ratio'] ? config.charts['aspect-ratio'] : 0.5
-
+      
       $('<div>Records by week</div>').appendTo($(selectorTab))
       $(selectorTab)
       const optsByDay = {
@@ -220,8 +220,6 @@ define(
         metrics: [
           { prop: 'count', colour: 'grey'},
         ],
-        minPeriod: 1980,
-        maxPeriod: 2020,
         showLegend: false,
         showTaxonLabel: false,
         interactivity: 'none',
@@ -237,6 +235,17 @@ define(
         axisLeftLabel: 'Record count',
         margin: {left: 40, right: 0, top: 0, bottom: 15},
       }
+
+      // Set min and/or max year if configured by admin
+      const minYear = config.charts && config.charts['yearly-min'] ? config.charts['yearly-min'] : 0
+      const maxYear = config.charts && config.charts['yearly-max'] ? config.charts['yearly-max'] : 0
+      if (minYear) {
+        optsByYear.minPeriod = minYear
+      }
+      if (maxYear) {
+        optsByYear.maxPeriod = maxYear
+      }
+      
       chartByYear = brccharts.temporal(optsByYear)
     }
 

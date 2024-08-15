@@ -156,11 +156,17 @@ Data for the zoomable map are stored in subfolders of the *user/data* folder as 
 These options are used to tailor the appearance and behaviour of the temporal charts. These are specified as a group of options with the group name *charts*.
 - **aspect-ratio**: a numeric value between 0 and 1 that indicates the height of each chart as a fraction of its width. The width of the charts is always set to fill the available display area. If not specified, a value of 0.5 is used. Example:
   - `aspect-ratio: 0.4`
+- **yearly-min**: a year indicating the earliest year to show on the x axis of the *yearly* chart showing record accumulation over time. If not specified, the earliest year present in the data is used. Example:
+  - `yearly-min: 1980`
+- **yearly-max**: a year indicating the latest year to show on the x axis of the *yearly* chart showing record accumulation over time. If not specified, the latest year present in the data is used. Example:
+  - `yearly-max: 2020`
 
 A full example:
 ```
 charts:
   aspect-ratio: 0.4
+  yearly-min: 1980
+  yearly-max: 2020
 ```
 
 Data for the temporal are stored in subfolders of the *user/data* folder as described in the documentation on [admin utilities](./docs-admin-utilities.md).
@@ -211,5 +217,7 @@ zoom:
   height: 800
 charts:
   aspect-ratio: 0.4
+  yearly-min: 1980
+  yearly-max: 2020
 ```
 
