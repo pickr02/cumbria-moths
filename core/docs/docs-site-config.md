@@ -122,8 +122,6 @@ These options are used to tailor the appearance and behaviour of the classic atl
   - `vc-buffer-south: 10000`
 - **vc-buffer-north**: specifies a value in metres by which to extend the real-world extent of the map (as calculated from the map boundary) in the *northward* direction. This can be useful when specifying a vice-county map with a hectad grid - it enables the map to be extended so that the whole grid is visible. Example:
   - `vc-buffer-north: 10000`
-- **default-res**: indicates the default dot map size to use for the atlas map. Can be one of *hectad* (10x10 km), *quandrant* (5x5 km), *tetrad* (2x2 km) or *monad* (1x1 km). If not specified, then *hectad* is used. Example:
-  - `default-res: tetrad`
 
 A full example:
 ```
@@ -135,7 +133,6 @@ overview:
   vc-buffer-east: 10000
   vc-buffer-south: 10000
   vc-buffer-north: 10000
-  default-res: tetrad
 ```
 Data for the atlas map are stored in subfolders of the *user/data* folder as described in the documentation on [admin utilities](./docs-admin-utilities.md).
 
@@ -151,6 +148,18 @@ zoom:
 ```
 
 Data for the zoomable map are stored in subfolders of the *user/data* folder as described in the documentation on [admin utilities](./docs-admin-utilities.md).
+
+## Configuration common to both map types
+These options are used to configure features that are common to both the atlas and zoom maps. These are specified as a group of options with the group name *common*.
+
+- **default-res**: indicates the default dot map size to use for the atlas map. Can be one of *hectad* (10x10 km), *quandrant* (5x5 km), *tetrad* (2x2 km) or *monad* (1x1 km). If not specified, then *hectad* is used. Example:
+  - `default-res: tetrad`
+
+A full example:
+```
+common:
+  default-res: tetrad
+```
 
 ## Configuring the temporal charts
 These options are used to tailor the appearance and behaviour of the temporal charts. These are specified as a group of options with the group name *charts*.
@@ -215,9 +224,10 @@ overview:
   vc-buffer-east: 10000
   vc-buffer-south: 10000
   vc-buffer-north: 10000
-  default-res: tetrad
 zoom:
   height: 800
+common:
+  default-res: tetrad
 charts:
   aspect-ratio: 0.4
   yearly-min: 1980
