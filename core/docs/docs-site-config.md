@@ -152,7 +152,7 @@ Data for the zoomable map are stored in subfolders of the *user/data* folder as 
 ## Configuration common to both map types
 These options are used to configure features that are common to both the atlas and zoom maps. These are specified as a group of options with the group name *common*.
 
-- **default-res**: indicates the default dot map size to use for the atlas map. Can be one of *hectad* (10x10 km), *quandrant* (5x5 km), *tetrad* (2x2 km) or *monad* (1x1 km). If not specified, then *hectad* is used. Example:
+- **default-res**: indicates the default dot map size to use for the maps. Can be one of *hectad* (10x10 km), *quandrant* (5x5 km), *tetrad* (2x2 km) or *monad* (1x1 km). If not specified, then *hectad* is used. Example:
   - `default-res: tetrad`
 
 A full example:
