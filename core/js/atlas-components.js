@@ -13,10 +13,11 @@ define(
 
       create: async function loadContent() {
   
-        const configSite = await general.getConfig("../user/config/site.txt") 
+        const configSite = await general.getConfig("../user/config/site.txt")
+        const configImages = await general.getConfig("../user/config/images.txt") 
         const configCore = await general.getConfig("config/config.txt") 
-        //console.log('configSite', configSite)
-        //console.log('configCore', configCore)
+
+
         generateHeader(configSite)
         generateFooter(configCore)
  
@@ -150,6 +151,11 @@ define(
             $err.html(`
               <p>There was a problem reading the 'site.txt' config file...</p>
               <pre>${configSite.errName}: ${configSite.errMessage}</pre>`
+            )
+          } else if (configImages.errName) {
+            $err.html(`
+              <p>There was a problem reading the 'images.txt' config file...</p>
+              <pre>${configImages.errName}: ${configImages.errMessage}</pre>`
             )
           }
         }

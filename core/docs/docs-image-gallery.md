@@ -4,19 +4,16 @@ If you include the gallery tab on your atlas, you will also need to configure th
 ## General format
 Each taxon for which you wish to display images is represented in this file as collection (array). The identifier for each collection matches taxon identifiers specified in the taxon list file (*TODO - link to taxon list file doc*). Each image in the collection is represented by three properties: *file*, *thumb* and *caption*. 
 
-The *file* property is the name (without path) of an image file which you must place in the *user/data/images* folder. The *thumb* property is the name (without path) of an image file to use as a thumbnail in the gallery control. If you can create small thumbnail images of each of your full images, then you can specify these (which will improve the gallery performance - though often not noticably), otherwise just reference the full image file here too. The *caption* property is used to display a caption over the image - it can be a useful place to put copyright information or an image description. (You shouldn't really have to specify the taxon name in the caption since that will be obvious from the user selection.) Example:
+The *file* property is the name (without path) of an image file which you must place in the *user/data/images* folder. The *thumb* property is the name (without path) of an image file to use as a thumbnail in the gallery control. If you can create small thumbnail images of each of your full images, then you can specify these (which will improve the gallery performance - though often not noticably), otherwise you can leave this property out and the image specified under *file* will also be used to generate a thumbnail. The *caption* property is used to display a caption over the image - it can be a useful place to put copyright information or an image description. You can leave this property out if there is no caption you wish to display. (You shouldn't really have to specify the taxon name in the caption since that will be obvious from the user selection.) Example:
 ```
 aporrectodea_caliginosa:
   - file: aporrectodea-caliginosa-blah.jpg
-    thumb: aporrectodea-caliginosa-blah.jpg
     caption: Copyright Joe Bloggs
   - file: blah-a-cal.jpg
     thumb: blah-a-cal-thumb.jpg
     caption: Copyright Jane Doe
 aporrectodea_rosea:
   - file: 202040801-crop-enhanced.jpg
-    thumb: 202040801-crop-enhanced.jpg
-    caption: Head close-up
 ```
 Note that there is no specified format for image names - how you name them is entirely up to you. The gallery control supports all common image formats (e.g. png, tif, jpeg, gif).
 

@@ -445,15 +445,23 @@ define(
 
       let dynamicEl
       if (images[taxonId] && Array.isArray(images[taxonId])) {
+
         dynamicEl = images[taxonId].map(i => {
+        
+          let captionHtml
+          if (i.caption) {
+            captionHtml = `
+              <div class="lightGallery-captions">
+                <div style="background-color: black; opacity: 0.7; margin: 0.3em; font-size: 1em">${i.caption}<div>
+              </div>`
+          } else {
+            captionHtml = ''
+          }
           return {
             alt: i.caption,
             src: `../user/data/images/${i.file}`,
             thumb: `../user/data/images/${i.thumb ? i.thumb : i.file}`,
-            subHtml: `
-              <div class="lightGallery-captions">
-                <div style="background-color: black; opacity: 0.7; margin: 0.3em; font-size: 1em">${i.caption}<div>
-              </div>`
+            subHtml: captionHtml
           }
         })
       } else {
