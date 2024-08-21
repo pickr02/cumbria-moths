@@ -29,15 +29,15 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
 
     function createZoomControls(selectorControl) {
       $(selectorControl).html('')
-      common.createDotShapeControl(selectorControl, config, 'zoom', dotShapeChanged)
+
+      if (config.common['dot-shape'] === 'common') {
+        common.createDotShapeControl(selectorControl, 'zoom', refreshZoomMap)
+      }
     }
 
-    function dotShapeChanged(val) {
-      console.log('Zoom dot changed', val)
-    }
-
-    function refreshZoomMap(taxonId) {
+    function refreshZoomMap() {
       const dotSize = config.common && config.common['default-res'] ? config.common['default-res'] : 'hectad'
+      const taxonId = localStorage.getItem('taxonId')
       mapZoom.setIdentfier(`../user/data/${dotSize}/${taxonId}.csv`)
       mapZoom.redrawMap()
     }
@@ -78,7 +78,7 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
         resolve({
           records: dataMap,
           precision: precision,
-          shape: 'circle',
+          shape: localStorage.getItem('dot-shape'),
           opacity: 1,
           size: 1
         })

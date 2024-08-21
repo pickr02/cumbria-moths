@@ -18,16 +18,30 @@ define(
             cache: false,
             // async:  false,
             success: function (data) {
-              let json = {}
+              let config = {}
               try {
-                json = jsyaml.load(data)
+                config = jsyaml.load(data)
               } catch (e) {
-                json = {
+                config = {
                   errName: e.name,
                   errMessage: e.message
                 }
               }
-              resolve(json)
+              config.get = (argString) => {
+                const args = argString.split('.')
+                val = config
+                try {
+                  for (let i=0; i < args.length; i++) {
+                    //console.log('val', val)
+                    val = val[args[i]]
+                    //console.log('args[i]', args[i])
+                  }
+                } catch (e) {
+                  val = null
+                }
+                return typeof val === 'undefined' ? null : val
+              }
+              resolve(config)
             },
             error: function (error) {
               resolve({})

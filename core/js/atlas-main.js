@@ -4,15 +4,17 @@ brcLocalAtlas = {}
 define(
   ["atlas-general", "atlas-components", "atlas-gallery", "atlas-charts", "atlas-overview", "atlas-zoom", "jquery.min", "d3", "brcatlas.umd.min"],
 
-  function (general, components, galllery, charts, overview, zoom, jq, d3, brcatlas) {
+  function (g, components, galllery, charts, overview, zoom, jq, d3, brcatlas) {
 
-    general.loadCss('css/brcatlas.umd.css')
-    general.loadCss('css/brccharts.umd.css')
-    general.loadCss('css/leaflet.css')
-    general.loadCss('css/lightgallery-bundle.min.css')
-    general.loadCss('css/atlas-css.css')
+    g.loadCss('css/brcatlas.umd.css')
+    g.loadCss('css/brccharts.umd.css')
+    g.loadCss('css/leaflet.css')
+    g.loadCss('css/lightgallery-bundle.min.css')
+    g.loadCss('css/atlas-css.css')
 
     let config, images
+
+    // Create common page components
     components.create()
 
     loadContent()
@@ -22,15 +24,15 @@ define(
       localStorage.setItem('taxonId', taxonId)
 
       // There's always a static map
-      overview.refreshOverviewMap(taxonId, config)
+      overview.refreshOverviewMap()
     
       if (config.tabs) {
         if (config.tabs.find(t => t.tab === 'zoom')) {
-          zoom.refreshZoomMap(taxonId)
+          zoom.refreshZoomMap()
         }
         if (config.tabs.find(t => t.tab === 'details')) {
           const url = `../user/data/captions/${taxonId}.md`
-          general.file2Html(url).then(res => $(`#brc-tab-details.tab-pane`).html(res) )
+          g.file2Html(url).then(res => $(`#brc-tab-details.tab-pane`).html(res) )
         }
         if (config.tabs.find(t => t.tab === 'charts')) {
           charts.refreshCharts(taxonId)
@@ -41,11 +43,29 @@ define(
       }
     }
 
+    function initLocalStorage() {
+     
+      const setDefault = (variable, val) => {
+        if (localStorage.getItem(variable) === null) {
+          localStorage.setItem(variable, val)
+        }
+      }
+
+      setDefault('dot-shape', 'circle')
+      if (config.get('common.dot-shape')  && config.get('common.dot-shape') !== 'control') {
+        // If dot-shape is set in config, then set localStorage
+        localStorage.setItem('dot-shape', config.common['dot-shape'])
+        setDefault('dot-shape', config.common['dot-shape'])
+      }
+    }
+
     async function loadContent() {
 
-      // Open site config files
-      config = await general.getConfig("../user/config/site.txt") 
-      images = await general.getConfig("../user/config/images.txt") 
+      config = await g.getConfig("../user/config/site.txt") 
+      images = await g.getConfig("../user/config/images.txt") 
+      //console.log('config', config)
+      
+      initLocalStorage()
 
       // Set site name
       if (config.name) {
