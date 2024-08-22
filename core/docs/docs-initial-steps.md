@@ -1,4 +1,5 @@
-THIS PAGE is under development and incomplete. It will take you through the initial steps of creating your own atlas website from the BRC GitHub repository by forking the repository and linking it to a GitHub pages site.
+# Initial steps
+The page will take you through the initial steps of creating your own atlas website from the BRC GitHub repository by forking the repository and linking it to a GitHub pages site.
 
 ## Overview of the main steps
 The main steps to create your own configurable atlas, hosted on GitHub, from a spreadsheet of biological records are:
