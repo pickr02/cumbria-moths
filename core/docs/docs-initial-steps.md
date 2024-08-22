@@ -18,10 +18,10 @@ You should see up a *free* account - you do not need to sign up for a plan that 
 ## A note on GitHub and Git vocabulary
 GitHub is an online platform built around Git and uses the vocabulary of Git. We will inevitably need to use some of this vocabulary. These terms will be explained as they are introduced below.
 
-(You should only need to use the online GitHub interface you do everything described here. But for those that know, or are prepared to learn, the Git command line interface, it can make things easier when configuring your website, particularly if you have a very large number of taxa in your project.)
+(You should only need to use the online GitHub interface to do everything described here. But for those that know, or are prepared to learn, the Git command line interface, it can make things easier when configuring your website, particularly if you have a very large number of taxa in your project.)
 
 ## Forking the BRC atlas repo
-The first taks is to 'fork' the BRC configurable atlas 'repo'. The term 'repo' is short-hand for 'repository' which you can think of as a place that holds all the digital resources related to a project - in this case the configurable atlas project. To 'fork' a GitHub repo copies it to your own GitHub account. But it is a smart copy - GitHub retains and manages the link between the original and your forked copy and provides tools to help you keep them in line.
+The first task is to 'fork' the BRC configurable atlas 'repo'. The term 'repo' is short-hand for 'repository' which you can think of as a place that holds all the digital resources related to a project - in this case the configurable atlas project. When you 'fork' a GitHub repo, you copy it to your own GitHub account. But it is a smart copy - GitHub retains and manages the link between the original and your forked copy and provides tools to help you keep them in line.
 
 First go to the BRC repo for the atlas project here: https://github.com/BiologicalRecordsCentre/brevi-atlas-test.
 
@@ -35,12 +35,24 @@ You need to click the *fork* button. Then you will see a dialog like that shown 
 
 Fill in a name for your forked repo - its a good idea to relate it to you altas project because it will appear in the URL of your GitHub Pages website. You also need to *uncheck* the checkbox which says *Copy the main branch only* because major versions of the software will be stored in their own branches. When you have done those things, click the green *Create fork* button.
 
-Once the repo is forked, you will see a pratically identical copy of the BRC configurable atlas repo in your own new repo.
+Once the repo is forked, you will see an identical copy of the BRC configurable atlas repo in your own new repo.
 
 Note that you can only fork any particular project once into your personal account, so it is not possible for you to create more than one configurable atlas into a single GitHub account.
 
 ## Setting up a GitHub Pages linked to your repo
-adf
+The *GitHub Pages* facility is the thing which enables you to publish an actual publicly accessible website on the GitHub platform. Here's how you set up your GitHub Pages linked this your forked repo. 
+
+Near the top-left of the main page for your forked GitHub repo you will see a bunch of buttons like this:
+
+![GitHub settings button](./images/settings-button.png)
+
+Click the *Settings* button and a dialog will appear with a bunch of links down the left-hand side. Under *Code and automation* you will see the *Pages* link. Click on this link. That will give you a dialog like this one:
+
+![GitHub Pages dialog](./images/pages-dialog.png)
+
+Click the button initially labelled *None* and in the drop-down list of 'branches' which appears, select the latest branch (e.g. v1.0.0). You do not need to change any other controls on this dialog. Click on the *Save* button.
+
+(GitHub/Git branches are a way of storing different versioned copies of the project files. BRC will use this to separate major versions of the configurable atlas project. Normally the 'main' branch will reflect the latest release branch.)
 
 ## Updating your project with the latest code
 On the home page of your forked repo, you may see a notice like the one shown below. It indicates two things:
