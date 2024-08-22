@@ -46,7 +46,7 @@ Near the top-left of the main page for your forked GitHub repo you will see a bu
 
 ![GitHub settings button](./images/settings-button.png)
 
-Click the *Settings* button and a dialog will appear with a bunch of links down the left-hand side. Under *Code and automation* you will see the *Pages* link. Click on this link. That will give you a dialog like this one:
+Click the *Settings* button and a dialog will appear with a bunch of links down the left-hand side. Under *Code and automation* you will see the *Pages* link. Click on this link. That will you to a GitHub pages view like this one:
 
 ![GitHub Pages dialog](./images/pages-dialog.png)
 
@@ -54,8 +54,23 @@ Click the button initially labelled *None* and in the drop-down list of 'branche
 
 (GitHub/Git branches are a way of storing different versioned copies of the project files. BRC will use this to separate major versions of the configurable atlas project. Normally the 'main' branch will reflect the latest release branch.)
 
+Initially after you've saved your configuration the GitHub pages view looks much the same. The excoption is that there is a section on supplying a custom domain for your GitHub pages website. We will not cover that in this tutorial - we will instead stick with the  domain and URL that GitHub provides for our website. But what is it? Read on.
+
+When GitHub Pages is first linked to your repo - or later when you update the repo with your own configuration files - there is a delay before the GitHub pages is created or updated. This is usually only a few minutes. After a few minutes, try refreshing this page and eventually you will see something like the following appear at the top of the page:
+
+![GitHub Pages website link](./images/pages-website-link.png)
+
+This shows the URL for the website based on the forked GitHub repo. Following that link for the first time will show something like this:
+
+![Unconfigured website](./images/unconfigured-website.png)
+
+This is how a configurable atlas website looks without any configuration! Your next steps should be to generate some data for use with the website.
+
 ## Updating your project with the latest code
+From time to time, BRC may update the configurable atlas software. Because GitHub maintains a link between a forked repo and its source, it is relatively easy to pull those updates into your forked repo. 
+
 On the home page of your forked repo, you may see a notice like the one shown below. It indicates two things:
+
 1. that this branch (i.e. your forked repo) is a number of commits *ahead* of BRC's project site (from which it is forked) and
 2. that this branch is a number of commits *behind* of BRC's project site.
 
