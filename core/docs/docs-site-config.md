@@ -156,12 +156,17 @@ These options are used to configure features that are common to both the atlas a
   - `resolution: tetrad monad`
 - **dot-shape**: indicates whether or not to offer the user a control to switch between squares and circles and, if not, what the shape should be. Value should be one of 'control' (to display the control to user), 'square' or 'circle'.  If not specified, then 'circle' is used. Example:
   - `dot-shape: square`
+- **dot-colour**: indicates the colour of the dots on a standard map. Will accept any of the colour formats understood by HTML/CSS. If the option is not specified, the dots will be black. Examples:
+  - `dot-colour: red` (HTML colour name)
+  - `dot-colour: rgb(100,120,30)` (red, green blue format)
+  - `dot-colour: "#EF9766"` (hex colour format - double-quotes required)
 
 A full example:
 ```
 common:
-  dot-shape: control
   resolution: hectad quadrant tetrad
+  dot-shape: control
+  dot-color: red
 ```
 
 ## Configuring the temporal charts
