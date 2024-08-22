@@ -5,11 +5,11 @@ define(["jquery.min", "d3", "brccharts.umd.min"],
 
     let chartByWeek, chartByYear
  
-    function createCharts(selectorTab, selectorControl, config) {
+    function createCharts(selectorTab, selectorControl, c) {
    
       const width =  600
-      const ar = config.charts && config.charts['aspect-ratio'] ? config.charts['aspect-ratio'] : 0.5
-      let whichCharts = config.charts && config.charts['include'] ? config.charts['include'] : 'weekly yearly'
+      const ar = c.get('charts.aspect-ratio') ? c.charts['aspect-ratio'] : 0.5
+      let whichCharts = c.get('charts.include') ? c.charts['include'] : 'weekly yearly'
       whichCharts = whichCharts.split(' ')
       
       const $labelWeeklyChart = $('<div>Records by week</div>').appendTo($(selectorTab))
@@ -74,8 +74,8 @@ define(["jquery.min", "d3", "brccharts.umd.min"],
       }
 
       // Set min and/or max year if configured by admin
-      const minYear = config.charts && config.charts['yearly-min'] ? config.charts['yearly-min'] : 0
-      const maxYear = config.charts && config.charts['yearly-max'] ? config.charts['yearly-max'] : 0
+      const minYear = c.get('charts.yearly-min') ? c.charts['yearly-min'] : 0
+      const maxYear = c.get('charts.yearly-max') ? c.charts['yearly-max'] : 0
       if (minYear) {
         optsByYear.minPeriod = minYear
       }

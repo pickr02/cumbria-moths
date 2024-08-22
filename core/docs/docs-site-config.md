@@ -152,16 +152,16 @@ Data for the zoomable map are stored in subfolders of the *user/data* folder as 
 ## Configuration common to both map types
 These options are used to configure features that are common to both the atlas and zoom maps. These are specified as a group of options with the group name *common*.
 
-- **default-res**: indicates the default dot map size to use for the maps. Can be one of *hectad* (10x10 km), *quandrant* (5x5 km), *tetrad* (2x2 km) or *monad* (1x1 km). If not specified, then *hectad* is used. Example:
-  - `default-res: tetrad`
+- **resolution**: indicates which resolutions to use for the dots. Values can be any combination of 'hectad', 'quadrant', 'tetrad' and 'monad'. If more than one is specified, separate them with spaces. If more that one is specified, then the user is able to select between them using a drop-down selection control. If only one is specified, the control does not appear. Example:
+  - `resolution: tetrad monad`
 - **dot-shape**: indicates whether or not to offer the user a control to switch between squares and circles and, if not, what the shape should be. Value should be one of 'control' (to display the control to user), 'square' or 'circle'.  If not specified, then 'circle' is used. Example:
   - `dot-shape: square`
 
 A full example:
 ```
 common:
-  default-res: tetrad
   dot-shape: control
+  resolution: hectad quadrant tetrad
 ```
 
 ## Configuring the temporal charts

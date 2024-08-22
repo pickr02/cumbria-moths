@@ -12,7 +12,7 @@ define(
     g.loadCss('css/lightgallery-bundle.min.css')
     g.loadCss('css/atlas-css.css')
 
-    let config, images
+    let c, images
 
     // Create common page components
     components.create()
@@ -26,18 +26,18 @@ define(
       // There's always a static map
       overview.refreshOverviewMap()
     
-      if (config.tabs) {
-        if (config.tabs.find(t => t.tab === 'zoom')) {
+      if (c.tabs) {
+        if (c.tabs.find(t => t.tab === 'zoom')) {
           zoom.refreshZoomMap()
         }
-        if (config.tabs.find(t => t.tab === 'details')) {
+        if (c.tabs.find(t => t.tab === 'details')) {
           const url = `../user/data/captions/${taxonId}.md`
           g.file2Html(url).then(res => $(`#brc-tab-details.tab-pane`).html(res) )
         }
-        if (config.tabs.find(t => t.tab === 'charts')) {
+        if (c.tabs.find(t => t.tab === 'charts')) {
           charts.refreshCharts(taxonId)
         }
-        if (config.tabs.find(t => t.tab === 'gallery')) {
+        if (c.tabs.find(t => t.tab === 'gallery')) {
           galllery.refreshGallery(taxonId, images)
         }
       }
@@ -46,30 +46,23 @@ define(
     function initLocalStorage() {
      
       const setDefault = (variable, val) => {
-        if (localStorage.getItem(variable) === null) {
-          localStorage.setItem(variable, val)
-        }
+        localStorage.setItem(variable, val)
       }
-
+ 
       setDefault('dot-shape', 'circle')
-      if (config.get('common.dot-shape')  && config.get('common.dot-shape') !== 'control') {
-        // If dot-shape is set in config, then set localStorage
-        localStorage.setItem('dot-shape', config.common['dot-shape'])
-        setDefault('dot-shape', config.common['dot-shape'])
-      }
+      setDefault('resolution', 'hectad')
     }
 
     async function loadContent() {
 
-      config = await g.getConfig("../user/config/site.txt") 
+      c = await g.getConfig("../user/config/site.txt") 
       images = await g.getConfig("../user/config/images.txt") 
-      //console.log('config', config)
-      
+
       initLocalStorage()
 
       // Set site name
-      if (config.name) {
-        $("#atlas-site-name").text(`${config.name}` )
+      if (c.name) {
+        $("#atlas-site-name").text(`${c.name}` )
       } else {
         $("#atlas-site-name").text(`No site name specified` )
       }
@@ -93,19 +86,19 @@ define(
   
       // Overview map is always displayed but not on a tab if no tabs specified
       // If tabs are specified, but overview map is not included, then add it to tabs.
-      if (config.tabs && config.tabs.length && !config.tabs.find(t => t.tab === 'overview')) {
-        config.tabs.push({
+      if (c.tabs && c.tabs.length && !c.tabs.find(t => t.tab === 'overview')) {
+        c.tabs.push({
           tab: 'overview',
           caption: 'Overview'
         })
       }
       // Create tabs
-      if (config.tabs && config.tabs.length) {
-        createTabs(config.tabs)
-        populateTabs(config.tabs)
+      if (c.tabs && c.tabs.length) {
+        createTabs(c.tabs)
+        populateTabs(c.tabs)
       } else { 
         // Default is to just show overview map
-        overview.createOverviewMap("#brc-tabs", "#brc-controls", config)
+        overview.createOverviewMap("#brc-tabs", "#brc-controls", c)
       }
     }
     
@@ -152,13 +145,13 @@ define(
 
       tabs.forEach((t,i) => {
         if (t.tab === "overview") {
-          overview.createOverviewMap("#brc-tab-overview", "#brc-control-overview", config)
+          overview.createOverviewMap("#brc-tab-overview", "#brc-control-overview", c)
         } else if (t.tab === "zoom") {
-          zoom.createZoomMap("#brc-tab-zoom", "#brc-control-zoom", config)
+          zoom.createZoomMap("#brc-tab-zoom", "#brc-control-zoom", c)
         } else if (t.tab === "details") {
           // No action needed here
         } else if (t.tab === "charts") {
-          charts.createCharts("#brc-tab-charts", "#brc-control-charts", config)
+          charts.createCharts("#brc-tab-charts", "#brc-control-charts", c)
         } else if (t.tab === "gallery") {
           galllery.createGallery("#brc-tab-gallery", "#brc-control-gallery", images)
         } else {

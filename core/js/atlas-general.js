@@ -29,12 +29,12 @@ define(
               }
               config.get = (argString) => {
                 const args = argString.split('.')
+                //console.log(argString)
+                //if (args[0] === 'overview') console.log(args)
                 val = config
                 try {
                   for (let i=0; i < args.length; i++) {
-                    //console.log('val', val)
                     val = val[args[i]]
-                    //console.log('args[i]', args[i])
                   }
                 } catch (e) {
                   val = null

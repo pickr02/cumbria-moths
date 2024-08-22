@@ -16,9 +16,9 @@ and configure it to create an atlas website for other people - their users - to 
 - [x] A taxon selector that enables users to switch between taxa.
 
 ## Both overview map and explore map
-- [ ] Map resolution selector. Allows  user to switch between different map resolutions: hectad (10 km), quadrant (5 km), tetrad (2 km) or monad (1 km). Config options for admins to specify what resolutions are available. If the admin only specifies one resolution, do not show the resolution selector to users.
-- [ ] Config option to allow admins to specify whether atlas dots are shown as circles or squares.
-- [ ] Config option to allow admins to specify the colour of atlas dots for standard map display.
+- [x] Map resolution selector. Allows  user to switch between different map resolutions: hectad (10 km), quadrant (5 km), tetrad (2 km) or monad (1 km). Config options for admins to specify what resolutions are available. If the admin only specifies one resolution, do not show the resolution selector to users.
+- [x] Config option to allow admins to specify whether atlas dots are shown as circles or squares.
+- [x] Config option to allow admins to specify the colour of atlas dots for standard map display.
 - [ ] A map type selector which provides different views of the dot map. Possible map types are: dots coloured to indicate record number; dots coloured to indicate temporal bands (as used on the [iRecord species details map](https://irecord.org.uk/species-details?taxa_taxon_list_id=250358)). Config options for admins to specify what map types are available to users.
 - [ ] Other controls - to be displayed conditionally - required for the operation of additional map types (e.g. those for specifying temporal bands).
 
@@ -28,13 +28,13 @@ and configure it to create an atlas website for other people - their users - to 
 - [x] Config option for admins to specify atlas area as a Vice County boundary (Britain or Ireland). These boundaries supplied with the core software.
 - [x] Config option for admins to specify whether or not a 10 km grid is to be show with a VC boundary. These grids supplied with the core software.
 - [ ] Config options for admins to specify atlas area as a country boundary (Ireland, Northern Ireland, GB and Ireland, GB, Scotland, England, Wales). Currently only GB and Ireland available.
-- [x] Config option for admins to specify a buffer around the atlas area boundary.
+- [x] Config options for admins to specify a buffer around the atlas area boundary.
 - [ ] Config option for admins to specify how Channel Islands and Hebrides are displayed for GB and Ireland view.
 - [ ] Config option for admins to specify a add-hoc atlas area by uploading a geojson boundary file.
 - [ ] Config option for admins to specify a add-hoc atlas grid by uploading a geojson file.
 - [ ] Config option for admins to set the colour of land areas.
 - [ ] Config option for admins to set the colour of sea areas.
-- [ ] Config option for amins to specify a georeferenced raster image to act as a basemap for the atlas overview.
+- [ ] Config option for admins to specify a georeferenced raster image to act as a basemap for the atlas overview.
 - [ ] A download button to allow users to download an image of the currently displayed overview map. Config options to allow admins to specify whether or not to show this button.
 
 ## Zoomable map

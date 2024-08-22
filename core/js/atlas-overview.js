@@ -2,15 +2,16 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
 
   function (jq, d3, brcatlas, common) {
 
-    let mapStatic, config
+    let mapStatic, c
  
-    function createOverviewMap(selectorTab, selectorControl, c) {
+    function createOverviewMap(selectorTab, selectorControl, config) {
 
       // Set module-level config
-      config = c
+      c = config
+      common.setConfig(c)
 
       // Initialise map
-      const height = config.overview && config.overview.height ? config.overview.height : 500
+      const height =  c.get('overview.height') ? c.get('overview.height') : 500
       // Get value for map width given original height set in config
       // Need to do this with an instance of static map with expand set to false
       // Later used to set the max width of actual map.
@@ -35,14 +36,14 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
         transOptsKey: 'BI4',
         mapTypesControl: false,
         transOptsControl: false,
-        mapTypesSel: {standard: genMap},
+        mapTypesSel: {standard: common.genMap},
         mapTypesKey: 'standard'
       }
 
       // If a VC is specified, set up the transOptsSel
-      if (config.overview && config.overview.vc) {
+      if (c.get('overview.vc')) {
 
-        const match = config.overview.vc.match(/(gb|ir)(\d+)/)
+        const match = c.overview.vc.match(/(gb|ir)(\d+)/)
         if (match) {
           // Set correct projection for VC (British or Irish)
           mapStaticOpts.proj = match[1]
@@ -60,10 +61,10 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
             }
           })
           const props = gjson.features[0].properties
-          const xminBuffer = config.overview['vc-buffer-west'] ? Number(config.overview['vc-buffer-west']) : 0
-          const xmaxBuffer = config.overview['vc-buffer-east'] ? Number(config.overview['vc-buffer-east']) : 0
-          const yminBuffer = config.overview['vc-buffer-south'] ? Number(config.overview['vc-buffer-south']) : 0
-          const ymaxBuffer = config.overview['vc-buffer-north'] ? Number(config.overview['vc-buffer-north']) : 0
+          const xminBuffer = c.get('overview.vc-buffer-west') ? Number(c.overview['vc-buffer-west']) : 0
+          const xmaxBuffer = c.get('overview.vc-buffer-east') ? Number(c.overview['vc-buffer-east']) : 0
+          const yminBuffer = c.get('overview.vc-buffer-south') ? Number(c.overview['vc-buffer-south']) : 0
+          const ymaxBuffer = c.get('overview.vc-buffer-north') ? Number(c.overview['vc-buffer-north']) : 0
 
           // Set the transOptsSel
           mapStaticOpts.transOptsSel = {
@@ -81,8 +82,10 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
           mapStaticOpts.boundaryGjson = gjsonFile
 
           // Remove default UK grid
-          if (config.overview['hectad-grid'] && config.overview['hectad-grid'] === true) {
-            mapStaticOpts.gridGjson = `./data/vc-${match[1]}-hectad-grids/vc-${match[1]}-${match[1] === 'ir' ? 'H' : ''}${match[2]}-hectads.geojson`
+          if (c.get('overview.hectad-grid') === true) {
+            const file = `./data/vc-${match[1]}-hectad-grids/vc-${match[1]}-${match[1] === 'ir' ? 'H' : ''}${match[2]}-hectads.geojson`
+            console.log('grid', file)
+            mapStaticOpts.gridGjson = file
           } else {
             mapStaticOpts.gridGjson = ''
           }
@@ -100,50 +103,25 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
     function createOverviewControls(selectorControl) {
       $(selectorControl).html('')
 
-      if (config.common['dot-shape'] === 'common') {
+
+      // Resolution selection
+      if (c.get('common.resolution')) {
+        resolutions = c.get('common.resolution').replace(/\s+/g, ' ').split(' ').filter(r => ['hectad', 'quadrant', 'tetrad', 'monad'].includes(r))
+        if (resolutions.length > 1) {
+          common.createResolutionControl(selectorControl, 'overview', refreshOverviewMap)
+        }
+      }
+      // Dot shape selection
+      if (c.get('common.dot-shape') === 'control') {
         common.createDotShapeControl(selectorControl, 'overview', refreshOverviewMap)
       }
     }
 
     function refreshOverviewMap() {
-      const dotSize = config.common && config.common['default-res'] ? config.common['default-res'] : 'hectad'
+      const dotSize = common.getDotSize()
       const taxonId = localStorage.getItem('taxonId')
       mapStatic.setIdentfier(`../user/data/${dotSize}/${taxonId}.csv`)
       mapStatic.redrawMap()
-    }
-
-    async function genMap(file) {
-
-      const dotSize = config.common && config.common['default-res'] ? config.common['default-res'] : 'hectad'
-      const data = await d3.csv(file)
-      const dataMap = data.map(d => {
-        return {gr: d.gr, colour: 'black'}
-      })
-
-      let precision 
-      switch(dotSize) {
-        case 'hectad':
-          precision = 10000
-          break
-        case 'quadrant':
-          precision = 5000
-          break
-        case 'tetrad':
-          precision = 2000
-          break
-        case 'monad':
-          precision = 1000
-      }
-    
-      return new Promise((resolve) => {
-        resolve({
-          records: dataMap,
-          precision: precision,
-          shape: localStorage.getItem('dot-shape'),
-          opacity: 1,
-          size: 1
-        })
-      })
     }
 
     return {
