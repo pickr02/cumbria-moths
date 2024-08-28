@@ -10,18 +10,30 @@ There are two ways of creating a new file in your repo:
 2. Create it directly in the repo.
 
 ### Creating first and then uploading
-To using the first method, first create a configuration file, e.g. *site.txt* on your own computer and, optionally, edit it with a plain text editor (e.g. Notepad on Windows) to include some configuration options.
+To use the first method, first create a configuration file, e.g. *site.txt* on your own computer and, optionally, edit it with a plain text editor (e.g. Notepad on Windows) to include some configuration options.
 
-Next, naviate to the place where you wish to upload the file in your GitHub repo. For the *site.txt* folder, this will be the *user/config* folder - simply click on the *user* folder from the homepage of your GitHub repo and then click again on the *config* folder: that opens the *config* folder. You will see a button near the top right of the page like this:
+Next, navigate to the place where you wish to upload the file in your GitHub repo. For the *site.txt* folder, this will be the *user/config* folder - simply click on the *user* folder from the homepage of your GitHub repo and then click again on the *config* folder: that opens the *config* folder. You will see a button near the top right of the page like this:
 
 ![GitHub add button](./images/add-button.png)
 
+When you click that button, you will see two options: *Create a new file* and *Upload files*. Click on *Upload files*. An upload page appears where you can either drag your new file to or, by clicking on the *Choose your files* link, select your file with the file system select dialog.
+
+Your file won't actually be added to the repo until you hit the 'Commit changes' button. If you have not used a versioning repository tool like GitHub before, then this step will be unfamiliar to you. It's what allows GitHub to track changes to files and, if necessary, revert changes at a later date. 
+
+You can usually just keep the default commit message - *Add files via upload* - but you may wish to add a more descriptive message and, optionally a full description of the addition or changes you've made. For our purposes, keeping the default is okay and it certainly speeds things up a bit.
+
 ### Creating directly in GitHub
+To use the second method, navigate to the folder as before, but click the *Create new file* option after you've clicked the *Add file* button. You will see something like this:
+
+![Add file page](./images/add-file-page.png)
+
+
 
 ## Editing a configuration file
 
 ## Adding other resources
 
+## Deleting config files and resources
 
 # Using Git
 If you are a seasoned user of Git, it will likely be much more convenient for you to update your repo by using the Git command line rather than the GitHub interface. This can also overcome GitHub's limit on the number of files that can be uploaded in one go.
