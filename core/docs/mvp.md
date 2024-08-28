@@ -41,6 +41,7 @@ and configure it to create an atlas website for other people - their users - to 
 - [x] Zoomable map for users to explore the mapped data in more detail.
 - [x] Config option for admins to specify whether or not to show the zoomable map.
 - [x] Config option for admins to specify the height of the zoomable map.
+- [ ] Show VC or uploaded boundary on map.
 
 ## Info pages
 - [x] Ability for admins to add html or markdown pages for each taxon which will be displayed on *info* tab when user selects taxon.
