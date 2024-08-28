@@ -52,8 +52,7 @@ GitHub does not have a facility to create an empty folder, but you can create on
 
 Instead of typing the name of a file into the *Name your file* box, type something like 'folder/dummy', where 'folder' is the name of the of the folder you wish to create. Then commit the new folder complete with dummy file. Once you've added other files to this folder, you can delete the 'dummy' file (see next section). (If you delete the 'dummy' file before uploading other files into the folder, the folder disappears.)
 
-**Important note**
-GitHub imposes a limit of 100 files that can be uploaded in any one commit through its interface. That can be awkward for us if you have more than 100 taxa in your atlas (which could easilty be the case). It means that you will have to upload data files in batches of 100 which is a pain. 
+**Important note: GitHub imposes a limit of 100 files that can be uploaded in any one commit through its interface.** That can be awkward for us if you have more than 100 taxa in your atlas (which could easilty be the case). It means that you will have to upload data files in batches of 100 which is a pain. 
 
 GitHub does not impose any such limit if you are uploading files via the Git command line tool. To find out more about that read the section on *Using Git* in this document.
 
