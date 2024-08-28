@@ -16,7 +16,7 @@ Next, navigate to the place where you wish to upload the file in your GitHub rep
 
 ![GitHub add button](./images/add-button.png)
 
-When you click that button, you will see two options: *Create a new file* and *Upload files*. Click on *Upload files*. An upload page appears where you can either drag your new file to or, by clicking on the *Choose your files* link, select your file with the file system select dialog.
+When you click that button, you will see two options: *Create a new file* and *Upload files*. Click on *Upload files*. An upload page appears where you can either drag your new file to or, by clicking on the *Choose your files* link, select your file with the file-select dialog.
 
 Your file won't actually be added to the repo until you hit the 'Commit changes' button. If you have not used a versioning repository tool like GitHub before, then this step will be unfamiliar to you. It's what allows GitHub to track changes to files and, if necessary, revert changes at a later date. 
 
@@ -37,9 +37,9 @@ To edit a file, e.g. a configuration file like *site.txt*, navigate to the folde
 Click on the button with the pencil icon and that will take you into edit mode. When you have finished your edits, click the green *Commit changes...* button. You will see a commit dialog appear. As described previously you can added a commit message and/or description or just accept the default commit message before clicking the green *Commit changes* button.
 
 ## Adding data and other resources
-To add files such as data files and resources like images and markdown/html pages, first navigate to the folder where you want to create upload the resources, then click the *Add file* button (near the top right of the page) and then click *Upload files*.
+To add files such as data files and resources like images and markdown/html pages, first navigate to the folder where you want to create the resources, then click the *Add file* button (near the top right of the page) and then click *Upload files*.
 
-You can use GitHub's drag and drop facility to copy the files or click the *choose your files* link to use a file select dialog. When you have copied all the files you wish to add, click the green *Commit changes* button (as described in the section *Creating first and then uploading*).
+You can use GitHub's drag and drop facility to copy the files or click the *choose your files* link to use a file-select dialog. When you have copied all the files you wish to add, click the green *Commit changes* button (as described in the section *Creating first and then uploading*).
 
 If the files you wish to upload need to go into a folder which is not yet present, there are two options:
 
