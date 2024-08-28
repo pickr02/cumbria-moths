@@ -1,6 +1,10 @@
 # General site configuration
 The file `site.txt` is the main site configuration page which you must be create and place in the folder `user/config`. The format in which the configuration options are laid out (described below) is known as YAML (pronounced 'yamel'). YAML files normally have a '.yml' file extension, but this configuration file has the file extension '.txt' to make it easy to open and edit with any text editor.
 
+To initially create, upload and edit your 'site.txt' file, you can follow the instructions laid out in the document [*Using GitHub ot add/edit files*](./docs-add-edit-config.md). 
+
+Add configuration options to this file as outlined below. Note that none of the options are mandatory. The software is designed such that it will operate without any of the configuration options being specified. So you can start very gently by adding one or two options and seeing how that affects your website before adding more.
+
 ## General format
 The general format for configuration options is:
 ```

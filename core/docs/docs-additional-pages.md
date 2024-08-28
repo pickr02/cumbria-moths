@@ -1,6 +1,8 @@
 # Creating additional HTML or Markdown pages
 You may add any number of additional HTML or Markdown pages to your atlas website. These should be stored under the *user/config* folder, but typically you would place them in a subfolder (or multiple sub-folders) of the */user/config* folder in order to keep that space organised. HTML pages should have the file extension `.html` and Markdown pages `.md`.
 
+Creating, uploading and editing files in your repo is described in the document [*Using GitHub ot add/edit files*](./docs-add-edit-config.md).
+
 If you have some HTML skills, then you may want to stick with providing additional pages in HTML format to give you full flexibility of HTML layout and styling. Markdown is a good option for those without HTML skills. If you don't have any Markdown skills, you can easily pick up the basics in just a few minutes by looking at online resources, e.g: https://www.markdownguide.org/.
 
 ## HTML pages
