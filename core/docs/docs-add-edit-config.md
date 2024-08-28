@@ -14,7 +14,7 @@ To using the first method, first create a configuration file, e.g. *site.txt* on
 
 Next, naviate to the place where you wish to upload the file in your GitHub repo. For the *site.txt* folder, this will be the *user/config* folder - simply click on the *user* folder from the homepage of your GitHub repo and then click again on the *config* folder: that opens the *config* folder. You will see a button near the top right of the page like this:
 
-[./images/add-button.png]
+[GitHub add button](./images/add-button.png)
 
 ### Creating directly in GitHub
 
