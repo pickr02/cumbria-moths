@@ -33,7 +33,7 @@ Create, add and edit the main configuration file and associated resources (e.g. 
 - [Using GitHub to add/edit files](./core/docs/docs-add-edit-config.md)
 ### Generate and upload biological record data
 Use a utility on your new site to convert a CSV of biological records into data files required by the site. This includes all the biological record data required for your site including taxon list, map and chart data. Upload these data to your GitHub repo. 
-- [Using the admin utilities](./core/docs/docs-admin-utilities.md) - 
+- [Using the admin utilities](./core/docs/docs-admin-utilities.md)
 ### Add further information 
 Add any further configuration and  files required for your site, taxon images, species accounts, web pages.
 - [Creating additional HTML or Markdown pages](./core/docs/docs-additional-pages.md)
