@@ -68,6 +68,8 @@ Deleting a folder is very similar. Navigate into the folder you wish to delete. 
 # Using Git
 If you are a seasoned user of Git, it will likely be much more convenient for you to update your repo by using the Git command line rather than the GitHub interface. This can also overcome GitHub's limit on the number of files that can be uploaded in one go.
 
-If you are not a Git user but would like to learn how to use it to modify and upload files in your repo rather than using the Git interface, then this section will give you some useful information and guidance on learning how to do that. But note that this is enirely optional - it is possible to manage your website entirely through the GitHub interface without using the Git command line.
+If you are not a Git user but would like to learn how to use it to modify and upload files in your repo rather than using the GitHub interface, there are plenty of tutorials online that will show you how to do that, e.g.:
 
-TODO - instructions on using Git
+https://www.freecodecamp.org/news/introduction-to-git-and-github/
+
+Note that many of those tutorials, including the one above, take you through setting up a repo on your own computer and then pushing that to GitHub. However, you already have a GitHub repo for your project, so you will skip that part and, instead, use the git *clone* command to get a local copy of your repo which you can keep in sync with the GitHub repo using Git command line instructions.

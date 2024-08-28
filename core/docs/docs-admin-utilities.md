@@ -9,5 +9,5 @@ To reach the admin utilties, click on the gear wheel on the right of your websit
 
 That will take you to a list of utilities acessible by clicking on the corresponding button. These are each described below>
 
-## Generate atlas data from a CSV of biological records
+## Generate atlas data from a biological records CSV
 
