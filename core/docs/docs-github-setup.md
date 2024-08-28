@@ -1,15 +1,5 @@
-# Initial steps
+# GitHub setup
 The page will take you through the initial steps of creating your own atlas website from the BRC GitHub repository by forking the repository and linking it to a GitHub pages site.
-
-## Overview of the main steps
-The main steps to create your own configurable atlas, hosted on GitHub, from a spreadsheet of biological records are:
-1. Fork the BRC GitHub project repository ('repo') into your own GitHub account.
-2. Set up 'GitHub pages' on your forked repo: this creates your website.
-3. Create, add and edit text configuration files to tailor the look of your website.
-4. Add any required resources, eg. a logo image.
-5. Use the utility on your new site to convert a spreadsheet of records into the mapping and charting data required by the site. These are generated on your own computer.
-6. Upload these data to your GitHub repo.
-7. Add any further configuration and  files required for your site, taxon images, species accounts, web pages.
 
 ## Personal GitHub account
 To use this workflow, you will need a personal GitHub account. GitHub is a platform for hosting and versioning digital resources - commonly software code. It has a whole host of useful features - some of which are described below. If you do not already have a GitHub account, you can set one up here: https://github.com/

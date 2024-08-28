@@ -6,7 +6,7 @@ For information on the specification for, and progress on, this project, see thi
 
 For some notes around the demonstration of this project at the BRC Recording Groups conference at Wallingford in March 2024, see [this information page](./core/docs/conf2024.md).
 
-## Documentation links
+## Documentation
 
 Note that until the first version is released, the documentation here will also be incomplete and under development.
 
@@ -15,7 +15,7 @@ This documenation is provided for site admins and the text in these pages often 
 No documetation is provided for atlas website users. It is intended that the atlas website facilities are intuitive and easy to use without instruction. If, as an admin, you feel that more documentation is required for your users, you can provide that in additional HTML or Markdown page(s) as described in the help page listed below.
 
 ## Overview of the main steps
-The main steps to create your own configurable atlas, hosted on GitHub, from a spreadsheet of biological records are outline below with links to documents that provide details. There are four main steps:
+The main steps to create your own configurable atlas, hosted on GitHub, from a spreadsheet of biological records are outlined below with links to documents that provide details. There are four main steps:
 
 1. Set up a GitHub repository & associated website
 2. Configure the appearance of your website
