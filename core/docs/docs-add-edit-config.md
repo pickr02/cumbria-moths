@@ -46,13 +46,13 @@ If the files you wish to upload need to go into a folder which is not yet presen
 1. create the folder first and then copy the files into the new folder, or
 2. use GitHub's drag and drop feature on the upload page and drag the whole folder.
 
-GitHub does not have a facility to create an empty folder, but you can create one with a dummy file in it later, once there are some real files in the folder, delete the dummy file. To do that, navigate to the folder where you want to create the new subfolder and  click the *Add file* button (near the top right of the page) and then click *Create new file*. You will see something like this:
+GitHub does not have a facility to create an empty folder, but you can create one with a dummy file in it and later, once there are some real files in the folder, delete the dummy file. To do that, navigate to the folder where you want to create the new subfolder and  click the *Add file* button (near the top right of the page) and then click *Create new file*. You will see something like this:
 
 ![Add file page](./images/add-file-page.png)
 
 Instead of typing the name of a file into the *Name your file* box, type something like 'folder/dummy', where 'folder' is the name of the of the folder you wish to create. Then commit the new folder complete with dummy file. Once you've added other files to this folder, you can delete the 'dummy' file (see next section). (If you delete the 'dummy' file before uploading other files into the folder, the folder disappears.)
 
-**Important note: GitHub imposes a limit of 100 files that can be uploaded in any one commit through its interface.** That can be awkward for us if you have more than 100 taxa in your atlas (which could easilty be the case). It means that you will have to upload data files in batches of 100 which is a pain. 
+**Important note: GitHub imposes a limit of 100 files that can be uploaded in any one commit through its interface.** That can be awkward if you have more than 100 taxa in your atlas (which could easilty be the case). It means that you will have to upload data files in batches of 100. 
 
 GitHub does not impose any such limit if you are uploading files via the Git command line tool. To find out more about that read the section on *Using Git* in this document.
 
@@ -63,7 +63,7 @@ To delete a file in GitHub, navigate to the folder containing the file and click
 
 Click this button and you will see a list of options - click the red one which says *Delete file*. The file will not actually be deleted until you commit the changes using the green *Commit changes...* button that you will be familiar with by now. As usual, you need to supply a commit message, but you can accept the default.
 
-Deleting a folder is very similar. Navigate into the folder you wish to delete. You will see the folders contents displayed. Click on the ellipsis button and select the red *Delete directory* button. The folder and all its contents will be deleted, but not until you have committed the changes.
+Deleting a folder is very similar. Navigate into the folder you wish to delete. You will see the folder's contents displayed. Click on the ellipsis button and select the red *Delete directory* button. The folder and all its contents will be deleted, but not until you have committed the changes.
 
 # Using Git
 If you are a seasoned user of Git, it will likely be much more convenient for you to update your repo by using the Git command line rather than the GitHub interface. This can also overcome GitHub's limit on the number of files that can be uploaded in one go.

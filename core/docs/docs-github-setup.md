@@ -55,7 +55,7 @@ This shows the URL for the website based on the forked GitHub repo. Following th
 
 ![Unconfigured website](./images/unconfigured-website.png)
 
-This is how a configurable atlas website looks without any configuration! Your next steps will be to add configuration and data to your repo. You can start learing out this by reading this document on [using GitHub to add/edit files](./docs-add-edit-config.md).
+This is how a configurable atlas website looks without any configuration! Your next steps will be to add configuration and data to your repo.
 
 ## Updating your project with the latest code
 From time to time, BRC may update the configurable atlas software. Because GitHub maintains a link between a forked repo and its source, it is relatively easy to pull those updates into your forked repo. 
