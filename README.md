@@ -31,8 +31,7 @@ Setting up the GitHub side of things deals with 'forking' the BRC GitHub project
 Create, add and edit the main configuration file and associated resources (e.g. a logo image) that tailors the look of your website.
 - [General site configuration](./core/docs/docs-site-config.md)
 ### Generate and upload biological record data
-Use the utility on your new site to convert a spreadsheet of records into the mapping and charting data required by the site. These are generated on your own computer.
-Upload these data to your GitHub repo.
+Use the utility on your new site to convert a spreadsheet of records into the mapping and charting data required by the site. Upload these data to your GitHub repo.
 - [Using the admin utilities](./core/docs/docs-admin-utilities.md) - this includes how to generate all the required data for your site (e.g. taxon list, map and chart data), from a CSV of biological records.
 ### Add further information 
 Add any further configuration and  files required for your site, taxon images, species accounts, web pages.
