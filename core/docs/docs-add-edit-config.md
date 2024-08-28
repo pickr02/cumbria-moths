@@ -27,9 +27,12 @@ To use the second method, navigate to the folder as before, but click the *Creat
 
 ![Add file page](./images/add-file-page.png)
 
+In the *Name your file* box, enter the name of the file you wish to create, e.g. *site.txt*, and optionally add some text to the body of the file (where it says *Etner file contents here*). Then click the green *Commit changes...* button. You will see a commit dialog appear. As with the previous method you can added a commit message and/or description or just accept the default commit message before clicking the green *Commit changes* button.
 
+## Editing a file
+To edit a file, e.g. a configuration file like *site.txt*, navigate to the folder that contains the file and then click on the file name (which will show as a blue link when your mouse moves over it). Now on the right near the top of the screen you will see a set of buttons like this:
 
-## Editing a configuration file
+![Edit buttons](./images/edit-buttons.png)
 
 ## Adding other resources
 
