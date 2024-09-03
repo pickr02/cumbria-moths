@@ -26,14 +26,15 @@ and configure it to create an atlas website for other people - their users - to 
 - [x] A classic atlas overview map.
 - [x] Config option for admins to specify the maximum height of the overview map.
 - [x] Config option for admins to specify atlas area as a Vice County boundary (Britain or Ireland). These boundaries supplied with the core software.
-- [x] Config option for admins to specify whether or not a 10 km grid is to be show with a VC boundary. These grids supplied with the core software.
-- [ ] Config options for admins to specify atlas area as a country boundary (Ireland, Northern Ireland, GB and Ireland, GB, Scotland, England, Wales). Currently only GB and Ireland available.
+- [x] Config options for admins to specify atlas area as a country boundary (Ireland, Northern Ireland, Scotland, England, Wales). Default is GB and Ireland.
+- [x] Config option for admins to specify whether or not a hectad grid is to be show with a VC boundary or a 100 km grid with a country boundary. These grids supplied with the core software.
 - [x] Config options for admins to specify a buffer around the atlas area boundary.
-- [ ] Config option for admins to specify how Channel Islands and Hebrides are displayed for GB and Ireland view.
-- [ ] Config option for admins to specify a add-hoc atlas area by uploading a geojson boundary file.
-- [ ] Config option for admins to specify a add-hoc atlas grid by uploading a geojson file.
-- [ ] Config option for admins to set the colour of land areas.
-- [ ] Config option for admins to set the colour of sea areas.
+- [x] Config option for admins to specify how Channel Islands and Northern Isles are displayed for GB and Ireland view.
+- [x] Config options for admins to set the colour of land areas, sea areas, boundary line, grid lines abd inset boxes.
+- [x] Config options for admins to set the width of boundary lines and grid lines.
+- [x] Config options for admins to set the style of grid lines.
+- [ ] Config option for admins to specify an add-hoc atlas area by uploading a geojson boundary file.
+- [ ] Config option for admins to specify an add-hoc atlas grid by uploading a geojson file.
 - [ ] Config option for admins to specify a georeferenced raster image to act as a basemap for the atlas overview.
 - [ ] A download button to allow users to download an image of the currently displayed overview map. Config options to allow admins to specify whether or not to show this button.
 
@@ -41,7 +42,8 @@ and configure it to create an atlas website for other people - their users - to 
 - [x] Zoomable map for users to explore the mapped data in more detail.
 - [x] Config option for admins to specify whether or not to show the zoomable map.
 - [x] Config option for admins to specify the height of the zoomable map.
-- [ ] Show VC or uploaded boundary on map.
+- [x] Config option for admins to indicate whether to show country or vice-county boundaries on map
+- [ ] Config option to show uploaded boundary on map.
 
 ## Info pages
 - [x] Ability for admins to add html or markdown pages for each taxon which will be displayed on *info* tab when user selects taxon.

@@ -21,6 +21,15 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
         mapTypesKey: 'standard'
       })
 
+      // Boundaries
+      if (c.get('zoom.boundaries')) {
+        if (c.zoom.boundaries === 'countries') {
+          mapZoom.setShowCountries(true) 
+        } else if (c.zoom.boundaries === 'vcs') {
+          mapZoom.setShowVcs(true) 
+        }
+      }
+
       resizeZoomMap() // Required here in case slipply map is first tab
 
       // Map controls

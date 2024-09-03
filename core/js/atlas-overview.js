@@ -40,17 +40,67 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
         mapTypesKey: 'standard'
       }
 
-      // If a VC is specified, set up the transOptsSel
-      if (c.get('overview.vc')) {
+      // Configure insets
+      if (c.get('overview.insets')) {
+        if (c.overview.insets === 'none') {
+          mapStaticOpts.transOptsKey = 'BI1'
+        } else if (c.overview.insets === 'ci') {
+          mapStaticOpts.transOptsKey = 'BI2'
+        } else if (c.overview.insets === 'ni') {
+          mapStaticOpts.transOptsKey = 'BI3'
+        } else {
+          mapStaticOpts.transOptsKey = 'BI4'
+        }
+      } else {
+        mapStaticOpts.transOptsKey = 'BI4'
+      }
 
-        const match = c.overview.vc.match(/(gb|ir)(\d+)/)
-        if (match) {
+      // Configure styles
+      if (c.get('overview.land-colour')) {
+        mapStaticOpts.boundaryFill = c.get('overview.land-colour')
+      }
+      if (c.get('overview.sea-colour')) {
+        mapStaticOpts.seaFill = c.get('overview.sea-colour')
+      }
+      if (c.get('overview.boundary-colour')) {
+        mapStaticOpts.boundaryColour = c.get('overview.boundary-colour')
+      }
+      if (c.get('overview.grid-colour')) {
+        mapStaticOpts.gridLineColour = c.get('overview.grid-colour')
+      }
+      if (c.get('overview.inset-colour')) {
+        mapStaticOpts.insetColour = c.get('overview.inset-colour')
+      }
+      if (c.get('overview.boundary-width')) {
+        mapStaticOpts.boundaryLineWidth = c.get('overview.boundary-width')
+      }
+      if (c.get('overview.grid-width')) {
+        mapStaticOpts.gridLineWidth = c.get('overview.grid-width')
+      }
+      
+      // If a boundary is specified, set up the transOptsSel
+      if (c.get('overview.boundary')) {
+
+        const vc = c.overview.boundary.match(/(gb|ir)(\d+)/)
+        const country = c.overview.boundary.match(/(ireland|northern-ireland|scotland|england|wales)/)
+        let gjsonFile, grid
+        if (vc) {
           // Set correct projection for VC (British or Irish)
-          mapStaticOpts.proj = match[1]
-
-          // Open the lowest resolution geojson file in order
-          // to get the minimum bounding box.
-          const gjsonFile = `./data/vc-${match[1]}-simp-100/vc-${match[1]}-${match[1] === 'ir' ? 'H' : ''}${match[2]}.geojson`
+          mapStaticOpts.proj = vc[1]
+          // Open the geojson file in order to get the minimum bounding box
+          gjsonFile = `./data/vc-${vc[1]}-simp-100/vc-${vc[1]}-${vc[1] === 'ir' ? 'H' : ''}${vc[2]}.geojson`
+          // Specify the grid file
+          grid = `./data/vc-${vc[1]}-hectad-grids/vc-${vc[1]}-${vc[1] === 'ir' ? 'H' : ''}${vc[2]}-hectads.geojson`
+        } else if (country) {
+          // Set correct projection 
+          mapStaticOpts.proj = c.overview.boundary.includes('ireland') ? 'ir' : 'gb'
+          // Open the geojson file in order to get the minimum bounding box
+          gjsonFile = `./data/countries-simp/country-${c.overview.boundary}-simp.geojson`
+          // Specify the grid file
+          grid = `./data/countries-grids/country-${c.overview.boundary}-100km.geojson`
+        }
+          
+        if (vc || country) {
           let gjson
           $.ajax({
             url: gjsonFile,
@@ -61,15 +111,15 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
             }
           })
           const props = gjson.features[0].properties
-          const xminBuffer = c.get('overview.vc-buffer-west') ? Number(c.overview['vc-buffer-west']) : 0
-          const xmaxBuffer = c.get('overview.vc-buffer-east') ? Number(c.overview['vc-buffer-east']) : 0
-          const yminBuffer = c.get('overview.vc-buffer-south') ? Number(c.overview['vc-buffer-south']) : 0
-          const ymaxBuffer = c.get('overview.vc-buffer-north') ? Number(c.overview['vc-buffer-north']) : 0
+          const xminBuffer = c.get('overview.buffer-west') ? Number(c.overview['buffer-west']) : 0
+          const xmaxBuffer = c.get('overview.buffer-east') ? Number(c.overview['buffer-east']) : 0
+          const yminBuffer = c.get('overview.buffer-south') ? Number(c.overview['buffer-south']) : 0
+          const ymaxBuffer = c.get('overview.buffer-north') ? Number(c.overview['buffer-north']) : 0
 
           // Set the transOptsSel
           mapStaticOpts.transOptsSel = {
-            vc: {
-              id: 'vc',
+            boundary: {
+              id: 'boundary',
               bounds: {
                 xmin: props.xmin - xminBuffer,
                 ymin: props.ymin - yminBuffer,
@@ -78,21 +128,37 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
               }
             }
           }
-          mapStaticOpts.transOptsKey = 'vc'
+
+          console.log('mapStaticOpts.transOptsSel', mapStaticOpts.transOptsSel)
+          mapStaticOpts.transOptsKey = 'boundary'
           mapStaticOpts.boundaryGjson = gjsonFile
 
-          // Remove default UK grid
-          if (c.get('overview.hectad-grid') === true) {
-            const file = `./data/vc-${match[1]}-hectad-grids/vc-${match[1]}-${match[1] === 'ir' ? 'H' : ''}${match[2]}-hectads.geojson`
-            console.log('grid', file)
-            mapStaticOpts.gridGjson = file
+          // Set grid
+          if (c.get('overview.grid-display') === 'solid' || c.get('overview.grid-display') === 'dashed') {
+            mapStaticOpts.gridGjson = grid
           } else {
             mapStaticOpts.gridGjson = ''
           }
         }
+      } else {
+        // If no boundary is specified, the grid lines are always shown unless
+        // admin specifically turns them off in config.
+        if (c.get('overview.grid-display') === false) {
+          console.log('no grid')
+          mapStaticOpts.gridLineStyle = 'none'
+        } else {
+          console.log('yes grd')
+        }
       }
 
+      // Grid style
+      if (c.get('overview.grid-display')) {
+        mapStaticOpts.gridLineStyle = c.get('overview.grid-display')
+      }
+      
       mapStatic = brcatlas.svgMap(mapStaticOpts)
+
+      console.log('mapStaticOpts', mapStaticOpts)
 
       $(selectorTab).css('max-width', `${maxWidth}px`)
 
