@@ -36,7 +36,7 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map", "turf.v7.min
         transOptsKey: 'BI4',
         mapTypesControl: false,
         transOptsControl: false,
-        mapTypesSel: {standard: common.genMap},
+        mapTypesSel: {standard: common.genStandardMap, density: common.genDensityMap, timeslice: common.genTimeSliceMap},
         mapTypesKey: 'standard'
       }
 
@@ -221,6 +221,9 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map", "turf.v7.min
     function createOverviewControls(selectorControl) {
       $(selectorControl).html('')
 
+      // Map type selection 
+      common.createMapTypeControl(selectorControl, 'overview', refreshOverviewMap)
+
       // Resolution selection
       if (c.get('common.resolution')) {
         resolutions = c.get('common.resolution').replace(/\s+/g, ' ').split(' ').filter(r => ['hectad', 'quadrant', 'tetrad', 'monad'].includes(r))
@@ -240,8 +243,8 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map", "turf.v7.min
         $downloadButton.text('Download')
         $downloadButton.on('click', downloadMapImage)
 
-        components.makeRadio(`download-type`, 'SVG', 'svg', true, $downloadDiv, [])
-        components.makeRadio(`download-type`, 'PNG', 'png', false, $downloadDiv, [])
+        components.makeRadio(`download-type`, 'SVG', 'svg', localStorage.getItem('download-type') === 'svg', 'download-type', $downloadDiv, [])
+        components.makeRadio(`download-type`, 'PNG', 'png', localStorage.getItem('download-type') === 'png', 'download-type', $downloadDiv, [])
       }
     }
 
@@ -270,6 +273,8 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map", "turf.v7.min
     function refreshOverviewMap() {
       const dotSize = common.getDotSize()
       const taxonId = localStorage.getItem('taxonId')
+      const mapType = localStorage.getItem('map-type')
+      mapStatic.setMapType(mapType)
       mapStatic.setIdentfier(`../user/data/${dotSize}/${taxonId}.csv`)
       mapStatic.redrawMap()
     }

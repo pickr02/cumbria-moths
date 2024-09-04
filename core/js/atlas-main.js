@@ -46,11 +46,14 @@ define(
     function initLocalStorage() {
      
       const setDefault = (variable, val) => {
-        localStorage.setItem(variable, val)
+        if (!localStorage.getItem(variable)) {
+          localStorage.setItem(variable, val)
+        }
       }
  
       setDefault('dot-shape', 'circle')
       setDefault('resolution', 'hectad')
+      setDefault('download-type', 'png')
     }
 
     async function loadContent() {

@@ -172,8 +172,8 @@ define(
           }
         }
       },
-      
-      makeRadio: function makeRadio(id, label, val, checked, $container, callbacks) {
+
+      makeRadio: function makeRadio(id, label, val, checked, ls, $container, callbacks) {
     
         const $div = $('<div>').appendTo($container)
         $div.css('display', 'inline-block')
@@ -193,7 +193,7 @@ define(
     
         $radio.change(function (e) {
           // Store value in local storage
-          localStorage.setItem('dot-shape', val)
+          localStorage.setItem(ls, val)
           // Ensure that the control on other map matches this
           $(`.atlas-map-control-${val}`).prop("checked", true)
           // Callbacks

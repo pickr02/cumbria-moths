@@ -215,10 +215,12 @@ These options are used to configure features that are common to both the atlas a
   - `resolution: tetrad monad`
 - **dot-shape**: indicates whether or not to offer the user a control to switch between squares and circles and, if not, what the shape should be. Value should be one of 'control' (to display the control to user), 'square' or 'circle'.  If not specified, then 'circle' is used. Example:
   - `dot-shape: square`
-- **dot-colour**: indicates the colour of the dots on a standard map. Will accept any of the colour formats understood by HTML/CSS. If the option is not specified, the dots will be black. Examples:
+- **dot-colour**: indicates the colour of the dots on a maps of type 'standard' and 'density'. Will accept any of the colour formats understood by HTML/CSS. If the option is not specified, the dots will be black. Examples:
   - `dot-colour: red` (HTML colour name)
   - `dot-colour: rgb(100,120,30)` (red, green blue format)
   - `dot-colour: "#EF9766"` (hex colour format - double-quotes required)
+- **map-types**: indicates which map types to use. Can be any combination of the following types separated by a space: 'standard', 'density', 'timeslice'. The 'standard' map presents a classic atlas map with all dots a single colour. The 'density' map presents a map with the size of the dots relating to the number of records contributing to that atlas dot. The 'timeslice' map presents options for colouring the dots on the map depending on the year in which the first or the last record contributing to that dot was made. If only one option is specified, that is the only map type available to your users and no selection control is presented. If more than one type is specified, then the user is able to switch between them using a selection control. If the option is unspecified, then all three options are available to the user. Example:
+  - `map-types: standard, timeslice`
 
 A full example:
 ```
@@ -226,6 +228,7 @@ common:
   resolution: hectad quadrant tetrad
   dot-shape: control
   dot-color: red
+  map-types: standard, density
 ```
 
 ## Configuring the temporal charts

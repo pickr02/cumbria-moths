@@ -17,7 +17,7 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
       mapZoom = brcatlas.leafletMap({
         selector: selectorTab,
         height: 500,
-        mapTypesSel: {standard: common.genMap},
+        mapTypesSel: {standard: common.genStandardMap, density: common.genDensityMap, timeslice: common.genTimeSliceMap},
         mapTypesKey: 'standard'
       })
 
@@ -36,8 +36,12 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
       createZoomControls(selectorControl)
     }
 
+    
     function createZoomControls(selectorControl) {
       $(selectorControl).html('')
+
+      // Map type selection 
+      common.createMapTypeControl(selectorControl, 'zoom', refreshZoomMap)
 
       // Resolution selection
       if (c.get('common.resolution')) {
@@ -56,6 +60,8 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
     function refreshZoomMap() {
       const dotSize = common.getDotSize()
       const taxonId = localStorage.getItem('taxonId')
+      const mapType = localStorage.getItem('map-type')
+      mapZoom.setMapType(mapType)
       mapZoom.setIdentfier(`../user/data/${dotSize}/${taxonId}.csv`)
       mapZoom.redrawMap()
     }
