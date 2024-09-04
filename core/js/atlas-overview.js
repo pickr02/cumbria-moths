@@ -235,6 +235,7 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map", "turf.v7.min
       // Download button
       if (c.get('overview.download-control') === true) {
         const $downloadDiv=$('<div>').appendTo($(selectorControl))
+        $downloadDiv.css('margin-top', '1em')
         const $downloadButton = $('<button>').appendTo($downloadDiv)
         $downloadButton.text('Download')
         $downloadButton.on('click', downloadMapImage)
