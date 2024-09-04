@@ -1,6 +1,6 @@
-define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map", "turf.v7.min"],
+define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map", "turf.v7.min", "atlas-components"],
 
-  function (jq, d3, brcatlas, common, turf) {
+  function (jq, d3, brcatlas, common, turf, components) {
 
     let mapStatic, c
  
@@ -187,7 +187,7 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map", "turf.v7.min
 
         }
       }
-      
+
       // Display custom grid if specified
       if (c.get('overview.custom-grid')) {
         mapStaticOpts.gridGjson = c.get('overview.custom-grid')
@@ -221,7 +221,6 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map", "turf.v7.min
     function createOverviewControls(selectorControl) {
       $(selectorControl).html('')
 
-
       // Resolution selection
       if (c.get('common.resolution')) {
         resolutions = c.get('common.resolution').replace(/\s+/g, ' ').split(' ').filter(r => ['hectad', 'quadrant', 'tetrad', 'monad'].includes(r))
@@ -233,6 +232,38 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map", "turf.v7.min
       if (c.get('common.dot-shape') === 'control') {
         common.createDotShapeControl(selectorControl, 'overview', refreshOverviewMap)
       }
+      // Download button
+      if (c.get('overview.download-control') === true) {
+        const $downloadDiv=$('<div>').appendTo($(selectorControl))
+        const $downloadButton = $('<button>').appendTo($downloadDiv)
+        $downloadButton.text('Download')
+        $downloadButton.on('click', downloadMapImage)
+
+        components.makeRadio(`download-type`, 'SVG', 'svg', true, $downloadDiv, [])
+        components.makeRadio(`download-type`, 'PNG', 'png', false, $downloadDiv, [])
+      }
+    }
+
+    function downloadMapImage() {
+      let info = null
+      if (c.get('overview.download-text') || c.get('overview.download-info') === true) {
+        info = {margin: 10,text: ''}
+        if (c.get('overview.download-text')) {
+          info.text = c.get('overview.download-text')
+        }
+        if (c.get('overview.download-info') === true) {
+          const today = new Date()
+          const yyyy = today.getFullYear()
+          let mm = today.getMonth() + 1
+          let dd = today.getDate()
+          if (dd < 10) dd = '0' + dd
+          if (mm < 10) mm = '0' + mm
+          if (info.text) info.text = `${info.text} `
+          info.text = `${info.text}From ${location.href} on ${dd}/${mm}/${yyyy}.`
+        }
+      }
+      const asSvg = $("input[name='atlas-map-control-download-type']:checked").val() ==='svg'
+      mapStatic.saveMap(asSvg, info, 'map')
     }
 
     function refreshOverviewMap() {

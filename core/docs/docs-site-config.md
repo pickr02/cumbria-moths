@@ -122,6 +122,8 @@ These options are used to tailor the appearance and behaviour of the classic atl
   - `custom-boundary: /user/config/boundary/project-boundary.geojson`
 - **custom-grid**: specifies the location of a geojson file to use as a project grid. You must first upload your grid file into a folder under the *user/config* folder. For example you could create a sub-folder called *boundary* here and upload your geojson file to that folder. You then reference the file using its full path starting with */user/config/* (see example below). The grid file will be used regarless of whether or not you have specified a value for the *boundary* config option. So you can use this to replace the default grid shown with pre-defined boundaries if you wish. If you also specify the *custom-boundary* config option, they coordinate systems of the two geojson files should be the same. If you do not specify the *custom-boundary* config option, then the coordinate system of your geosjon file needs to match that of the pre-defined boundary you are using. If the coordinate system of your geojson file is not British National grid - EPSG:27700 - you need to specify the *custom-proj* config option. Example:
   - `custom-grid: /user/config/boundary/project-grid.geojson`
+- **custom-background**: specifies the location of a georeferenced image file to use as a background for the map. You must first upload your image file and its assocaited 'world' file (specifying the georeferencing) into a folder under the *user/config* folder. For example you could create a sub-folder called *boundary* here and upload your image files to that folder. The image file and world file must have the same name but different file extensions. The image file extensions you can use are: 'tif', 'jpg', 'png' or 'bmp' and the world file extensions corresponding to these are, respectively: 'tfw', jgw', 'pgw' and 'bpw'. Only use lower case for the file extensions. You then reference the image file using its full path starting with */user/config/*. If you do not specify the *custom-boundary* config option, then the coordinate system of your geosjon file needs to match that of the pre-defined boundary you are using. If the coordinate system of your world file is not British National grid - EPSG:27700 - you need to specify the *custom-proj* config option.(You can use a tool such as QGIS to design and create background images with their associated world files.) Example:
+  - `custom-background: /user/config/boundary/background-image.png`
 - **custom-proj**: specifies the coordinate reference system used by a custom boundary file. Must be one of 'gb', 'ir' or 'ci' which refer to these coordinate systems respectively: OSGB 1936 / British National Grid (EPSG:27700), TM75 / Irish Grid (EPSG:29903) and WGS 84 / UTM zone 30N (EPSG:32630). The last one is used for the Channel Islands.
 - **buffer-west**: specifies a value in metres by which to extend the real-world extent of the map (as calculated from the map boundary) in the *westward* direction. This can be useful when specifying a vice-county or country map with a grid - it enables the map to be extended so that the whole grid is visible. Example:
   - `buffer-west: 10000`
@@ -153,12 +155,16 @@ These options are used to tailor the appearance and behaviour of the classic atl
   - `grid-colour: red` (HTML colour name)
   - `grid-colour: rgb(100,120,30)` (red, green blue format)
   - `grid-colour: "#ffe6b3"` (hex colour format - double-quotes required)
-- **boundary-width**: specifies the width of boundary lines in pixels. Will accept any number (including fractional parts). If the option is not specified, the line width will be 1. Examples:
+- **boundary-width**: specifies the width of boundary lines in pixels. Will accept any number (including fractional parts). If the option is not specified, the line width will be 1. Example:
   - `boundary-width: 1.5`
-- **grid-width**: specifies the width of grid lines in pixels. Will accept any number (including fractional parts). If the option is not specified, the line width will be 1. Examples:
+- **grid-width**: specifies the width of grid lines in pixels. Will accept any number (including fractional parts). If the option is not specified, the line width will be 1. Example:
   - `grid-width: 0.5`  
-- **custom-background**: specifies the location of a georeferenced image file to use as a background for the map. You must first upload your image file and its assocaited 'world' file (specifying the georeferencing) into a folder under the *user/config* folder. For example you could create a sub-folder called *boundary* here and upload your image files to that folder. The image file and world file must have the same name but different file extensions. The image file extensions you can use are: 'tif', 'jpg', 'png' or 'bmp' and the world file extensions corresponding to these are, respectively: 'tfw', jgw', 'pgw' and 'bpw'. Only use lower case for the file extensions. You then reference the image file using its full path starting with */user/config/*. (You can use a tool such as QGIS to design and create background images with their associated world files.) Example:
-  - `custom-background: /user/config/boundary/background-image.png`
+- **download-control**: specifies whether or not a control should be displayed that allows users to download an SVG or PNG image of the currently displayed map. The control will only be shown if this config option is set to 'true'. Example:
+  - `download-control: true`
+- **download-text**: specifies some text that should be added to the foot of map images downloaded from the site. Example:
+  - `download-text: Shropshire Earthworm Atlas. `
+- **download-info**: indicates whether or not to display the URL of the website and the date to the foot of map images downloaded from the site. If the 'download-text' option is also specified, this text is appended to that with a space to separate them. The information is only appended if this config option is set to 'true'. Example:
+  - `download-info: true`
 
 A full example:
 ```
@@ -168,7 +174,7 @@ overview:
   grid-display: solid
   custom-boundary: /user/config/boundary/project-boundary.geojson
   custom-grid: /user/config/boundary/project-grid.geojson
-  proj: ir
+  custom-background: /user/config/boundary/background-image.png
   buffer-west: 10000
   buffer-east: 10000
   buffer-south: 10000
@@ -181,7 +187,9 @@ overview:
   grid-colour: black
   boundary-width: 1.5
   grid-width: 0.5
-  custom-background: /user/config/boundary/background-image.png
+  download-control: true
+  download-text: Shropshire Earthworm atlas showing data to 2020.
+  download-info: true
 ```
 Data for the atlas map are stored in subfolders of the *user/data* folder as described in the documentation on [admin utilities](./docs-admin-utilities.md).
 
