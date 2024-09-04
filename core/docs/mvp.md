@@ -33,8 +33,8 @@ and configure it to create an atlas website for other people - their users - to 
 - [x] Config options for admins to set the colour of land areas, sea areas, boundary line, grid lines abd inset boxes.
 - [x] Config options for admins to set the width of boundary lines and grid lines.
 - [x] Config options for admins to set the style of grid lines.
-- [ ] Config option for admins to specify an add-hoc atlas area by uploading a geojson boundary file.
-- [ ] Config option for admins to specify an add-hoc atlas grid by uploading a geojson file.
+- [x] Config option for admins to specify an add-hoc atlas area by uploading a geojson boundary file.
+- [x] Config option for admins to specify an add-hoc atlas grid by uploading a geojson file.
 - [ ] Config option for admins to specify a georeferenced raster image to act as a basemap for the atlas overview.
 - [ ] A download button to allow users to download an image of the currently displayed overview map. Config options to allow admins to specify whether or not to show this button.
 
@@ -43,7 +43,6 @@ and configure it to create an atlas website for other people - their users - to 
 - [x] Config option for admins to specify whether or not to show the zoomable map.
 - [x] Config option for admins to specify the height of the zoomable map.
 - [x] Config option for admins to indicate whether to show country or vice-county boundaries on map
-- [ ] Config option to show uploaded boundary on map.
 
 ## Info pages
 - [x] Ability for admins to add html or markdown pages for each taxon which will be displayed on *info* tab when user selects taxon.
@@ -66,13 +65,11 @@ and configure it to create an atlas website for other people - their users - to 
 - [x] Utility for admins to generate temporal data files from a CSV of records.
 - [x] Utility for admins to generate taxon list from a CSV of records.
 - [x] Utility for admins to generate taxon information stubs fro a CSV of records.
-- [ ] Utility for admins to generate grid files from imported geojson boundary.
-- [ ] Utility for admins to generate generalised boundary files from imported geojson (for potential use with zoomable map at different resolutions).
 - [ ] Utility for admins to generate hectad grid from imported geojson boundary file.
 - [ ] Utility for admins to check and report potential problems on a CSV of records, e.g. for highlighting invalid GRs or unrecognised date formats.
 
 ## Documentation
-- [ ] Detailed documentation to take an admin through the process of setting up an atlas website. This will be implemented as a series of readme files in this repository.
+- [x] Detailed documentation to take an admin through the process of setting up an atlas website. This will be implemented as a series of readme files in this repository.
 - [ ] Technical documentation explaining the architecture of the website - aimed at coders developing or maintaining site functionlity.
 
 ## Bugs/issues

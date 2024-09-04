@@ -1,6 +1,6 @@
-define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
+define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map", "turf.v7.min"],
 
-  function (jq, d3, brcatlas, common) {
+  function (jq, d3, brcatlas, common, turf) {
 
     let mapStatic, c
  
@@ -77,6 +77,9 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
       if (c.get('overview.grid-width')) {
         mapStaticOpts.gridLineWidth = c.get('overview.grid-width')
       }
+      if (c.get('overview.grid-display')) {
+        mapStaticOpts.gridLineStyle = c.get('overview.grid-display')
+      }
       
       // If a boundary is specified, set up the transOptsSel
       if (c.get('overview.boundary')) {
@@ -141,25 +144,74 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
           }
         }
       } else {
-        // If no boundary is specified, the grid lines are always shown unless
-        // admin specifically turns them off in config.
-        if (c.get('overview.grid-display') === false) {
-          console.log('no grid')
-          mapStaticOpts.gridLineStyle = 'none'
-        } else {
-          console.log('yes grd')
+        // If no boundary is specified - then use custom boundary
+        // if specified.
+        if (c.get('overview.custom-boundary')) {
+          mapStaticOpts.boundaryGjson = c.get('overview.custom-boundary')
+          // Assume British projection unless other valid value specified
+          if (c.get('overview.proj')) {
+            if (c.common.proj === 'ci' || c.common.proj === 'ir') {
+              mapStaticOpts.proj = c.common.proj
+            } else {
+              mapStaticOpts.proj = 'br'
+            }
+          }
+          // Set extents from mbb
+          let gjson
+          $.ajax({
+            url: c.get('overview.custom-boundary'),
+            cache: false,
+            async:  false,
+            success: function (data) {
+              gjson = data
+            }
+          })
+          const bbox = turf.bbox(gjson)
+          const xminBuffer = c.get('overview.buffer-west') ? Number(c.overview['buffer-west']) : 0
+          const xmaxBuffer = c.get('overview.buffer-east') ? Number(c.overview['buffer-east']) : 0
+          const yminBuffer = c.get('overview.buffer-south') ? Number(c.overview['buffer-south']) : 0
+          const ymaxBuffer = c.get('overview.buffer-north') ? Number(c.overview['buffer-north']) : 0
+          // Set the transOptsSel
+          mapStaticOpts.transOptsSel = {
+            boundary: {
+              id: 'boundary',
+              bounds: {
+                xmin: bbox[0] - xminBuffer,
+                ymin: bbox[1] - yminBuffer,
+                xmax: bbox[2] + xmaxBuffer,
+                ymax: bbox[3] + ymaxBuffer
+              }
+            }
+          }
+          mapStaticOpts.transOptsKey = 'boundary'
+
         }
       }
-
-      // Grid style
-      if (c.get('overview.grid-display')) {
-        mapStaticOpts.gridLineStyle = c.get('overview.grid-display')
-      }
       
+      // Display custom grid if specified
+      if (c.get('overview.custom-grid')) {
+        mapStaticOpts.gridGjson = c.get('overview.custom-grid')
+      }
+
+      // Create static map
       mapStatic = brcatlas.svgMap(mapStaticOpts)
 
-      console.log('mapStaticOpts', mapStaticOpts)
+      // Background image if specified
+      // Only available as method (not properties)
+      if (c.get('overview.custom-background')) {
+        const extensions = {
+          png: 'pgw',
+          tif: 'tfw',
+          jpg: 'jgw',
+          bmp: 'bpw'
+        }
+        const file = c.get('overview.custom-background')
+        const ext = file.substring(file.length-3)
+        const world = `${file.substring(0, file.length-3)}${extensions[ext]}`
+        mapStatic.basemapImage('background', true, file, world)
+      }
 
+      // Set container width
       $(selectorTab).css('max-width', `${maxWidth}px`)
 
       // Map controls

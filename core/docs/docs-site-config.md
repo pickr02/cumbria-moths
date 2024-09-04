@@ -114,10 +114,15 @@ To exclude a visualisation from your atlas, e.g. the temporal charts, simply do 
 These options are used to tailor the appearance and behaviour of the classic atlas map. These are specified as a group of options with the group name *overview*.
 - **height**: specifies the maximum height of the atlas map in pixels. The nominal width of the map is calculated from the height you specify and the aspect ratio of your atlas area. If the nominal width exceeds the area available to display it (e.g. on small devices), then the width is reduced to fit it in and the height is also reduced to maintain the aspect ratio. Therefore the height you speciy here should be regarded as a maximum height that will not be exceeded. Example:
   - `height: 800`
-- **boundary**: specifies a boundary to use as the atlas area. Valid values for country areas are 'ireland', 'northern-ireland', 'scotland', 'wales' and 'england'. You can also specify a British or Irish vice-county to use as the atlas area. Values are of the format 'gb*n*' or 'ir*n*' where *n* is the vice-county number, e.g. gb40 (Shropshire), gb1 (West Cornwall with Scilly) or ir21 (Dublin). Vice-county boundaries for Britain and Ireland are supplied with the core software. If uspecified, then the atlas area covers the whole of Britain and Ireland and the Channel Islands.
+- **boundary**: specifies a pre-defined boundary to use as the atlas area. Valid values for country areas are 'ireland', 'northern-ireland', 'scotland', 'wales' and 'england'. You can also specify a British or Irish vice-county to use as the atlas area. Values are of the format 'gb*n*' or 'ir*n*' where *n* is the vice-county number, e.g. gb40 (Shropshire), gb1 (West Cornwall with Scilly) or ir21 (Dublin). Vice-county boundaries for Britain and Ireland are supplied with the core software. If uspecified, then the atlas area covers the whole of Britain and Ireland and the Channel Islands.
   - `display: gb40`
 - **grid-display**: if set to 'dashed' or 'solid', this indicates that a grid is to be drawn over the map boundary (a dashed or solid line respectively). If the value is set to 'none', no grid is drawn. If a vice-county is used to specify the map extent and boundary, the grid will be a 10x10 km (hectad) grid. If a country-level boundary is used to specify the map extent and boundary, the grid will be a 100x100 km grid. Grids for all the pre-defined country and vice-county boundaries are supplied with the core software. If not specified a grid is not drawn unless the default boundary is used in which case it is drawn. Example:
   - `grid-display: dashed`
+- **custom-boundary**: specifies the location of a geojson file to use as a project boundary. You must first upload your boundary file into a folder under the *user/config* folder. For example you could create a sub-folder called *boundary* here and upload your geojson file to that folder. You then reference the file using its full path starting with */user/config/* (see example below). The boundary file will only be used if you have *not* specified a value for the *boundary* config option. If the coordinate system of your geojson file is not British National grid - EPSG:27700 - you need to specify the *custom-proj* config option. Example:
+  - `custom-boundary: /user/config/boundary/project-boundary.geojson`
+- **custom-grid**: specifies the location of a geojson file to use as a project grid. You must first upload your grid file into a folder under the *user/config* folder. For example you could create a sub-folder called *boundary* here and upload your geojson file to that folder. You then reference the file using its full path starting with */user/config/* (see example below). The grid file will be used regarless of whether or not you have specified a value for the *boundary* config option. So you can use this to replace the default grid shown with pre-defined boundaries if you wish. If you also specify the *custom-boundary* config option, they coordinate systems of the two geojson files should be the same. If you do not specify the *custom-boundary* config option, then the coordinate system of your geosjon file needs to match that of the pre-defined boundary you are using. If the coordinate system of your geojson file is not British National grid - EPSG:27700 - you need to specify the *custom-proj* config option. Example:
+  - `custom-grid: /user/config/boundary/project-grid.geojson`
+- **custom-proj**: specifies the coordinate reference system used by a custom boundary file. Must be one of 'gb', 'ir' or 'ci' which refer to these coordinate systems respectively: OSGB 1936 / British National Grid (EPSG:27700), TM75 / Irish Grid (EPSG:29903) and WGS 84 / UTM zone 30N (EPSG:32630). The last one is used for the Channel Islands.
 - **buffer-west**: specifies a value in metres by which to extend the real-world extent of the map (as calculated from the map boundary) in the *westward* direction. This can be useful when specifying a vice-county or country map with a grid - it enables the map to be extended so that the whole grid is visible. Example:
   - `buffer-west: 10000`
 - **buffer-east**: specifies a value in metres by which to extend the real-world extent of the map (as calculated from the map boundary) in the *eastward* direction. This can be useful when specifying a vice-county or country map with a grid - it enables the map to be extended so that the whole grid is visible. Example:
@@ -152,13 +157,19 @@ These options are used to tailor the appearance and behaviour of the classic atl
   - `boundary-width: 1.5`
 - **grid-width**: specifies the width of grid lines in pixels. Will accept any number (including fractional parts). If the option is not specified, the line width will be 1. Examples:
   - `grid-width: 0.5`  
+- **custom-background**: specifies the location of a georeferenced image file to use as a background for the map. You must first upload your image file and its assocaited 'world' file (specifying the georeferencing) into a folder under the *user/config* folder. For example you could create a sub-folder called *boundary* here and upload your image files to that folder. The image file and world file must have the same name but different file extensions. The image file extensions you can use are: 'tif', 'jpg', 'png' or 'bmp' and the world file extensions corresponding to these are, respectively: 'tfw', jgw', 'pgw' and 'bpw'. Only use lower case for the file extensions. You then reference the image file using its full path starting with */user/config/*. Example:
+  - `custom-background: /user/config/boundary/background-image.png`
+(You can use a tool such as QGIS to design and create background images with their associated world files.)
 
 A full example:
 ```
 overview:
   height: 800
-  boundary: gb40
-  grid-display: none
+  boundary:
+  grid-display: solid
+  custom-boundary: /user/config/boundary/project-boundary.geojson
+  custom-grid: /user/config/boundary/project-grid.geojson
+  proj: ir
   buffer-west: 10000
   buffer-east: 10000
   buffer-south: 10000
@@ -171,6 +182,7 @@ overview:
   grid-colour: black
   boundary-width: 1.5
   grid-width: 0.5
+  custom-background: /user/config/boundary/background-image.png
 ```
 Data for the atlas map are stored in subfolders of the *user/data* folder as described in the documentation on [admin utilities](./docs-admin-utilities.md).
 
