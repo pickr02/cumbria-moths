@@ -157,9 +157,8 @@ These options are used to tailor the appearance and behaviour of the classic atl
   - `boundary-width: 1.5`
 - **grid-width**: specifies the width of grid lines in pixels. Will accept any number (including fractional parts). If the option is not specified, the line width will be 1. Examples:
   - `grid-width: 0.5`  
-- **custom-background**: specifies the location of a georeferenced image file to use as a background for the map. You must first upload your image file and its assocaited 'world' file (specifying the georeferencing) into a folder under the *user/config* folder. For example you could create a sub-folder called *boundary* here and upload your image files to that folder. The image file and world file must have the same name but different file extensions. The image file extensions you can use are: 'tif', 'jpg', 'png' or 'bmp' and the world file extensions corresponding to these are, respectively: 'tfw', jgw', 'pgw' and 'bpw'. Only use lower case for the file extensions. You then reference the image file using its full path starting with */user/config/*. Example:
+- **custom-background**: specifies the location of a georeferenced image file to use as a background for the map. You must first upload your image file and its assocaited 'world' file (specifying the georeferencing) into a folder under the *user/config* folder. For example you could create a sub-folder called *boundary* here and upload your image files to that folder. The image file and world file must have the same name but different file extensions. The image file extensions you can use are: 'tif', 'jpg', 'png' or 'bmp' and the world file extensions corresponding to these are, respectively: 'tfw', jgw', 'pgw' and 'bpw'. Only use lower case for the file extensions. You then reference the image file using its full path starting with */user/config/*. (You can use a tool such as QGIS to design and create background images with their associated world files.) Example:
   - `custom-background: /user/config/boundary/background-image.png`
-(You can use a tool such as QGIS to design and create background images with their associated world files.)
 
 A full example:
 ```
