@@ -36,7 +36,7 @@ and configure it to create an atlas website for other people - their users - to 
 - [x] Config option for admins to specify an add-hoc atlas area by uploading a geojson boundary file.
 - [x] Config option for admins to specify an add-hoc atlas grid by uploading a geojson file.
 - [x] Config option for admins to specify a georeferenced raster image to act as a basemap for the atlas overview.
-- [ ] A download button to allow users to download an image of the currently displayed overview map. Config options to allow admins to specify whether or not to show this button.
+- [x] A download button to allow users to download an image of the currently displayed overview map. Config options to allow admins to specify whether or not to show this button.
 
 ## Zoomable map
 - [x] Zoomable map for users to explore the mapped data in more detail.
