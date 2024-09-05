@@ -272,12 +272,27 @@ tabs:
     caption: Gallery
 overview:
   height: 900
-  boundary: gb59
-  grid-display: true
+  #boundary: gb9
+  grid-display: dashed
   buffer-west: 10000
   buffer-east: 10000
   buffer-south: 10000
   buffer-north: 10000
+  custom-boundary: /user/data/boundary/chesh-lancs-vcs-27700.geojson
+  custom-grid: /user/data/boundary/chesh-lancs-hectad-grid-27700.geojson
+  custom-crs: gb
+  custom-background: /user/data/boundary/chesh-lancs-background.png
+  insets: both
+  land-colour: "#ffe6b3"
+  sea-colour: "#ccffff"
+  inset-colour: black
+  boundary-colour: black
+  grid-colour: black
+  boundary-width: 1.9
+  grid-width: 1
+  download-control: true
+  download-text: Shropshire Earthworm atlas showing data to 2020.
+  download-info: true
 zoom:
   height: 700
   boundaries: vcs
@@ -285,10 +300,24 @@ common:
   resolution: hectad quadrant tetrad monad
   dot-shape: control
   dot-colour: red
+  map-types: standard density timeslice
+  legends:
+    - id: density
+      x: 10
+      y: 10
+      scale: 1.2
+    - id: timeslice
+      x: 10
+      y: 10
+      scale: 1.2
+  timeslice:
+    colour1: red
+    colour2: blue
+    colour3: yellow
+    threshold1: 1999
+    threshold2: 2009
 charts:
   aspect-ratio: 0.4
   yearly-min: 1980
   yearly-max: 2020
   include: weekly yearly
-```
-
