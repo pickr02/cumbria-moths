@@ -276,6 +276,18 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map", "turf.v7.min
       const mapType = localStorage.getItem('map-type')
       mapStatic.setMapType(mapType)
       mapStatic.setIdentfier(`../user/data/${dotSize}/${taxonId}.csv`)
+      // Set the legend opts
+      if (c.get('common.legends')) {
+        const opts = c.common.legends.find(l => l.id === mapType)
+        if (opts) {
+          mapStatic.setLegendOpts({
+            display: true,
+            scale: opts.scale ? Number(opts.scale) : 1,
+            x: opts.x ? Number(opts.x) : 1,
+            y: opts.y ? Number(opts.y) : 1
+          })
+        }
+      }
       mapStatic.redrawMap()
     }
 

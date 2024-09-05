@@ -222,15 +222,25 @@ These options are used to configure features that are common to both the atlas a
 - **map-types**: indicates which map types to use. Can be any combination of the following types separated by a space: 'standard', 'density', 'timeslice'. The 'standard' map presents a classic atlas map with all dots a single colour. The 'density' map presents a map with the size of the dots relating to the number of records contributing to that atlas dot. The 'timeslice' map presents options for colouring the dots on the map depending on the year in which the first or the last record contributing to that dot was made. If only one option is specified, that is the only map type available to your users and no selection control is presented. If more than one type is specified, then the user is able to switch between them using a selection control. If the option is unspecified, then all three options are available to the user. Example:
   - `map-types: standard, timeslice`
 
-A full example:
-```
-common:
-  resolution: hectad quadrant tetrad
-  dot-shape: control
-  dot-color: red
-  map-types: standard, density
-```
 
+- **legends**: the collection name under which map legend options are configured.
+- **id**: a label identifying the map type - must correspond to one of the types configured under the *map-types* config option. If one of the map types is not included in this collection, a legend will not be displayed for that map type. (Note that a legend is not available for the standard map type.)
+- **x**: an offset, in pixels, for the legend on the overview map (from the top left corner of the map). This is configurable because depending on the shape and layout of your project area, the top left corner of the map may not be the best place for the legend. (Only applies to the overview map - the zoomable map always shows the legend in the top left.) 
+- **y**: an offset, in pixels, for the legend on the overview map (from the top left corner of the map). This is configurable because depending on the shape and layout of your project area, the top left corner of the map may not be the best place for the legend. (Only applies to the overview map - the zoomable map always shows the legend in the top left.) 
+- **scale**: a numeric value that can be used to resize the legend. The default is 1. A value of 0.5 would halve the size of the legend and a value of 2 would double it.
+
+An example that woud display legends for the density and timesclice maps is show below:
+```
+legends:
+  - id: density
+    x: 10
+    y: 10
+    scale: 1.2
+  - id: timeslice
+    x: 10
+    y: 10
+    scale: 1.2
+```
 ## Configuring the temporal charts
 These options are used to tailor the appearance and behaviour of the temporal charts. These are specified as a group of options with the group name *charts*.
 - **aspect-ratio**: a numeric value between 0 and 1 that indicates the height of each chart as a fraction of its width. The width of the charts is always set to fill the available display area. If not specified, a value of 0.5 is used. Example:

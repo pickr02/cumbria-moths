@@ -58,11 +58,32 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
     }
 
     function refreshZoomMap() {
+
+      legOpts = {
+        density: {
+          width: 140,
+          height: 90
+        }
+      }
       const dotSize = common.getDotSize()
       const taxonId = localStorage.getItem('taxonId')
       const mapType = localStorage.getItem('map-type')
       mapZoom.setMapType(mapType)
       mapZoom.setIdentfier(`../user/data/${dotSize}/${taxonId}.csv`)
+      // Set the legend opts
+      if (c.get('common.legends')) {
+        const opts = c.common.legends.find(l => l.id === mapType)
+        if (opts && legOpts[mapType]) {
+          mapZoom.setLegendOpts({
+            display: true,
+            scale: 0.9,
+            x: 10,
+            y: 10,
+            width: legOpts[mapType].width,
+            height: legOpts[mapType].height
+          })
+        }
+      }
       mapZoom.redrawMap()
     }
 

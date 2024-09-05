@@ -149,12 +149,17 @@ define(["d3", "jquery.min", "atlas-components"],
 
     async function genDensityMap(file) {
 
+      const dotColour = c.get('common.dot-colour') ? c.get('common.dot-colour') : 'black'
       const data = await d3.csv(file)
+      const maxn = data.reduce((a,r) => Number(r.recn) > a ? Number(r.recn) : a, 0)
+      const minn = data.reduce((a,r) => Number(r.recn) < a ? Number(r.recn) : a, maxn)
       const dataMap = data.map(d => {
-        //return {gr: d.gr, colour: c.get('common.dot-colour') ? c.get('common.dot-colour') : 'black'}
-        return {gr: d.gr, colour: 'black'}
+        return {
+          gr: d.gr, 
+          colour: dotColour,
+          size: 0.3 + 0.7 * (Math.sqrt(Number(d.recn))-Math.sqrt(minn)) / (Math.sqrt(maxn)-Math.sqrt(minn))
+        }
       })
-
       let precision 
       switch(getDotSize()) {
         case 'hectad':
@@ -169,7 +174,6 @@ define(["d3", "jquery.min", "atlas-components"],
         case 'monad':
           precision = 1000
       }
-
       let dotShape
       if (['circle', 'square'].includes(c.get('common.dot-shape'))) {
         dotShape = c.get('common.dot-shape')
@@ -178,12 +182,35 @@ define(["d3", "jquery.min", "atlas-components"],
       }
 
       return new Promise((resolve) => {
+
+        const lines = [
+          {
+            size: 0.3,
+            text: `${minn} record${minn === 1 ? '' : 's'}`
+          },
+          {
+            size: 1,
+            text: `${maxn} record${maxn === 1 ? '' : 's'}`
+          },
+        ]
+
+        if (maxn === minn) {
+          lines.shift()
+        }
+         
         resolve({
           records: dataMap,
           precision: precision,
           shape: dotShape,
           opacity: 1,
-          size: 1
+          size: 1,
+          legend: {
+            title: 'Record density',
+            shape: dotShape,
+            colour: dotColour,
+            precision: precision,
+            lines: lines
+          }
         })
       })
     }
