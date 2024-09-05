@@ -50,10 +50,12 @@ define(
           localStorage.setItem(variable, val)
         }
       }
- 
       setDefault('dot-shape', 'circle')
       setDefault('resolution', 'hectad')
       setDefault('download-type', 'png')
+      setDefault('timeslice-order', 'recent')
+      setDefault('timeslice-thresh1', c.get('common.timeslice.threshold1') ? Number(c.get('common.timeslice.threshold1')) : 1999)
+      setDefault('timeslice-thresh2', c.get('common.timeslice.threshold2') ? Number(c.get('common.timeslice.threshold2')) : 2009)
     }
 
     async function loadContent() {

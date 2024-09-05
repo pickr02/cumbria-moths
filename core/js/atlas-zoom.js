@@ -63,6 +63,10 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
         density: {
           width: 140,
           height: 90
+        },
+        timeslice: {
+          width: 225,
+          height: 110
         }
       }
       const dotSize = common.getDotSize()
@@ -70,6 +74,8 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
       const mapType = localStorage.getItem('map-type')
       mapZoom.setMapType(mapType)
       mapZoom.setIdentfier(`../user/data/${dotSize}/${taxonId}.csv`)
+
+      console.log(mapType,dotSize, taxonId)
       // Set the legend opts
       if (c.get('common.legends')) {
         const opts = c.common.legends.find(l => l.id === mapType)

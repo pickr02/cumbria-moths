@@ -19,8 +19,8 @@ and configure it to create an atlas website for other people - their users - to 
 - [x] Map resolution selector. Allows  user to switch between different map resolutions: hectad (10 km), quadrant (5 km), tetrad (2 km) or monad (1 km). Config options for admins to specify what resolutions are available. If the admin only specifies one resolution, do not show the resolution selector to users.
 - [x] Config option to allow admins to specify whether atlas dots are shown as circles or squares.
 - [x] Config option to allow admins to specify the colour of atlas dots for standard map display.
-- [ ] A map type selector which provides different views of the dot map. Possible map types are: dots coloured to indicate record number; dots coloured to indicate temporal bands (as used on the [iRecord species details map](https://irecord.org.uk/species-details?taxa_taxon_list_id=250358)). Config options for admins to specify what map types are available to users.
-- [ ] Other controls - to be displayed conditionally - required for the operation of additional map types (e.g. those for specifying temporal bands).
+- [x] A map type selector which provides different views of the dot map. Possible map types are: dots coloured to indicate record number; dots coloured to indicate temporal bands (as used on the [iRecord species details map](https://irecord.org.uk/species-details?taxa_taxon_list_id=250358)). Config options for admins to specify what map types are available to users.
+- [x] Other controls - to be displayed conditionally - required for the operation of additional map types (e.g. those for specifying temporal bands).
 
 ## Overview map
 - [x] A classic atlas overview map.
@@ -65,8 +65,6 @@ and configure it to create an atlas website for other people - their users - to 
 - [x] Utility for admins to generate temporal data files from a CSV of records.
 - [x] Utility for admins to generate taxon list from a CSV of records.
 - [x] Utility for admins to generate taxon information stubs fro a CSV of records.
-- [ ] Utility for admins to generate hectad grid from imported geojson boundary file.
-- [ ] Utility for admins to check and report potential problems on a CSV of records, e.g. for highlighting invalid GRs or unrecognised date formats.
 
 ## Documentation
 - [x] Detailed documentation to take an admin through the process of setting up an atlas website. This will be implemented as a series of readme files in this repository.

@@ -5,6 +5,8 @@ define(["d3", "jquery.min", "atlas-components"],
     const callbacksMapTypeControl = []
     const callbacksResolutionControl = []
     const callbacksDotShapeControl = []
+    //const callbacksTimesliceMap = []
+
     let c
 
     function setConfig(config) {
@@ -25,9 +27,15 @@ define(["d3", "jquery.min", "atlas-components"],
       if (!mapTypes.length) {
         mapTypes = Object.keys(allMapTypes)
       }
+      
       if (mapTypes.length === 1) {
         localStorage.setItem('map-type', mapTypes[0])
         return
+      }
+
+      if (!mapTypes.find(t => t === localStorage.getItem('map-type'))) {
+        // Could happen if admin removed previously included map type
+        localStorage.setItem('map-type', mapTypes[0])
       }
 
       const $sel = $('<select>').appendTo($(selectorControl))
@@ -43,6 +51,12 @@ define(["d3", "jquery.min", "atlas-components"],
         localStorage.setItem('map-type', mapType)
         // Ensure that the control on other map matches this
         $(`.map-type-selector`).val(mapType)
+        // Show/hide supplementary controls
+        if (mapType === 'timeslice') {
+          $('.timeslice-controls').show()
+        } else {
+          $('.timeslice-controls').hide()
+        }
         // Callbacks
         callbacksMapTypeControl.forEach(cb => {
           cb()
@@ -59,6 +73,101 @@ define(["d3", "jquery.min", "atlas-components"],
       })
 
       callbacksMapTypeControl.push(callback)
+
+      // Also create the timeslice conrol
+      createTimeSliceControls(selectorControl, map)
+    }
+
+    function createTimeSliceControls(selectorControl, map) {
+
+      const $div0 = $('<div>').appendTo($(selectorControl))
+      $div0.addClass('timeslice-controls')
+
+      const $div1 = $('<div>').appendTo($div0)
+      const $label = $('<div>').appendTo($div1)
+      $label.css('display', 'inline-block')
+      $label.css('margin-left', '0.7em')
+      $label.text('Thresholds')
+
+      $thresh1 = $('<input>').appendTo($div1)
+      $thresh1.attr('type', 'number')
+      $thresh1.attr('id', `${map}-timeslice-thresh1`)
+      $thresh1.attr('value', localStorage.getItem('timeslice-thresh1'))
+      $thresh1.addClass('timeslice-thresh1')
+      $thresh1.css('width', '4em')
+      $thresh1.css('margin-left', '1em')
+      $thresh1.on('change', function() {
+        const thresh1 = $(`#${map}-timeslice-thresh1`).val()
+        // Store value in local storage
+        localStorage.setItem('timeslice-thresh1', thresh1)
+        // Ensure that the control on other map matches this
+        $(`.timeslice-thresh1`).val(thresh1)
+        // Callbacks
+        callbacksMapTypeControl.forEach(cb => {
+          cb()
+        })
+      })
+
+      $thresh2 = $('<input>').appendTo($div1)
+      $thresh2.attr('type', 'number')
+      $thresh2.attr('id', `${map}-timeslice-thresh2`)
+      $thresh2.attr('value', localStorage.getItem('timeslice-thresh2'))
+      $thresh2.addClass('timeslice-thresh2')
+      $thresh2.css('width', '4em')
+      $thresh2.css('margin-left', '0.5em')
+      $thresh2.on('change', function() {
+        const thresh2 = $(`#${map}-timeslice-thresh2`).val()
+        // Store value in local storage
+        localStorage.setItem('timeslice-thresh2', thresh2)
+        // Ensure that the control on other map matches this
+        $(`.timeslice-thresh2`).val(thresh2)
+        // Callbacks
+        callbacksMapTypeControl.forEach(cb => {
+          cb()
+        })
+      })
+
+      const $sel = $('<select>').appendTo($div0)
+      $sel.attr('id', `${map}-timeslice-order-selector`)
+      $sel.addClass('atlas-control')
+      $sel.addClass('timeslice-order-selector')
+      $sel.addClass('form-select')
+      $sel.on('change', function() {
+        // Get selected value
+        const order = $(`#${map}-timeslice-order-selector`).find(":selected").val()
+        console.log('timeslice order', order)
+        // Store value in local storage
+        localStorage.setItem('timeslice-order', order)
+        // Ensure that the control on other map matches this
+        $(`.timeslice-order-selector`).val(order)
+        // Callbacks
+        callbacksMapTypeControl.forEach(cb => {
+          cb()
+        })
+      })
+
+      const scliceTypes = [
+        {
+          id: 'recent',
+          text: 'Recent on top'
+        },
+        {
+          id: 'oldest',
+          text: 'Oldest on top'
+        }
+      ]
+      scliceTypes.forEach(function(t){
+        const $opt = $('<option>')
+        $opt.attr('value', t.id)
+        $opt.html(t.text).appendTo($sel)
+        if (localStorage.getItem('timeslice-order') === t.id) {
+          $opt.attr('selected', 'selected')
+        }
+      })
+
+      if (localStorage.getItem('map-type') !== 'timeslice') {
+        $div0.hide()
+      }
     }
 
     function createResolutionControl(selectorControl, map, callback) {
@@ -217,9 +326,49 @@ define(["d3", "jquery.min", "atlas-components"],
 
     async function genTimeSliceMap(file) {
 
+      const order = localStorage.getItem('timeslice-order')
+      const colour1 = c.get('common.timeslice.colour1') ? c.get('common.timeslice.colour1') : '#1b9e77'
+      const colour2 = c.get('common.timeslice.colour2') ? c.get('common.timeslice.colour2') : '#7570b3' 
+      const colour3 = c.get('common.timeslice.colour3') ? c.get('common.timeslice.colour3') : '#d95f02' 
+      const threshold1 = Number(localStorage.getItem('timeslice-thresh1'))
+      const threshold2 = Number(localStorage.getItem('timeslice-thresh2'))
+
       const data = await d3.csv(file)
-      const dataMap = data.map(d => {
-        return {gr: d.gr, colour: c.get('common.dot-colour') ? c.get('common.dot-colour') : 'black'}
+
+      const dataMap = data
+      .filter(d => {
+        // Filter out any records with null year values
+        if (order === 'recent') {
+          return(d.yearEnd !== 'null')
+        } else {
+          return(d.yearStart !== 'null')
+        }
+      })
+      .map(d => {
+        let colour
+        if (order === 'recent') {
+          // Recent on top
+          // Will colour according to year of latest record in square
+          if (Number(d.yearEnd) > threshold2) {
+            colour = colour3
+          } else if (Number(d.yearEnd) > threshold1) {
+            colour = colour2
+          } else {
+            colour = colour1
+          }
+        } else {
+          // Oldest on top
+          // Will colour accoring to year of first record in square
+          if (Number(d.yearStart) < threshold1) {
+            colour = colour1
+          } else if (Number(d.yearStart) < threshold2) {
+            colour = colour2
+          } else {
+            colour = colour3
+          }
+        }
+
+        return {gr: d.gr, colour: colour}
       })
 
       let precision 
@@ -250,7 +399,26 @@ define(["d3", "jquery.min", "atlas-components"],
           precision: precision,
           shape: dotShape,
           opacity: 1,
-          size: 1
+          size: 1,
+          legend: {
+            title: order === 'recent' ? 'Year of latest record in square' : 'Year of first record in square',
+            shape: dotShape,
+            precision: precision,
+            lines: [
+              {
+                colour: colour1,
+                text: `${threshold1} and before`
+              },
+              {
+                colour: colour2,
+                text: `${threshold1+1}-${threshold2}`
+              },
+              {
+                colour: colour3,
+                text: `${threshold2+1} and after`
+              },
+            ]
+          }
         })
       })
     }

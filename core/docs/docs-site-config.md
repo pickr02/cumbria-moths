@@ -166,31 +166,6 @@ These options are used to tailor the appearance and behaviour of the classic atl
 - **download-info**: indicates whether or not to display the URL of the website and the date to the foot of map images downloaded from the site. If the 'download-text' option is also specified, this text is appended to that with a space to separate them. The information is only appended if this config option is set to 'true'. Example:
   - `download-info: true`
 
-A full example:
-```
-overview:
-  height: 800
-  boundary:
-  grid-display: solid
-  custom-boundary: /user/config/boundary/project-boundary.geojson
-  custom-grid: /user/config/boundary/project-grid.geojson
-  custom-background: /user/config/boundary/background-image.png
-  buffer-west: 10000
-  buffer-east: 10000
-  buffer-south: 10000
-  buffer-north: 10000
-  insets: ci
-  land-colour: "#ffe6b3"
-  sea-colour: "#ccffff"
-  inset-colour: black
-  boundary-colour: black
-  grid-colour: black
-  boundary-width: 1.5
-  grid-width: 0.5
-  download-control: true
-  download-text: Shropshire Earthworm atlas showing data to 2020.
-  download-info: true
-```
 Data for the atlas map are stored in subfolders of the *user/data* folder as described in the documentation on [admin utilities](./docs-admin-utilities.md).
 
 ## Configuring the zoomable map
@@ -199,12 +174,6 @@ These options are used to tailor the appearance and behaviour of the zoomable ma
   - `height: 800`
 - **boundaries**: specifies whether to draw country or vice county boundaries on the map. Valid options are 'countries' or 'vcs'. If no value (or any other value) is specified, no boundaries are drawn on the zoom map. Example:
   - `boundaries: vcs`
-A full example:
-```
-zoom:
-  height: 800
-  boundaries: countries
-```
 
 Data for the zoomable map are stored in subfolders of the *user/data* folder as described in the documentation on [admin utilities](./docs-admin-utilities.md).
 
@@ -221,15 +190,12 @@ These options are used to configure features that are common to both the atlas a
   - `dot-colour: "#EF9766"` (hex colour format - double-quotes required)
 - **map-types**: indicates which map types to use. Can be any combination of the following types separated by a space: 'standard', 'density', 'timeslice'. The 'standard' map presents a classic atlas map with all dots a single colour. The 'density' map presents a map with the size of the dots relating to the number of records contributing to that atlas dot. The 'timeslice' map presents options for colouring the dots on the map depending on the year in which the first or the last record contributing to that dot was made. If only one option is specified, that is the only map type available to your users and no selection control is presented. If more than one type is specified, then the user is able to switch between them using a selection control. If the option is unspecified, then all three options are available to the user. Example:
   - `map-types: standard, timeslice`
-
-
-- **legends**: the collection name under which map legend options are configured.
+- **legends**: the group under which map legend options are configured.
 - **id**: a label identifying the map type - must correspond to one of the types configured under the *map-types* config option. If one of the map types is not included in this collection, a legend will not be displayed for that map type. (Note that a legend is not available for the standard map type.)
 - **x**: an offset, in pixels, for the legend on the overview map (from the top left corner of the map). This is configurable because depending on the shape and layout of your project area, the top left corner of the map may not be the best place for the legend. (Only applies to the overview map - the zoomable map always shows the legend in the top left.) 
 - **y**: an offset, in pixels, for the legend on the overview map (from the top left corner of the map). This is configurable because depending on the shape and layout of your project area, the top left corner of the map may not be the best place for the legend. (Only applies to the overview map - the zoomable map always shows the legend in the top left.) 
 - **scale**: a numeric value that can be used to resize the legend. The default is 1. A value of 0.5 would halve the size of the legend and a value of 2 would double it.
-
-An example that woud display legends for the density and timesclice maps is show below:
+An example that woud display legends for the density and timeslice maps is show below:
 ```
 legends:
   - id: density
@@ -241,6 +207,18 @@ legends:
     y: 10
     scale: 1.2
 ```
+- **timesclice**: the group under which options are configured for the timeslice chart ('Occurrence by year').
+- **colour1**: specifies the colour for dots representing records under the first year threshold. Will accept any of the colour formats understood by HTML/CSS. If the option is not specified, the value will be '#1b9e77'. Examples:
+  - `colour1: red` (HTML colour name)
+  - `colour1: rgb(100,120,30)` (red, green blue format)
+  - `colour1: "#EF9766"` (hex colour format - double-quotes required)
+- **colour2**: specifies the colour for dots representing records between the first and second year thresholds. Will accept any of the colour formats understood by HTML/CSS. If the option is not specified, the value will be '#7570b3'. For examples, see 'colour1'.
+- **colour3**: specifies the colour for dots representing records over the second year thresholds. Will accept any of the colour formats understood by HTML/CSS. If the option is not specified, the value will be '#d95f02'. For examples, see 'colour1'.
+- **threshold1**: specifies the year that will be the upper limit of the first band of records and the lower limit of the second bad of records in the timeslice chart. If not specified, the value will be 1999. Example:
+  - `threshold1: 2005`
+- **threshold2**: specifies the year that will be the upper limit of the second band of records and the lower limit of the third band of records the in the timeslice chart. If not specified, the value will be 2009. Example:
+  - `threshold2: 2015`
+
 ## Configuring the temporal charts
 These options are used to tailor the appearance and behaviour of the temporal charts. These are specified as a group of options with the group name *charts*.
 - **aspect-ratio**: a numeric value between 0 and 1 that indicates the height of each chart as a fraction of its width. The width of the charts is always set to fill the available display area. If not specified, a value of 0.5 is used. Example:
@@ -252,15 +230,6 @@ These options are used to tailor the appearance and behaviour of the temporal ch
 - **include**: indicates which of the charts to show. Values can be *weekly*, *yearly* or *weekly yearly*. If not specified, a value of *weekly yearly* is used and both charts are displayed. Example:
   - `include: weekly yearly`
 
-A full example:
-```
-charts:
-  aspect-ratio: 0.4
-  yearly-min: 1980
-  yearly-max: 2020
-  include: weely yearly
-```
-
 Data for the temporal are stored in subfolders of the *user/data* folder as described in the documentation on [admin utilities](./docs-admin-utilities.md).
 
 ## Configuring the image gallery
@@ -271,7 +240,7 @@ The available images and their captions are configured separately in a file call
 ## Configuring the taxon details
 These options are used to tailor the appearance and behaviour of the taxon details pages. These are specified as a group of options with the group name *details*. (No options as yet.)
 
-Taxon details are Markdown pages placed in the  *user/data/captions* folder. Each file is named after the identifier used for the taxon in the taxon list file (*TODO - link to taxon list file doc*). The pages can contain any information and be laid out in whatever way you wish. There is an admin utility to generate stub details pages for each of your taxa if you wish to use it (see [documentation on admin utilities](./docs-admin-utilities.md)).
+Taxon details are Markdown pages placed in the  *user/data/captions* folder. Each file is named after the identifier used for the taxon in the taxon list file. The pages can contain any information and be laid out in whatever way you wish. There is an admin utility to generate stub details pages for each of your taxa if you wish to use it (see [documentation on admin utilities](./docs-admin-utilities.md)).
 
 ## Example site.txt config file
 ```
