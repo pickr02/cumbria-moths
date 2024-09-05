@@ -195,6 +195,7 @@ These options are used to configure features that are common to both the atlas a
 - **x**: an offset, in pixels, for the legend on the overview map (from the top left corner of the map). This is configurable because depending on the shape and layout of your project area, the top left corner of the map may not be the best place for the legend. (Only applies to the overview map - the zoomable map always shows the legend in the top left.) 
 - **y**: an offset, in pixels, for the legend on the overview map (from the top left corner of the map). This is configurable because depending on the shape and layout of your project area, the top left corner of the map may not be the best place for the legend. (Only applies to the overview map - the zoomable map always shows the legend in the top left.) 
 - **scale**: a numeric value that can be used to resize the legend. The default is 1. A value of 0.5 would halve the size of the legend and a value of 2 would double it.
+
 An example that woud display legends for the density and timeslice maps is show below:
 ```
 legends:
@@ -208,17 +209,21 @@ legends:
     scale: 1.2
 ```
 - **timesclice**: the group under which options are configured for the timeslice chart ('Occurrence by year').
-- **colour1**: specifies the colour for dots representing records under the first year threshold. Will accept any of the colour formats understood by HTML/CSS. If the option is not specified, the value will be '#1b9e77'. Examples:
-  - `colour1: red` (HTML colour name)
-  - `colour1: rgb(100,120,30)` (red, green blue format)
-  - `colour1: "#EF9766"` (hex colour format - double-quotes required)
-- **colour2**: specifies the colour for dots representing records between the first and second year thresholds. Will accept any of the colour formats understood by HTML/CSS. If the option is not specified, the value will be '#7570b3'. For examples, see 'colour1'.
-- **colour3**: specifies the colour for dots representing records over the second year thresholds. Will accept any of the colour formats understood by HTML/CSS. If the option is not specified, the value will be '#d95f02'. For examples, see 'colour1'.
-- **threshold1**: specifies the year that will be the upper limit of the first band of records and the lower limit of the second bad of records in the timeslice chart. If not specified, the value will be 1999. Example:
-  - `threshold1: 2005`
-- **threshold2**: specifies the year that will be the upper limit of the second band of records and the lower limit of the third band of records the in the timeslice chart. If not specified, the value will be 2009. Example:
-  - `threshold2: 2015`
+- **colour1**: specifies the colour for dots representing records under the first year threshold. Will accept any of the colour formats understood by HTML/CSS. If the option is not specified, the value will be '#1b9e77'.
+- **colour2**: specifies the colour for dots representing records between the first and second year thresholds. Will accept any of the colour formats understood by HTML/CSS. If the option is not specified, the value will be '#7570b3'.
+- **colour3**: specifies the colour for dots representing records over the second year thresholds. Will accept any of the colour formats understood by HTML/CSS. If the option is not specified, the value will be '#d95f02'.
+- **threshold1**: specifies the year that will be the upper limit of the first band of records and the lower limit of the second bad of records in the timeslice chart. If not specified, the value will be 1999.
+- **threshold2**: specifies the year that will be the upper limit of the second band of records and the lower limit of the third band of records the in the timeslice chart. If not specified, the value will be 2009.
 
+Example timeslice configuration:
+```
+  timeslice:
+    colour1: red
+    colour2: rgb(100,120,30)
+    colour3: "#EF9766"
+    threshold1: 2005
+    threshold2: 2010
+```
 ## Configuring the temporal charts
 These options are used to tailor the appearance and behaviour of the temporal charts. These are specified as a group of options with the group name *charts*.
 - **aspect-ratio**: a numeric value between 0 and 1 that indicates the height of each chart as a fraction of its width. The width of the charts is always set to fill the available display area. If not specified, a value of 0.5 is used. Example:
