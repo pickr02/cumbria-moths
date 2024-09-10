@@ -5,6 +5,7 @@ define(["d3", "jquery.min", "atlas-components"],
     const callbacksMapTypeControl = []
     const callbacksResolutionControl = []
     const callbacksDotShapeControl = []
+    const callbacksDotOpacityControl = []
     //const callbacksTimesliceMap = []
 
     let c
@@ -46,7 +47,6 @@ define(["d3", "jquery.min", "atlas-components"],
       $sel.on('change', function() {
         // Get selected value
         const mapType = $(`#${map}-map-type-selector`).find(":selected").val()
-        console.log('selected map type', mapType)
         // Store value in local storage
         localStorage.setItem('map-type', mapType)
         // Ensure that the control on other map matches this
@@ -135,7 +135,6 @@ define(["d3", "jquery.min", "atlas-components"],
       $sel.on('change', function() {
         // Get selected value
         const order = $(`#${map}-timeslice-order-selector`).find(":selected").val()
-        console.log('timeslice order', order)
         // Store value in local storage
         localStorage.setItem('timeslice-order', order)
         // Ensure that the control on other map matches this
@@ -216,6 +215,40 @@ define(["d3", "jquery.min", "atlas-components"],
       callbacksDotShapeControl.push(callback)
     }
 
+    function createDotOpacityControl(selectorControl, map, callback) {
+  
+      const $div = $('<div>').appendTo($(selectorControl))
+
+      const $label = $('<label>').appendTo($div)
+      $label.attr('for', `${map}-opacity-slider`)
+      $label.text('Opacity:')
+      $label.css('margin', '0 0.5em 0.5em 0')
+      $label.css('vertical-align', 'middle')
+
+      const $slider = $('<input>').appendTo($div)
+      $slider.attr('type', 'range')
+      $slider.attr('min', 0)
+      $slider.attr('max', 1)
+      $slider.attr('step', 0.1)
+      $slider.attr('value', localStorage.getItem('dot-opacity'))
+      $slider.attr('id', `${map}-opacity-slider`)
+      $slider.addClass('atlas-control')
+      $slider.addClass('opacity-slider')
+      $slider.on('input', function() {
+        // Get selected value
+        const opacity = $(`#${map}-opacity-slider`).val()
+        // Store value in local storage
+        localStorage.setItem('dot-opacity', opacity)
+        // Ensure that the control on other map matches this
+        $(`.opacity-slider`).val(opacity)
+        // Callbacks
+        callbacksDotOpacityControl.forEach(cb => {
+          cb()
+        })
+      })
+      callbacksDotOpacityControl.push(callback)
+    }
+
     async function genStandardMap(file) {
 
       const data = await d3.csv(file)
@@ -245,12 +278,21 @@ define(["d3", "jquery.min", "atlas-components"],
         dotShape = localStorage.getItem('dot-shape')
       }
 
+      // let dotOpacity
+      // if (Number(c.get('common.dot-shape')) >= 0 && Number(c.get('common.dot-shape')) <= 1) {
+      //   dotOpacity = c.get('common.dot-opacity')
+      // } else {
+      //   dotOpacity = localStorage.getItem('dot-opacity')
+      // }
+
+      const dotOpacity = localStorage.getItem('dot-opacity')
+
       return new Promise((resolve) => {
         resolve({
           records: dataMap,
           precision: precision,
           shape: dotShape,
-          opacity: 1,
+          opacity: dotOpacity,
           size: 1
         })
       })
@@ -290,6 +332,15 @@ define(["d3", "jquery.min", "atlas-components"],
         dotShape = localStorage.getItem('dot-shape')
       }
 
+      // let dotOpacity
+      // if (Number(c.get('common.dot-shape')) >= 0 && Number(c.get('common.dot-shape')) <= 1) {
+      //   dotOpacity = c.get('common.dot-opacity')
+      // } else {
+      //   dotOpacity = localStorage.getItem('dot-opacity')
+      // }
+
+      const dotOpacity = localStorage.getItem('dot-opacity')
+
       return new Promise((resolve) => {
 
         const lines = [
@@ -311,11 +362,12 @@ define(["d3", "jquery.min", "atlas-components"],
           records: dataMap,
           precision: precision,
           shape: dotShape,
-          opacity: 1,
+          opacity: dotOpacity,
           size: 1,
           legend: {
             title: 'Record density',
             shape: dotShape,
+            opacity: dotOpacity,
             colour: dotColour,
             precision: precision,
             lines: lines
@@ -393,16 +445,26 @@ define(["d3", "jquery.min", "atlas-components"],
         dotShape = localStorage.getItem('dot-shape')
       }
 
+      // let dotOpacity
+      // if (Number(c.get('common.dot-shape')) >= 0 && Number(c.get('common.dot-shape')) <= 1) {
+      //   dotOpacity = c.get('common.dot-opacity')
+      // } else {
+      //   dotOpacity = localStorage.getItem('dot-opacity')
+      // }
+
+      const dotOpacity = localStorage.getItem('dot-opacity')
+
       return new Promise((resolve) => {
         resolve({
           records: dataMap,
           precision: precision,
           shape: dotShape,
-          opacity: 1,
+          opacity: dotOpacity,
           size: 1,
           legend: {
             title: order === 'recent' ? 'Year of latest record in square' : 'Year of first record in square',
             shape: dotShape,
+            opacity: dotOpacity,
             precision: precision,
             lines: [
               {
@@ -443,6 +505,7 @@ define(["d3", "jquery.min", "atlas-components"],
       setConfig: setConfig,
       createMapTypeControl: createMapTypeControl,
       createDotShapeControl: createDotShapeControl,
+      createDotOpacityControl: createDotOpacityControl,
       createResolutionControl: createResolutionControl,
       genStandardMap: genStandardMap,
       genDensityMap: genDensityMap,

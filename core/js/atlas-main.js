@@ -56,6 +56,14 @@ define(
       setDefault('timeslice-order', 'recent')
       setDefault('timeslice-thresh1', c.get('common.timeslice.threshold1') ? Number(c.get('common.timeslice.threshold1')) : 1999)
       setDefault('timeslice-thresh2', c.get('common.timeslice.threshold2') ? Number(c.get('common.timeslice.threshold2')) : 2009)
+    
+      if (Number(c.get('common.dot-opacity')) > 0 && Number(c.get('common.dot-opacity')) <= 1) {
+        localStorage.setItem('dot-opacity', c.get('common.dot-opacity'))
+      } else if (c.get('common.dot-opacity') === 'control') {
+        setDefault('dot-opacity', 1)
+      } else {
+        localStorage.setItem('dot-opacity', 1)
+      }
     }
 
     async function loadContent() {
@@ -133,7 +141,7 @@ define(
         // Control pane
         $divc = $(`<div id="brc-control-${t.tab}">`).appendTo("#brc-controls")
         $divc.css('margin-top', '1em')
-        $divc.html(`TODO - controls for ${t.caption ? t.caption : t.tab} tab`)
+        $divc.html(``)
         $divc.css('display', 'none')
 
         // Active

@@ -182,12 +182,16 @@ These options are used to configure features that are common to both the atlas a
 
 - **resolution**: indicates which resolutions to use for the dots. Values can be any combination of 'hectad', 'quadrant', 'tetrad' and 'monad'. If more than one is specified, separate them with spaces. If more that one is specified, then the user is able to select between them using a drop-down selection control. If only one is specified, the control does not appear. Example:
   - `resolution: tetrad monad`
-- **dot-shape**: indicates whether or not to offer the user a control to switch between squares and circles and, if not, what the shape should be. Value should be one of 'control' (to display the control to user), 'square' or 'circle'.  If not specified, then 'circle' is used. Example:
+- **dot-shape**: indicates whether or not to offer the user a control to switch between squares and circles and, if not, what the shape should be. Value should be one of 'control' (to display the control to user), 'square' or 'circle'.  If not specified, then 'circle' is used. Examples:
   - `dot-shape: square`
+  - `dot-shape: control`
 - **dot-colour**: indicates the colour of the dots on a maps of type 'standard' and 'density'. Will accept any of the colour formats understood by HTML/CSS. If the option is not specified, the dots will be black. Examples:
   - `dot-colour: red` (HTML colour name)
   - `dot-colour: rgb(100,120,30)` (red, green blue format)
   - `dot-colour: "#EF9766"` (hex colour format - double-quotes required)
+- **dot-opacity**: indicates whether or not to offer the user a control to change dot opacity and, if not, what the dot opacity should be. Value should be either 'control' or a number between 0 and 1. If the option is not specified, the value is 1. Examples:
+  - `dot-opacity: 0.8`
+  - `dot-opacity: control`
 - **map-types**: indicates which map types to use. Can be any combination of the following types separated by a space: 'standard', 'density', 'timeslice'. The 'standard' map presents a classic atlas map with all dots a single colour. The 'density' map presents a map with the size of the dots relating to the number of records contributing to that atlas dot. The 'timeslice' map presents options for colouring the dots on the map depending on the year in which the first or the last record contributing to that dot was made. If only one option is specified, that is the only map type available to your users and no selection control is presented. If more than one type is specified, then the user is able to switch between them using a selection control. If the option is unspecified, then all three options are available to the user. Example:
   - `map-types: standard, timeslice`
 - **legends**: the group under which map legend options are configured.

@@ -285,8 +285,7 @@ requirejs(["atlas-general", "atlas-components", "atlas-dates", "d3", "jszip.min"
       }
     })
 
-    // console.log(jsonCsv.columns)
-    // console.log(jsonCsv)
+
     console.log(allData)
 
     // Create the map data and add to zip file
@@ -354,7 +353,6 @@ requirejs(["atlas-general", "atlas-components", "atlas-dates", "d3", "jszip.min"
         }
       }
     })
-    //console.log(allData)
 
     // Create the map data and add to zip file
     const zip = new JSZip()

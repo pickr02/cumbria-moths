@@ -21,6 +21,22 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
         mapTypesKey: 'standard'
       })
 
+      // Initialise map centre and zoom if set
+      if (localStorage.getItem('zoomLevel')) {
+        mapZoom.lmap.setView({lat: localStorage.getItem('zoomLat'), lng: localStorage.getItem('zoomLng')}, localStorage.getItem('zoomLevel'))
+      }
+
+      // Store location and zoom level when map changes
+      function viewChanged(e) {
+        const latlng = mapZoom.lmap.getCenter()
+        localStorage.setItem('zoomLat', latlng.lat)
+        localStorage.setItem('zoomLng', latlng.lng)
+        localStorage.setItem('zoomLevel', mapZoom.lmap.getZoom())
+      }
+      mapZoom.lmap.on('moveend', viewChanged )
+
+      //setView(center, zoom)
+
       // Boundaries
       if (c.get('zoom.boundaries')) {
         if (c.zoom.boundaries === 'countries') {
@@ -55,6 +71,10 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
       if (c.get('common.dot-shape') === 'control') {
         common.createDotShapeControl(selectorControl, 'zoom', refreshZoomMap)
       }
+      // Dot opacity
+      if (c.get('common.dot-opacity') === 'control') {
+        common.createDotOpacityControl(selectorControl, 'zoom', refreshZoomMap)
+      }
     }
 
     function refreshZoomMap() {
@@ -75,7 +95,6 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map"],
       mapZoom.setMapType(mapType)
       mapZoom.setIdentfier(`../user/data/${dotSize}/${taxonId}.csv`)
 
-      console.log(mapType,dotSize, taxonId)
       // Set the legend opts
       if (c.get('common.legends')) {
         const opts = c.common.legends.find(l => l.id === mapType)

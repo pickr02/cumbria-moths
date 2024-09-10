@@ -112,7 +112,6 @@ define(
           // Carousel
           // Undocumented feature for adding a carousel image to top of page
           if (location.pathname.substring(location.pathname.length - 9) === "main.html" && configSite['header-carousel']) {
-            //console.log('carousel', configSite['header-carousel'])
 
             const $carousel = $(`<div id="brc-header-carousel-div" class="carousel slide" data-bs-ride="carousel">`).appendTo($($header))
             
@@ -164,7 +163,6 @@ define(
           // Not used
           const pathElements = window.location.pathname.split('/')
 
-          console.log(pathElements)
           if (pathElements[1] === 'core') {
             return ''
           } else {

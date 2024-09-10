@@ -131,8 +131,6 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map", "turf.v7.min
               }
             }
           }
-
-          console.log('mapStaticOpts.transOptsSel', mapStaticOpts.transOptsSel)
           mapStaticOpts.transOptsKey = 'boundary'
           mapStaticOpts.boundaryGjson = gjsonFile
 
@@ -235,6 +233,11 @@ define(["jquery.min", "d3", "brcatlas.umd.min", "atlas-common-map", "turf.v7.min
       if (c.get('common.dot-shape') === 'control') {
         common.createDotShapeControl(selectorControl, 'overview', refreshOverviewMap)
       }
+      // Dot opacity
+      if (c.get('common.dot-opacity') === 'control') {
+        common.createDotOpacityControl(selectorControl, 'overview', refreshOverviewMap)
+      }
+
       // Download button
       if (c.get('overview.download-control') === true) {
         const $downloadDiv=$('<div>').appendTo($(selectorControl))

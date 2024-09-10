@@ -20,7 +20,9 @@ define(
             success: function (data) {
               let config = {}
               try {
-                config = jsyaml.load(data)
+                if (jsyaml.load(data)) {
+                  config = jsyaml.load(data)
+                }
               } catch (e) {
                 config = {
                   errName: e.name,
@@ -29,8 +31,6 @@ define(
               }
               config.get = (argString) => {
                 const args = argString.split('.')
-                //console.log(argString)
-                //if (args[0] === 'overview') console.log(args)
                 val = config
                 try {
                   for (let i=0; i < args.length; i++) {
