@@ -14,7 +14,7 @@ GitHub is an online platform built around Git and uses the vocabulary of Git. We
 ## Forking the BRC atlas repo
 The first task is to 'fork' the BRC configurable atlas 'repo'. The term 'repo' is short-hand for 'repository' which you can think of as a place that holds all the digital resources related to a project - in this case the configurable atlas project. When you 'fork' a GitHub repo, you copy it to your own GitHub account. But it is a smart copy - GitHub retains and manages the link between the original and your forked copy and provides tools to help you keep them in line.
 
-First go to the BRC repo for the atlas project here: https://github.com/BiologicalRecordsCentre/brevi-atlas-test.
+First go to the BRC repo for the atlas project here: https://github.com/BiologicalRecordsCentre/configurable-atlas.
 
 Somewhere towards the top-right of this page your should see a bunch of buttons which look something like this:
 

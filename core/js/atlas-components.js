@@ -27,7 +27,7 @@ define(
           $footer.attr("class", "pt-5 my-5 text-body-secondary border-top")
           $footer.html(`
             <span class="me-2">
-              Created using <a href="https://github.com/BiologicalRecordsCentre/brevi-atlas-test">
+              Created using <a href="https://github.com/BiologicalRecordsCentre/configurable-atlas">
               BRC configurable atlas project</a> (version <b>${configCore.version}</b>).
             </span>
             <a href="admin.html">
