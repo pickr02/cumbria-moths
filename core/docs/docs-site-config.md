@@ -253,15 +253,13 @@ Taxon details are Markdown pages placed in the  *user/data/captions* folder. Eac
 
 ## Example site.txt config file
 ```
-name: Shropshire Earthworm Atlas
+nname: Demo atlas - Middlesex Earthworms
 header-background-colour: "#EF9766"
 header-text-colour: white
 header-logo: badge-circle.png
 header-logo-height: 80
 nav:
-  - caption: Info
-    page: pages/info.html
-  - caption: About
+  - caption: Readme
     page: pages/about.md
 tabs:
   - tab: overview
@@ -276,34 +274,27 @@ tabs:
     caption: Gallery
 overview:
   height: 900
-  #boundary: gb9
+  boundary: gb21
   grid-display: dashed
   buffer-west: 10000
   buffer-east: 10000
   buffer-south: 10000
   buffer-north: 10000
-  custom-boundary: /user/data/boundary/chesh-lancs-vcs-27700.geojson
-  custom-grid: /user/data/boundary/chesh-lancs-hectad-grid-27700.geojson
-  custom-crs: gb
-  custom-background: /user/data/boundary/chesh-lancs-background.png
-  insets: both
-  land-colour: "#ffe6b3"
-  sea-colour: "#ccffff"
-  inset-colour: black
+  land-colour: "#eeeeee"
   boundary-colour: black
   grid-colour: black
-  boundary-width: 1.9
-  grid-width: 1
+  boundary-width: 1.7
   download-control: true
-  download-text: Shropshire Earthworm atlas showing data to 2020.
+  download-text: Demo atlas - Middlesex Earthworm - from ESB data downloaded from NBN on 05/09/2024.
   download-info: true
 zoom:
   height: 700
   boundaries: vcs
 common:
-  resolution: hectad quadrant tetrad monad
+  resolution: monad tetrad quadrant hectad
   dot-shape: control
-  dot-colour: red
+  dot-opacity: control
+  dot-colour: black
   map-types: standard density timeslice
   legends:
     - id: density
@@ -315,13 +306,9 @@ common:
       y: 10
       scale: 1.2
   timeslice:
-    colour1: red
-    colour2: blue
-    colour3: yellow
     threshold1: 1999
     threshold2: 2009
 charts:
   aspect-ratio: 0.4
-  yearly-min: 1980
-  yearly-max: 2020
+  yearly-min: 1990
   include: weekly yearly
