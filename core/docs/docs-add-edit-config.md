@@ -27,7 +27,7 @@ To use the second method, navigate to the folder as before, but click the *Creat
 
 ![Add file page](./images/add-file-page.png)
 
-In the *Name your file* box, enter the name of the file you wish to create, e.g. *site.txt*, and optionally add some text to the body of the file (where it says *Etner file contents here*). Then click the green *Commit changes...* button. You will see a commit dialog appear. As with the previous method you can added a commit message and/or description or just accept the default commit message before clicking the green *Commit changes* button.
+In the *Name your file* box, enter the name of the file you wish to create, e.g. *site.txt*, and optionally add some text to the body of the file (where it says *Enter file contents here*). Then click the green *Commit changes...* button. You will see a commit dialog appear. As with the previous method you can added a commit message and/or description or just accept the default commit message before clicking the green *Commit changes* button.
 
 ## Editing a file
 To edit a file, e.g. a configuration file like *site.txt*, navigate to the folder that contains the file and then click on the file name (which will show as a blue link when your mouse moves over it). Now on the right near the top of the screen you will see a set of buttons like this:
@@ -52,7 +52,7 @@ GitHub does not have a facility to create an empty folder, but you can create on
 
 Instead of typing the name of a file into the *Name your file* box, type something like 'folder/dummy', where 'folder' is the name of the of the folder you wish to create. Then commit the new folder complete with dummy file. Once you've added other files to this folder, you can delete the 'dummy' file (see next section). (If you delete the 'dummy' file before uploading other files into the folder, the folder disappears.)
 
-**Important note: GitHub imposes a limit of 100 files that can be uploaded in any one commit through its interface.** That can be awkward if you have more than 100 taxa in your atlas (which could easilty be the case). It means that you will have to upload data files in batches of 100. 
+**Important note: GitHub imposes a limit of 100 files that can be uploaded in any one commit through its interface.** That can be awkward if you have more than 100 taxa in your atlas (which could easily be the case). It means that you will have to upload data files in batches of 100. 
 
 GitHub does not impose any such limit if you are uploading files via the Git command line tool. To find out more about that read the section on *Using Git* in this document.
 

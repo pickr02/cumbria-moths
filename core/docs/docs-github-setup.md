@@ -24,7 +24,7 @@ You need to click the *fork* button. Then you will see a dialog like that shown 
 
 ![GitHub fork dialog](./images/fork-dialog.png)
 
-Fill in a name for your forked repo - its a good idea to relate it to you altas project because it will appear in the URL of your GitHub Pages website. You also need to *uncheck* the checkbox which says *Copy the main branch only* because major versions of the software will be stored in their own branches. When you have done those things, click the green *Create fork* button.
+Fill in a name for your forked repo - its a good idea to relate it to you atlas project because it will appear in the URL of your GitHub Pages website. You also need to *uncheck* the checkbox which says *Copy the main branch only* because major versions of the software will be stored in their own branches. When you have done those things, click the green *Create fork* button.
 
 Once the repo is forked, you will see an identical copy of the BRC configurable atlas repo in your own new repo.
 
@@ -45,7 +45,7 @@ Click the button initially labelled *None* and in the drop-down list of 'branche
 
 (GitHub/Git branches are a way of storing different versioned copies of the project files. BRC will use this to separate major versions of the configurable atlas project. Normally the 'main' branch will reflect the latest release branch.)
 
-Initially after you've saved your configuration the GitHub pages view looks much the same. The excoption is that there is a section on supplying a custom domain for your GitHub pages website. We will not cover that in this tutorial - we will instead stick with the  domain and URL that GitHub provides for our website. But what is it? Read on.
+Initially after you've saved your configuration the GitHub pages view looks much the same. The exception is that there is a section on supplying a custom domain for your GitHub pages website. We will not cover that in this tutorial - we will instead stick with the  domain and URL that GitHub provides for our website. But what is it? Read on.
 
 When GitHub Pages is first linked to your repo - or later when you update the repo with your own configuration files - there is a delay before the GitHub pages is created or updated. This is usually only a few minutes. After a few minutes, try refreshing this page and eventually you will see something like the following appear at the top of the page:
 
@@ -71,7 +71,7 @@ The *commits ahead* are generated whenever you make configuration changes to you
 
 The *commits behind* are important - they indicate software updates that have been made to BRC's project site but which are not yet in your forked repo.
 
-Here's how you can update your forked repo with the latest software updates from BRC's project site. First click on the *Sync fork* button and the following dropdown will apear:
+Here's how you can update your forked repo with the latest software updates from BRC's project site. First click on the *Sync fork* button and the following dropdown will appear:
 
 ![GitHub commits behind dialog](./images/commits-behind-dialog.png)
 

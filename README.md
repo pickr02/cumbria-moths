@@ -5,9 +5,9 @@ This is the repository for the UKCEH Biological Record Centre (BRC) *Configurabl
 (If you are looking for the notes around the demonstration of this project given at the BRC Recording Groups conference at Wallingford in March 2024, see [this information page](./core/docs/conf2024.md).)
 
 ## Documentation
-This documenation is provided for site admins and the text in these pages often refers to *you*, i.e. the actual, or potential, site creator and administrator. Where the documentation refers to *users*, it means the people who will use your published atlas website.
+This documentation is provided for site admins and the text in these pages often refers to *you*, i.e. the actual, or potential, site creator and administrator. Where the documentation refers to *users*, it means the people who will use your published atlas website.
 
-No documetation is provided for atlas website users. It is intended that the atlas website facilities are intuitive and easy to use without instruction. If, as an admin, you feel that more documentation is required for your users, you can provide that in additional HTML or Markdown page(s) as described in the help page listed below.
+No documentation is provided for atlas website users. It is intended that the atlas website facilities are intuitive and easy to use without instruction. If, as an admin, you feel that more documentation is required for your users, you can provide that in additional HTML or Markdown page(s) as described in the help page listed below.
 
 ## Overview of the main steps
 The main steps to create your own configurable atlas, hosted on GitHub, from a spreadsheet of biological records are outlined below with links to documents that provide details. There are four main steps:

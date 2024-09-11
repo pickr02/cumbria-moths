@@ -8,7 +8,7 @@ If you have some HTML skills, then you may want to stick with providing addition
 ## HTML pages
 When you write HTML pages for your atlas, you don't write full HTML pages because the atlas software embeds them within the general HTML page framework of the atlas. The HTML you provide is inserted into a `<div>` tag that sits between the atlas header (including navigation bar) and the footer. So you don't need to use, for example, `<header>` or `<body>` tags.
 
-If you want to apply CSS styling to any elements within your page, you need to do it directly on the elements themsleves using the HTML `style` attribute.
+If you want to apply CSS styling to any elements within your page, you need to do it directly on the elements themselves using the HTML `style` attribute.
 
 To use an image in a page, the best way is to place the image in the same folder as the page (or a sub-folder you create for it) and set the `src` attribute of the image to the path of the image relative to the website root which will be something like: `<img src="/user/config/pages/logo.png">`
 
@@ -47,7 +47,7 @@ montes, nascetur ridiculus mus. Mauris dictum turpis non vestibulum bibendum. Cu
 id augue condimentum convallis et eget nibh.
 ```
 
-In the example above, the image won't float to the right as it did with the HTML example - there is no facility to do that in pure Markdown. However, if you have the occassional more sophisticated requirement like that, you can use HTML within a Markdown document. So the example below would give exactly the same results as the HTML page:
+In the example above, the image won't float to the right as it did with the HTML example - there is no facility to do that in pure Markdown. However, if you have the occasional more sophisticated requirement like that, you can use HTML within a Markdown document. So the example below would give exactly the same results as the HTML page:
 
 ```
 ## Project information

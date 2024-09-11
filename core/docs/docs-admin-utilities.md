@@ -1,13 +1,13 @@
 # Using the admin utilities
-This page explains how to use the admin utilities that are integrated into your website. These utilties often generate data but it is important to note that the data files are not generated directly in your repo. They are effectively generated and saved to files (or zipfiles) on your computer. Uploading the files to your repo is described in the document [*Using GitHub ot add/edit files*](./docs-add-edit-config.md).
+This page explains how to use the admin utilities that are integrated into your website. These utilities often generate data but it is important to note that the data files are not generated directly in your repo. They are effectively generated and saved to files (or zipfiles) on your computer. Uploading the files to your repo is described in the document [*Using GitHub ot add/edit files*](./docs-add-edit-config.md).
 
 So there is no need to worry that these admin utilities are publicly visible to anyone using your atlas website - anyone can use them, but only to generate data files from a CSV which they already have.
 
-To reach the admin utilties, click on the gear wheel on the right of your website's footer:
+To reach the admin utilities, click on the gear wheel on the right of your website's footer:
 
 ![Page footer](./images/footer.png)
 
-That will take you to a list of utilities acessible by clicking on the corresponding button. These are each described below:
+That will take you to a list of utilities accessible by clicking on the corresponding button. These are each described below:
 
 ## Generate atlas data from a biological records CSV
 Use this utility to select a CSV file of biological records from your computer from which to generate all the data files that will drive your atlas site. The file you select is not uploaded - it is only used to generate the atlas data files which are zipped and saved to a folder on your computer.
@@ -31,7 +31,7 @@ The *Generate species list* button is enabled as soon as you have set the mappin
 **The *taxa.csv* file needs to be uploaded to the *user/data* folder of your repo.** Note that you can, if you wish, edit the values in the *taxon* field of this CSV - that's the name that appears to your website's users in the taxon selection control, but you *must NOT* edit the key values in the *taxon_id* field, or else you will lose the links to the other data files.
 
 ### Generate species info page stubs
-The *Generate species info page stubs* button is enabled as soon as you have set the mapping for the taxon name field. Clicking this button generates a arkdown file for each of the taxa in your spreadsheet. Each of the files contains the same example markdown and you will want to completely replace this with text and headers of your own design. The value of this utility is simply in creating the files with the correct names so that they can be found when the user selects a taxon.
+The *Generate species info page stubs* button is enabled as soon as you have set the mapping for the taxon name field. Clicking this button generates a markdown file for each of the taxa in your spreadsheet. Each of the files contains the same example markdown and you will want to completely replace this with text and headers of your own design. The value of this utility is simply in creating the files with the correct names so that they can be found when the user selects a taxon.
 
 For a bit more information on the *markdown* syntax, see the information on [Creating additional HTML or Markdown pages](./docs-additional-pages.md).
 
