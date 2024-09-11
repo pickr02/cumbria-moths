@@ -1,8 +1,10 @@
-# Configurable atlas project
+# Configurable Atlas project
 
 This is the repository for the UKCEH Biological Record Centre (BRC) *Configurable Atlas project*. The features include in version 1 of this project can be found on this page on the [Minimum Viable Product](./core/docs/mvp.md).
 
 (If you are looking for the notes around the demonstration of this project given at the BRC Recording Groups conference at Wallingford in March 2024, see [this information page](./core/docs/conf2024.md).)
+
+**To see an demonstration atlas created from the *Configurable Atlas project*, have a look at this one: https://burkmarr.github.io/middlesex-earthworms/core/main.html**. The demonstration atlas was created without any coding using the instructions given below. It uses a free GitHub account with *GitHub Pages* to host the website - no experience of building or hosting websites is required.
 
 ## Documentation
 This documentation is provided for site admins and the text in these pages often refers to *you*, i.e. the actual, or potential, site creator and administrator. Where the documentation refers to *users*, it means the people who will use your published atlas website.
