@@ -86,7 +86,7 @@ define(["d3", "jquery.min", "atlas-components"],
       const $div1 = $('<div>').appendTo($div0)
       const $label = $('<div>').appendTo($div1)
       $label.css('display', 'inline-block')
-      $label.css('margin-left', '0.7em')
+      $label.css('margin-left', '0.5em')
       $label.text('Thresholds')
 
       $thresh1 = $('<input>').appendTo($div1)
@@ -222,7 +222,7 @@ define(["d3", "jquery.min", "atlas-components"],
       const $label = $('<label>').appendTo($div)
       $label.attr('for', `${map}-opacity-slider`)
       $label.text('Opacity:')
-      $label.css('margin', '0 0.5em 0.5em 0')
+      $label.css('margin', '0 0.5em 0.5em 0.5em')
       $label.css('vertical-align', 'middle')
 
       const $slider = $('<input>').appendTo($div)
