@@ -35,7 +35,7 @@ The *Generate species info page stubs* button is enabled as soon as you have set
 
 For a bit more information on the *markdown* syntax, see the information on [Creating additional HTML or Markdown pages](./docs-additional-pages.md).
 
-** The species information pages can be uploaded to the *user/data/captions* folder of your repo**. You can either upload them and then edit them there, or you can edit them on your computer before uploading them. It is only necessary to upload files for the species for which you have information to add.
+**The species information pages can be uploaded to the *user/data/captions* folder of your repo**. You can either upload them and then edit them there, or you can edit them on your computer before uploading them. It is only necessary to upload files for the species for which you have information to add.
 
 ### Generate atlas map data
 To enable the *Generate atlas map data* controls, you need to specify mappings for all four fields (because the generated map atlas data includes the earliest and latest years). Once the controls are enabled, you need to use the sliders to indicate which resolution atlas data you want to generate. You must specify at least one of these to enable to *Generate atlas map data* button, but you can specify all four if you are going to make all atlas mapping precisions available to your users.

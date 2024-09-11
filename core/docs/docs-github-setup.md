@@ -37,7 +37,7 @@ Near the top-left of the main page for your forked GitHub repo you will see a bu
 
 ![GitHub settings button](./images/settings-button.png)
 
-Click the *Settings* button and a dialog will appear with a bunch of links down the left-hand side. Under *Code and automation* you will see the *Pages* link. Click on this link. That will you to a GitHub pages view like this one:
+Click the *Settings* button and a page will appear with a bunch of links down the left-hand side. Under *Code and automation* you will see the *Pages* link. Click on this link. That will you to a GitHub pages view like this one:
 
 ![GitHub Pages dialog](./images/pages-dialog.png)
 
@@ -56,6 +56,19 @@ This shows the URL for the website based on the forked GitHub repo. Following th
 ![Unconfigured website](./images/unconfigured-website.png)
 
 This is how a configurable atlas website looks without any configuration! Your next steps will be to add configuration and data to your repo.
+
+## Set the correct default branch on your repo
+If you linked your GitHub pages to a branch other than *main*, e.g. *v1.0.0*, you should change the default repo of your project so that when you start to add data and configuration, it goes to the branch that links to your website (GitHub pages).
+
+Near the top-left of the main page for your forked GitHub repo you will see a bunch of buttons like this:
+
+![GitHub settings button](./images/settings-button.png)
+
+Click the *Settings* button and a page will appear where you will see a heading - **Default branch** - a little way down:
+
+![GitHub default branch](./images/default-branch.png)
+
+Click on the button with the oposing arrows (highlighted above), then in the dialog that appears, use the dropdown to switch to the branch you linked your GitHub pages to and then click the *Update* button. Acknowledge the warning that appears.
 
 ## Updating your project with the latest code
 From time to time, BRC may update the configurable atlas software. Because GitHub maintains a link between a forked repo and its source, it is relatively easy to pull those updates into your forked repo. 
