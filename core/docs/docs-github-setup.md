@@ -68,7 +68,7 @@ The website associated with this repo will be:
 
 The general format is:
 
-*https://**<your_userid>**.github.io/**<name_of_forked_repo>**
+*https://**<your_userid>**.github.io/**<name_of_forked_repo>***
 
 ## Set the correct default branch on your repo
 If you linked your GitHub pages to a branch other than *main*, e.g. *v1.0.0*, you should change the default repo of your project so that when you start to add data and configuration, it goes to the branch that links to your website (GitHub pages).
