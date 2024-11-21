@@ -57,6 +57,19 @@ This shows the URL for the website based on the forked GitHub repo. Following th
 
 This is how a configurable atlas website looks without any configuration! Your next steps will be to add configuration and data to your repo.
 
+### Finding your GitHub pages!
+It is easy to forget the URL for your GitHub pages website. You can work the address out from the address of your GitHub repo. Consider this repo:
+
+*https://github.com/burkmarr/middlesex-earthworms*
+
+The website associated with this repo will be:
+
+*https://burkmarr.github.io/middlesex-earthworms*
+
+The general format is:
+
+*https://**<your_userid>**.github.io/**<name_of_forked_repo>**
+
 ## Set the correct default branch on your repo
 If you linked your GitHub pages to a branch other than *main*, e.g. *v1.0.0*, you should change the default repo of your project so that when you start to add data and configuration, it goes to the branch that links to your website (GitHub pages).
 
