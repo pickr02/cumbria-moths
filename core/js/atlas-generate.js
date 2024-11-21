@@ -136,18 +136,26 @@ requirejs(["atlas-general", "atlas-components", "atlas-dates", "d3", "jszip.min"
     return `${taxon.replace(/[^a-z0-9]/gi, '_').toLowerCase()}` 
   }
 
-  function generateSpInfoStubs(JSZip) {
+  async function generateSpInfoStubs(JSZip) {
 
-    console.log('Generate species info stubs')
+    console.log('Generate species info stubs x')
     const zip = new JSZip()
     const fldTaxon = $('#brc-data-taxon-select').find(":selected").val()
 
-    jsonCsv.forEach(d => {
-      const taxonId = taxonToSafeName(d[fldTaxon])
-      if (taxonId) {
-        zip.folder('captions').file(`${taxonId}.md`, getStub(d[fldTaxon]))
+    const taxa = jsonCsv.reduce((a,d) => {
+      if (!a.includes(d[fldTaxon])) {
+        a.push(d[fldTaxon])
       }
-    })
+      return a
+    }, [])
+
+    for (let i=0; i<taxa.length; i++) {
+      const taxonId = taxonToSafeName(taxa[i])
+      if (taxonId) {
+        const stub = await getStub(taxa[i])
+        zip.folder('captions').file(`${taxonId}.md`, stub)
+      }
+    }
     // Download the zip file
     zip.generateAsync({type:"base64"}).then(function (base64) {
       window.location = "data:application/zip;base64," + base64
@@ -370,17 +378,26 @@ requirejs(["atlas-general", "atlas-components", "atlas-dates", "d3", "jszip.min"
     })
   }
 
-  function getStub(name) {
-    const stub = [
-      `### *${name}*`,
-      '#### Section header',
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et fringilla tortor. Aliquam sed elit eu lorem auctor finibus.',
-      'Donec euismod nibh felis. Phasellus dapibus diam condimentum purus bibendum tincidunt. Nunc eleifend blandit urna, elementum euismod nisl gravida non. Curabitur at enim dictum, euismod dolor et, scelerisque eros. Vestibulum mattis lacinia nisi porttitor mollis. Pellentesque ut vehicula ex, sit amet volutpat elit. In at ligula vitae tortor rutrum sodales.',
-      '#### Section header',
-      'Donec euismod nibh felis. Phasellus dapibus diam condimentum purus bibendum tincidunt. Nunc eleifend blandit urna, elementum euismod nisl gravida non. Curabitur at enim dictum, euismod dolor et, scelerisque eros',
-      'Vestibulum mattis lacinia nisi porttitor mollis. Pellentesque ut vehicula ex, sit amet volutpat elit. In at ligula vitae tortor rutrum sodales.'
-    ]
-    const ret = stub.join("\r\n")
-    return ret
+  async function getStub(name) {
+
+    let stub = await fetch('../user/config/stub.md')
+      .then(response => response.text())
+
+    if (stub) {
+      stub = stub.replace('{name}', name)
+    } else {
+      // Fallback if user does not supply a stub
+      stub = [
+        `### *${name}*`,
+        '#### Section header',
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et fringilla tortor. Aliquam sed elit eu lorem auctor finibus.',
+        'Donec euismod nibh felis. Phasellus dapibus diam condimentum purus bibendum tincidunt. Nunc eleifend blandit urna, elementum euismod nisl gravida non. Curabitur at enim dictum, euismod dolor et, scelerisque eros. Vestibulum mattis lacinia nisi porttitor mollis. Pellentesque ut vehicula ex, sit amet volutpat elit. In at ligula vitae tortor rutrum sodales.',
+        '#### Section header',
+        'Donec euismod nibh felis. Phasellus dapibus diam condimentum purus bibendum tincidunt. Nunc eleifend blandit urna, elementum euismod nisl gravida non. Curabitur at enim dictum, euismod dolor et, scelerisque eros',
+        'Vestibulum mattis lacinia nisi porttitor mollis. Pellentesque ut vehicula ex, sit amet volutpat elit. In at ligula vitae tortor rutrum sodales.'
+      ]
+      stub = stub.join("\r\n")
+    }
+    return stub
   }
 })

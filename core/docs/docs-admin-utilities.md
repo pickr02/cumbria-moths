@@ -31,7 +31,9 @@ The *Generate species list* button is enabled as soon as you have set the mappin
 **The *taxa.csv* file needs to be uploaded to the *user/data* folder of your repo.** Note that you can, if you wish, edit the values in the *taxon* field of this CSV - that's the name that appears to your website's users in the taxon selection control, but you *must NOT* edit the key values in the *taxon_id* field, or else you will lose the links to the other data files.
 
 ### Generate species info page stubs
-The *Generate species info page stubs* button is enabled as soon as you have set the mapping for the taxon name field. Clicking this button generates a markdown file for each of the taxa in your spreadsheet. Each of the files contains the same example markdown and you will want to completely replace this with text and headers of your own design. The value of this utility is simply in creating the files with the correct names so that they can be found when the user selects a taxon.
+The *Generate species info page stubs* button is enabled as soon as you have set the mapping for the taxon name field. Clicking this button generates a markdown file for each of the taxa in your spreadsheet. The main value of this utility is simply to create files with the correct names so that they can be found by the software when the user selects a taxon. You need to edit each of the generated stubs to contain the information required for each taxon. 
+
+By default the stubs contain a couple of headers and some *Lorem ipsum* text, but you can define your own stub to use instead, for example one containing the headers that you wish to use for all of your taxa. To use your own stub, create a markdown file called **stub.md** with the markdown you want (e.g. headers) and save it into the folder *user/config*. This will then be used as the template when creating the stubs for each taxon.
 
 For a bit more information on the *markdown* syntax, see the information on [Creating additional HTML or Markdown pages](./docs-additional-pages.md).
 

@@ -52,11 +52,18 @@ GitHub does not have a facility to create an empty folder, but you can create on
 
 Instead of typing the name of a file into the *Name your file* box, type something like 'folder/dummy', where 'folder' is the name of the of the folder you wish to create. Then commit the new folder complete with dummy file. Once you've added other files to this folder, you can delete the 'dummy' file (see next section). (If you delete the 'dummy' file before uploading other files into the folder, the folder disappears.)
 
-**Important note: GitHub imposes a limit of 100 files that can be uploaded in any one commit through its interface.** That can be awkward if you have more than 100 taxa in your atlas (which could easily be the case). It means that you will have to upload data files in batches of 100. 
+## Replacing files
+You can upload files and folders and files as described in the previous section even if they already exist in your repo and the changes will be 'merged' with those on the repo. So any files that already exist will be replaced with the new ones you've uploaded. 
 
-GitHub does not impose any such limit if you are uploading files via the Git command line tool. To find out more about that read the section on *Using Git* in this document.
+If you upload a whole folder (source folder) by drag and drop into a folder where the source folder already exists (the target folder), files in the source folder which are present in the target folder will overwrite those in the taret folder. Note that that files present in the target folder which are not present in the source folder are *not* deleted. This is analogous to the way the same operation would work on your desktop computer.
 
-## Deleting config files and resources
+## GitHub batch upload restriction
+
+**GitHub imposes a limit of 100 files that can be uploaded in any one commit through its interface.** That can be awkward if you have more than 100 taxa in your atlas (which could easily be the case). It means that you will have to upload data files in batches of 100. 
+
+GitHub does not impose any such limit if you are uploading files ti GiutHub via the Git command line tool. To find out more about that read the section on *Using Git* in this document. If you are comfortable using the Git command line tool, or are willing to learn it, that is by far the most convienient way to create, modify, upload and delete folders and files to GitHub.
+
+## Deleting config files, resources & folders
 To delete a file in GitHub, navigate to the folder containing the file and click on the name of the file (you will see the name turn blue as you hover over it - indicating a link). That will display the file contents. Towards the top-right of this page you will see a button with an ellipsis (three dots):
 
 ![Ellipsis button](./images/ellipsis-button.png)
@@ -64,6 +71,13 @@ To delete a file in GitHub, navigate to the folder containing the file and click
 Click this button and you will see a list of options - click the red one which says *Delete file*. The file will not actually be deleted until you commit the changes using the green *Commit changes...* button that you will be familiar with by now. As usual, you need to supply a commit message, but you can accept the default.
 
 Deleting a folder is very similar. Navigate into the folder you wish to delete. You will see the folder's contents displayed. Click on the ellipsis button and select the red *Delete directory* button. The folder and all its contents will be deleted, but not until you have committed the changes.
+
+## Starting again!
+If you decide you want to start again with a fresh configuration, you just need empty the contents of these two folders in your repo:
+- **user/config**
+- **user/data**
+
+You can go through the files and sub-folders in those two folders and delete them one by one as previously described. Alternatively, you could just delete those two folders. You would then need to re-create them again in order to start adding configuration and data again. Don't forget you can't create an empty folder in GitHub, so you would need to create the folders by adding a dummy file (or a genuine config file) at the same time as described above in the section **Adding data and other resources**.
 
 # Using Git
 If you are a seasoned user of Git, it will likely be much more convenient for you to update your repo by using the Git command line rather than the GitHub interface. This can also overcome GitHub's limit on the number of files that can be uploaded in one go.

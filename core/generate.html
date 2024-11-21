@@ -34,6 +34,11 @@
           </div>
 
           <div id="brc-map-gen-grp" class="border p-2 mb-2">
+            <p>
+              The field mapping selection boxes will only be enabled once you
+              have selected your CSV above.
+            </p>
+            
             <select id="brc-data-taxon-select" disabled class="brc-data-select form-select mb-2">
               <option value="" selected>Select taxon field</option>
             </select>
@@ -49,14 +54,26 @@
           </div>
           
           <div class="border p-2 mb-2">
+            <p>
+              The <i>Generate species list</i>
+              button will only be enabled once you have mapped the taxon field from your CSV.
+            </p>
             <button id="brc-gen-sp" type="button" class="disabled btn btn-primary">Generate species list</button>
           </div>
 
           <div class="border p-2 mb-2">
+            <p>
+              The <i>Generate species info page stubs</i>
+              button will only be enabled once you have mapped the taxon field from your CSV.
+            </p>
             <button id="brc-gen-info" type="button" class="disabled btn btn-primary mb-2">Generate species info page stubs</button>
           </div>
     
           <div id="brc-map-gen-grp" class="border p-2 mb-2">
+            <p>
+              The resolution toggles will only be enabled when you have mapped all four CSV fields above. The <i>Generate atlas map data</i>
+              button will only be enabled once you have toggled on one or more of the resolution options.
+            </p>
             <button id="brc-gen-map" type="button" class="disabled btn btn-primary mb-2">Generate atlas map data</button>
             <div class="form-check form-switch">
               <input class="form-check-input brc-gen-map-chk" disabled type="checkbox" id="brc-gen-hectads">
@@ -77,6 +94,10 @@
           </div>
 
           <div class="border p-2">
+            <p></p>
+              The chart type toggles will only be enabled when you have mapped all four CSV fields above. The <i>Generate chart data</i>
+              button will only be enabled once you have toggled on one or more of the resolution options.
+            </p>
             <button id="brc-gen-chart" type="button" class="disabled btn btn-primary mb-2">Generate chart data</button>
             <div class="form-check form-switch">
               <input class="form-check-input brc-gen-chart-chk" disabled type="checkbox" id="brc-gen-weekly">

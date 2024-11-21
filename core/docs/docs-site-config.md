@@ -253,7 +253,7 @@ Taxon details are Markdown pages placed in the  *user/data/captions* folder. Eac
 
 ## Example site.txt config file
 ```
-nname: Demo atlas - Middlesex Earthworms
+name: Demo atlas - Middlesex Earthworms
 header-background-colour: "#EF9766"
 header-text-colour: white
 header-logo: badge-circle.png
