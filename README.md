@@ -22,7 +22,7 @@ The main steps to create your own configurable atlas, hosted on GitHub, from a s
 Step 1 must come first, but the order in which you carry out steps 2 and 3 is not important. Step 4 is best performed after steps 2 & 3.
 
 ### Set up a GitHub repository & website
-Setting up the GitHub side of things deals with 'forking' the BRC GitHub project repository ('repo') into your own GitHub account and then setting up 'GitHub pages' on your forked repo to create your website.
+Setting up the GitHub side of things deals with 'forking' the BRC GitHub project repository ('repo') into your own GitHub account and then setting up 'GitHub pages' on your forked repo to create your website. Once set up, your website's address will have this format: *https://**<your_userid>**.github.io/**<name_of_forked_repo>***
 - [GitHub setup](./core/docs/docs-github-setup.md)
 ### Configure the appearance of your website
 Create, add and edit the main configuration file and associated resources (e.g. a logo image) that tailors the look of your website.
