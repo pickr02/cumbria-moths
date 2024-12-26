@@ -12,7 +12,7 @@ tabs:
     caption: Temporal
 overview:
     height: 800
-    custom-boundary: /user/config/boundary/cumbria.geojson
+    custom-boundary: /user/config/boundary/cumbriagr.geojson
     grid-display: solid
 zoom:
     boundaries: vcs    
