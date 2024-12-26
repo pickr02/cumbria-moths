@@ -1,5 +1,5 @@
 name: Cumbria Moth Atlas
-header-background-colour: rgb(100,120,30) (red, green blue format)
+header-background-colour: red
 header-text-colour: white
 tabs:
   - tab: overview
@@ -12,6 +12,7 @@ tabs:
     caption: Temporal
 overview:
     height: 800
+    boundary: gb70
     custom-boundary: /user/config/boundary/cumbria.geojson
     grid-display: solid
 zoom:
