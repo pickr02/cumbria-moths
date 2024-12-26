@@ -12,11 +12,10 @@ tabs:
     caption: Temporal
 overview:
     height: 800
-    boundary: gb70
     custom-boundary: /user/config/boundary/cumbria.geojson
     grid-display: solid
 zoom:
     boundaries: vcs    
 common:
-  - resolution: hectad monad
+    resolution: hectad monad
     map-types: standard, density, timeslice
