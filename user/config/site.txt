@@ -13,6 +13,7 @@ tabs:
 overview:
     height: 800
     custom-boundary: /user/config/boundary/wholecumbria.geojson
+    custom-proj: gb
     grid-display: solid
 zoom:
     boundaries: vcs
